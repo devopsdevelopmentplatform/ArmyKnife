@@ -1,0 +1,8 @@
+- hosts: localhost
+  roles:
+    - devsec.hardening.ssh_hardening
+  vars:
+    ssh_custom_options:
+      - "Include /etc/ssh/ssh_config.d/*"
+    sshd_custom_options:
+      - "AcceptEnv LANG"

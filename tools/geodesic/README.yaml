@@ -1,0 +1,216 @@
+name: Geodesic - The Ultimate DevOps Toolbox Image
+license: APACHE2
+github_repo: cloudposse/geodesic
+
+# Badges to display
+badges:
+  - name: "Build Status"
+    image: "https://github.com/cloudposse/geodesic/workflows/docker/badge.svg"
+    url: "https://github.com/cloudposse/geodesic/actions?query=workflow%3Adocker"
+  - name: "Latest Release"
+    image: "https://img.shields.io/github/release/cloudposse/geodesic.svg"
+    url: "https://github.com/cloudposse/geodesic/releases/latest"
+  - name: "Slack Community"
+    image: "https://slack.cloudposse.com/badge.svg"
+    url: "https://slack.cloudposse.com"
+  - name: "Slack Archive"
+    image: "https://img.shields.io/badge/slack-archive-blue.svg"
+    url: "https://archive.sweetops.com/geodesic"
+
+# Screenshots
+screenshots:
+  - name: "Demo"
+    description: "<br/>Example of running a shell based on the `cloudposse/geodesic` base docker image."
+    url: "docs/demo.gif"
+
+related:
+  - name: "Packages"
+    description: "Cloud Posse installer and distribution of native apps"
+    url: "https://github.com/cloudposse/packages"
+
+  - name: "Build Harness"
+    description: "Collection of Makefiles to facilitate building Golang projects, Dockerfiles, Helm charts, and more"
+    url: "https://github.com/cloudposse/dev"
+
+  - name: "terraform-aws-components"
+    description: "Catalog of reusable Terraform components and blueprints for provisioning reference architectures"
+    url: "https://github.com/cloudposse/terraform-aws-components"
+
+
+
+description: |-
+  Geodesic is a robust Linux toolbox container, crafted to optimize DevOps workflows. This container comes fully loaded with all essential dependencies for a complete DevOps toolchain. It's designed to bring consistency and boost efficiency across development environments. It achieves this without the need for installing additional software on your workstation. Think of Geodesic as a containerized parallel to Vagrant, offering similar functionality within a Docker container context.  <img align=right src="docs/geodesic-small.png">
+
+  ## Key Features
+
+  - **Unified Toolchain**: By packaging all necessary DevOps tools and dependencies, Geodesic eliminates the "works on my machine" problem, ensuring toolchain uniformity across different machines.
+  - **Consistent Environment**: Geodesic guarantees that every developer operates in a uniform OS environment with consistent tool versions, sidestepping discrepancies that often arise in diverse development setups.
+  - **Quick Start for New Developers**: It streamlines the onboarding process for new team members, allowing them to bypass lengthy workstation configurations and dive straight into productivity.
+  - **Cross-Platform Compatibility**: With native support for Mac OSX, Linux, and [Windows (via WSL)](https://docs.microsoft.com/en-us/windows/wsl/install-win10), Geodesic extends its versatile toolchain to a wide range of operating systems, ensuring broad accessibility and functionality.
+  - **Version Control for Tools**: Geodesic facilitates easy versioning of tools for different environments, enabling repeatable setups and minimizing compatibility issues.
+  - **Reusable Base Image for Toolboxes**: Empower teams to create and maintain consistent toolbox images, ensuring a standardized development environment across the board.
+
+introduction: |-
+  These days, the typical software application is distributed as a docker image and run as a container. Why should infrastructure be any different? Since everything we write is "Infrastructure as Code", we believe that it should be treated the same way. This is the "Geodesic Way". Use containers+envs instead of unconventional wrappers, complicated folder structures and symlink hacks. Geodesic is the container for all your infrastructure automation needs that enables you to truly achieve SweetOps.
+
+  Geodesic is best used in one of these two ways:
+
+    1. **Interactive Shell** It is optimized to work as an interactive command-line shell. The shell includes the *ultimate* mashup of cloud orchestration tools all distributed through our [packages](https://github.com/cloudposse/packages). Installation of the shell is as easy as running a docker container or using it as a base image for your own Docker toolbox.
+    2.  **Docker Base Image** You can create your own `Dockerfile` and use `cloudposse/geodesic` as the base image. This way you can rapidly bring up consistent toolboxes.
+
+  An organization may chose to leverage all of these components, or just the parts that make their life easier.
+
+  We recommend starting by using `geodesic` as a Docker base image (e.g. `FROM cloudposse/geodesic:...` pinned to a release and base OS) in your projects.
+ 
+  > [!IMPORTANT]  
+  > **Note**: Starting with Geodesic 2.0, we distribute Geodesic as a multi-platform (`linux/amd64`, `linux/arm64`) Debian-based Docker image and a single-platform (`linux/amd64`) Alpine-based image. 
+  > We recommend using the Debian-based image, and the `cloudposse/geodesic:latest` image now points to it. (Previously `cloudposse/geodesic:latest` was the Alpine image.)
+
+  We have deprioritized support for Alpine and may drop it entirely at some point.
+
+  Starting with Geodesic version 0.138.0, we distributed 2 versions of `linux/arm64` Geodesic Docker images,
+  one based on [Alpine](https://alpinelinux.org/) and one based on [Debian](https://debian.org), tagged `VERSION-BASE_OS`, e.g. `0.138.0-alpine`.
+  Prior to this, all Docker images were based on Alpine only and simply tagged `VERSION`. Prior to the release of Geodesic version 1.0,
+  the Alpine version was the most thoroughly tested and best supported version, and the special Docker tag `latest` continued to point
+  to the latest Alpine version.
+
+  **Note**: Geodesic is a large collection of tools. To run on an Apple natively under Geodesic, binaries need to be compiled
+  for `linux/arm64`, while to run on Apple natively on outside of Geodesic (on macOS) they need to be
+  compiled for `darwin/arm64`. As such, support for the Apple M1 (or later) chip is not
+  fully under Cloud Posse's control, rather it depends on each tool author updating each tool.
+
+  To be included in Geodesic and for Geodesic to support both Intel and Apple CPUs, a tool project must
+  distribute both a `linux/amd64` and `linux/arm64` binary. (In exceptional cases, if a tool is written
+  in the `go` language and distributes source code only, Cloud Posse may build the needed binaries.)
+  As of Geodesic 2.0, all but a small number of tools have started releasing the necessary binaries,
+  so we removed the ones that were not available on `linux/arm64` in order to provide a consistent
+  toolkit on both platforms. (See the Geodesic 2.0 [Release Notes](https://github.com/cloudposse/geodesic/releases/tag/2.0.0) for details on which tools were removed.)
+
+  Want to learn more? [Check out our getting started with Geodesic guide!](https://docs.cloudposse.com/tutorials/geodesic-getting-started/)
+
+usage: |-
+  ### Quickstart
+
+  #### docker run
+
+  Launching Gedoesic is a bit complex, so we recommend you install a launch script by running
+  ```
+  docker run --rm cloudposse/geodesic:latest-debian init | bash
+  ```
+  After that, you should be able to launch Geodesic just by typing
+  ```
+  geodesic
+  ```
+
+  ### Customizing your Docker image
+
+  In general we recommend creating a customized version of Geodesic by creating your own `Dockerfile` starting with
+  ```
+  ARG VERSION=2.0.0
+  ARG OS=debian
+  FROM cloudposse/geodesic:$VERSION-$OS
+
+  # Add configuration options such as setting a custom BANNER,
+  # setting the initial AWS_PROFILE and AWS_DEFAULT_REGION, etc. here
+
+  ENV BANNER="my-custom-geodesic"
+  ```
+
+  You can see some example configuration options to include in [Dockerfile.options](./Dockerfile.options).
+
+  #### Multi-platform gotchas
+
+  Although the Geodesic base image is provided in 2 architectures, when you do a local build
+  of your custom image, it will, by default, only be built for the architecture of the machine you are building on.
+  This is fine until you want to share it. You need to be aware that if you push just the image you
+  built with `docker build` you will only be supporting a single architecture. You should use `docker buildx`
+  to build a multi-platform image and push it to a Docker repository for sharing.
+
+  If you intend to support both architectures, you need to be sure that any customizations
+  you install are properly installed for both architectures. Package managers handle this for you
+  automatically, but if you are downloading files directly, you need to be careful to select the right one.
+  See the use of `TARGETARCH` in [Dockerfile.debian](./os/debian/Dockerfile.debian) for some examples.
+
+  #### Adding packages
+
+  You can also add extra commands by installing "packages". Both Debian and Alpine have a large selection
+  of packages to choose from. Cloud Posse also provides a large set of packages for installing common DevOps commands
+  and utilities via [cloudposse/packages](https://github.com/cloudposse/packages), but `linux/arm64` packages
+  are only provided for Debian, not Alpine. The package repositories are pre-installed in Geodesic,
+  all you need to do is add the packages you want via `RUN` commands in your Dockerfile. Debian
+  will automatically select the correct architecture for the package.
+
+  #### Installing packages in Debian
+
+  Debian uses [`apt`](https://wiki.debian.org/Apt) for package management and we generally recommend using
+  the [`apt-get`](https://www.debian.org/doc/manuals/apt-guide/ch2.en.html) command to install packages.
+  In addition to the default repositories, Geodesic pre-installs the Cloud Posse [package](https://github.com/cloudposse/packages) repository
+  and the Google Cloud SDK package repository. Unlike with `apk`, you do not need to specify a package repository when
+  installing a package because all repositories will be searched for it.
+  Also unlike `apk`, `apt-get` does not let you specify a version range on the command line, but they do
+  allow wildcards. Package versions include a release number (typically "1") at the end, to allow for
+  updated packages when there is a bug in the package itself. Therefore, best practice is to use a wildcard
+  for the release number when specifying a package version. For example,
+  to install the Google Cloud SDK at a version 300.0.0:
+
+  ```
+  RUN apt-get update && apt-get install -y google-cloud-sdk="300.0.0-*"
+  ```
+
+  Note the `-y` flag to `apt-get install`. That is required for scripted installation, otherwise the command
+  will ask for confirmation from the keyboard before installing a package.
+
+  #### Installing packages in Alpine
+
+  Under Alpine, you install a package by specifying a package name and a repository label (if not the default repository).
+  (You can also specify a version, see [the Alpine documentation](https://wiki.alpinelinux.org/wiki/Alpine_Linux_package_management#Advanced_APK_Usage)
+  for details). In addition to the default package repository, Geodesic installs 3 others:
+
+  | Repository Label | Repository Name|
+  |------------------|----------------|
+  | @testing | edge/testing |
+  | @community | edge/community |
+  | @cloudposse | cloudposse/packages |
+
+  As always, because of Docker layer caching, you should start your command line by updating the repo indexes,
+  and then add your packages. Alpine uses [`apk`](https://wiki.alpinelinux.org/wiki/Alpine_Linux_package_management).
+  So, to install [Teleport](https://gravitational.com/teleport) support from the Cloud Posse package repository,
+  pinned to version 4.2.x (which is the last to support Alpine), we can add this to our Dockerfile:
+
+  ```
+  RUN apk update && apk add -u teleport@cloudposse=~4.2
+  ```
+
+  ### Customizing your shell at launch time
+
+  After you have built your Docker image, or if you are using a shared Docker image, you can
+  add further customization at launch time. When Geodesic starts up, it looks for customization
+  scripts and configuration so you can do things like add command aliases or override preconfigured options.
+  Detailed information about launch-time configuration is in the [customization](./docs/customization.md)
+  document, available from within the shell via `man customization`.
+
+# Other files to include in this README from the project folder
+include:
+
+# Contributors to this project
+contributors:
+  - name: "Erik Osterman"
+    homepage: "https://github.com/osterman"
+    avatar: "http://s.gravatar.com/avatar/88c480d4f73b813904e00a5695a454cb?s=144"
+    github: "osterman"
+  - name: "Igor Rodionov"
+    homepage: "https://github.com/goruha/"
+    avatar: "http://s.gravatar.com/avatar/bc70834d32ed4517568a1feb0b9be7e2?s=144"
+    github: "goruha"
+  - name: "Andriy Knysh"
+    homepage: "https://github.com/aknysh/"
+    avatar: "https://avatars0.githubusercontent.com/u/7356997?v=4&u=ed9ce1c9151d552d985bdf5546772e14ef7ab617&s=144"
+    github: "aknysh"
+  - name: "Sarkis Varozian"
+    homepage: "https://github.com/sarkis"
+    avatar: "https://avatars3.githubusercontent.com/u/42673?s=144&v=4"
+    github: "sarkis"
+  - name: "Oscar Sullivan"
+    homepage: "https://github.com/osulli"
+    avatar: "https://github.com/osulli.png?size=150"
+    github: "osulli"

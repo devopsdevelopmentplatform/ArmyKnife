@@ -1,0 +1,29 @@
+---
+- name: Install and Configure Filebeat
+  hosts: all   
+  become: true  
+
+  tasks:
+    - name: Download and Install Filebeat
+      get_url:
+        url: https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-7.17.0-amd64.deb  
+        dest: /tmp/filebeat.deb
+        mode: 0644
+      register: download_result
+
+    - name: Install Filebeat
+      apt:
+        deb: /tmp/filebeat.deb
+      when: download_result.changed
+
+    - name: Configure Filebeat
+      template:
+        src: /etc/ansible/playbooks/templates/filebeat-config.yml.j2   
+        dest: /etc/filebeat/filebeat.yml
+
+    - name: Start and Enable Filebeat
+      systemd:
+        name: filebeat
+        enabled: yes
+        state: started
+

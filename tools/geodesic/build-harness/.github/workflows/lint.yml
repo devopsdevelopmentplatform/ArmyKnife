@@ -1,0 +1,35 @@
+---
+name: lint
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+
+jobs:
+  lint-readme:
+    name: readme
+    runs-on: ubuntu-latest
+    container: cloudposse/build-harness:latest
+    steps:
+      - uses: actions/checkout@v4
+      - shell: bash
+        run: /usr/bin/make BUILD_HARNESS_PATH=/build-harness PACKAGES_PREFER_HOST=true git-safe-directory readme/lint
+
+  super-linter:
+    name: superlinter
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+      - name: Lint Code Base
+        uses: github/super-linter/slim@v5
+        env:
+          VALIDATE_ALL_CODEBASE: false
+          VALIDATE_NATURAL_LANGUAGE: false
+          VALIDATE_DOCKERFILE_HADOLINT: false
+          DEFAULT_BRANCH: master
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

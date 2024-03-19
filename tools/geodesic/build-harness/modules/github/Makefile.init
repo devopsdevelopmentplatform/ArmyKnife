@@ -1,0 +1,77 @@
+GITHUB_TEMPLATES = \
+	.github/PULL_REQUEST_TEMPLATE.md \
+	.github/ISSUE_TEMPLATE/config.yml \
+	.github/ISSUE_TEMPLATE/feature_request.yml \
+	.github/ISSUE_TEMPLATE/bug_report.yml \
+	.github/ISSUE_TEMPLATE/question.md \
+
+# Install extra configuration for terraform projects
+GITHUB_TERRAFORM_TEMPLATES = .github/workflows/feature-branch.yml \
+	.github/workflows/feature-branch-chatops.yml \
+	.github/workflows/release-branch.yml \
+	.github/workflows/release-published.yml \
+	.github/workflows/scheduled.yml \
+	.github/mergify.yml \
+	.github/renovate.json \
+	.github/auto-release.yml
+
+GTIHUB_CODEOWNERS_FILE = .github/CODEOWNERS
+
+# Create a file (contents unimportant) with this name
+# to prevent pr/auto-format etc. from updating the GitHub templates, including CODEOWNERS.
+GITHUB_UPDATE_DISABLE_SENTINEL := .github/.github-update-disabled
+
+# Create a file (contents unimportant) with this name to prevent pr/auto-format etc.
+# from updating/replacing the CODEOWNERS file while still allowing other updates.
+GITHUB_CODEOWNERS_UPDATE_DISABLE_SENTINEL := .github/.github-CODEOWNERS-update-disabled
+
+ifeq (,$(wildcard $(GITHUB_CODEOWNERS_UPDATE_DISABLE_SENTINEL)))
+	GITHUB_TEMPLATES += $(GTIHUB_CODEOWNERS_FILE)
+endif
+
+# We cannot rely on modification dates to tell which files are out of date,
+# so we cannot use a traditional make rule. Instead, we use a phony target
+# to ensure the recipe always runs, and copy over all the files and then
+# ask `git` what has changed.
+$(GITHUB_TEMPLATES): $(addprefix $(BUILD_HARNESS_PATH)/templates/, $(GITHUB_TEMPLATES))
+	@mkdir -p $(dir $@)
+	@cp $(BUILD_HARNESS_PATH)/templates/$@ $@
+	@git ls-files --error-unmatch $@ >/dev/null 2>&1 || { git add $@; echo "# github/update: Added $@"; }
+	@for file in $$(git diff --name-only $@); do echo "# github/update: Updated $$file"; done
+
+$(GITHUB_TERRAFORM_TEMPLATES): $(addprefix $(BUILD_HARNESS_PATH)/templates/terraform/, $(GITHUB_TERRAFORM_TEMPLATES))
+	@mkdir -p $(dir $@)
+	@cp $(BUILD_HARNESS_PATH)/templates/terraform/$@ $@
+	@git ls-files --error-unmatch $@ >/dev/null 2>&1 || { git add $@; echo "# github/update: Added " $@; }
+	@for file in $$(git diff --name-only $@); do echo "# github/update: Updated $$file"; done
+
+# Update context.tf if it is in place. Leave it in directory
+# if it did not previously exist, but do not add it to git
+# in case this is going to be a collection of submodules.
+github/init/context.tf:
+	curl -o context.tf -fsSL https://raw.githubusercontent.com/cloudposse/terraform-null-label/master/exports/context.tf
+	@if [[ -d examples/complete ]]; then \
+		cp -p context.tf examples/complete/context.tf ; \
+	fi
+	find . -xdev -mindepth 2 -name context.tf -exec cp -p context.tf {} \;
+
+.PHONY: $(GITHUB_TEMPLATES) $(GITHUB_TERRAFORM_TEMPLATES) github/init/context.tf github/init github/update github/update/start
+
+github/init: $(GITHUB_TEMPLATES) $(if $(wildcard *.tf),$(GITHUB_TERRAFORM_TEMPLATES) github/init/context.tf)
+
+ifeq (,$(wildcard $(GITHUB_UPDATE_DISABLE_SENTINEL)))
+
+# Unless the sentinel file is present, update all the GitHub templates.
+# Do not update context.tf via github/update. That should be updated separately and explicitly.
+github/update: github/update/start $(GITHUB_TEMPLATES) $(if $(wildcard *.tf),$(GITHUB_TERRAFORM_TEMPLATES))
+	@printf "\n** GitHub workflows updated **\n\n"
+
+else
+github/update:
+	@printf "\n** Auto-update of GitHub workflows disabled by presence of %s **\n\n"  "$(GITHUB_UPDATE_DISABLE_SENTINEL)"
+
+endif
+
+github/update/start:
+	@printf "\n** GitHub workflows update started **\n\n"
+	@[ -f "$(GITHUB_CODEOWNERS_UPDATE_DISABLE_SENTINEL)" ] && printf "** Auto-update of CODEOWNERS file disabled by presence of %s **\n\n"  "$(GITHUB_CODEOWNERS_UPDATE_DISABLE_SENTINEL)" || true

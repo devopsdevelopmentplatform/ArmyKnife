@@ -1,0 +1,153 @@
+Vagrant.require_version ">= 2.0.0"
+# Require JSON module
+require 'json'
+# Read JSON file with config details
+f = JSON.parse(File.read(File.join(File.dirname(__FILE__), 'config.json')))
+Vagrant.configure(2) do |config|
+  config.vagrant.plugins = ["vagrant-hostmanager", "vagrant-vbguest"]
+  # check for updates of the base image
+  config.vm.box_check_update = true
+  # wait a while longer
+  config.vm.boot_timeout = 1200
+  # disable update guest additions
+  if Vagrant.has_plugin?("vagrant-vbguest")
+    config.vbguest.auto_update = false
+  end
+  # enable ssh agent forwarding
+  config.ssh.forward_agent = true
+  # use the standard vagrant ssh key
+  config.ssh.insert_key = false
+  # manage /etc/hosts
+  config.hostmanager.enabled = true
+  config.hostmanager.include_offline = true
+  config.hostmanager.manage_guest = true
+  config.hostmanager.manage_host = true
+
+  # Iterate through entries in JSON file
+  f.each do |g|
+    config.vm.define g['name'] do |s|
+      s.vm.box = g['box']
+      s.vm.hostname = g['name']
+      s.vm.network 'public_network', bridge: 'en1: Wi-Fi (AirPort)', auto_config: true
+      s.vm.network :forwarded_port,
+        host: g['forwarded_port'],
+        guest: g['app_port']
+      # set no_share to false to enable file sharing
+      s.vm.synced_folder ".", "/vagrant", disabled: g['no_share']
+      s.vm.provider :virtualbox do |virtualbox|
+        virtualbox.customize ["modifyvm", :id,
+          "--audio", "none",
+          "--cpus", g['cpus'],
+          "--memory", g['memory'],
+          "--graphicscontroller", "VMSVGA",
+          "--vram", "64"
+        ]
+        virtualbox.gui = g['gui']
+        virtualbox.name = g['name']
+      end
+    end
+  end
+  config.vm.cloud_init do |cloud_init|
+    cloud_init.content_type = "text/cloud-config"
+    cloud_init.inline = <<-EOF
+    output: {all: '| tee -a /var/log/cloud-init.log'}   # store logs inside vm
+
+    timezone: "America/Chicago"
+    
+    hostname: ansible
+    
+    package_update: true
+    package_upgrade: true
+    apt_get_command: ["apt-get", "--option=Dpkg::Options::=--force-confold", "--option=Dpkg::options::=--force-unsafe-io", "--assume-yes", "--quiet", "--no-install-recommends"]
+    
+    apt:
+      sources:
+        deadsnakes.list:
+          source: deb http://ppa.launchpad.net/deadsnakes/ppa/ubuntu $RELEASE main
+          keyid: F23C5A6CF475977595C89F51BA6932366A755776
+        docker.list:
+          source: deb https://download.docker.com/linux/ubuntu $RELEASE stable
+          keyid: 9DC858229FC7DD38854AE2D88D81803C0EBFCD88
+    
+    packages:
+      - ansible
+      - ansible-lint
+      - apt-transport-https
+      - ca-certificates
+      - cloud-init
+      - containerd.io
+      - docker-compose
+      - qemu-utils
+      - cloud-guest-utils
+      - cloud-image-utils
+      - make
+      - lightdm
+      - ubuntu-gnome-desktop
+      - curl
+      - dnsutils
+      - docker-ce
+      - docker-ce-cli
+      - git
+      - gnupg-agent
+      - inxi
+      - net-tools
+      - p7zip-full
+      - python3.11
+      - python3.11-venv
+      - software-properties-common
+      - tldr
+      - tree
+      - vim
+      - wget
+    
+    groups:
+      - docker
+    
+    system_info:
+      default_user:
+        groups: [docker]
+    
+    users:
+      - name: ansible
+        shell: /bin/bash
+        groups: [admin, users, wheel, docker]
+        sudo: ALL=(ALL) NOPASSWD:ALL
+        lock_passwd: false
+        plain_text_passwd: 'ansible'
+        chpasswd: { expire: False }
+        ssh_pwauth: True
+        ssh_authorized_keys:
+          - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDnrpx0iW124V5hQwqExGWnd2dyTL2XhbLyly6vmuyUMQPyq3PByJfvyjNvhNh/TQLD1B8PlV82j9nKBLY5C4lrvKT0eGf9o3q3DYYpQr8E13WwSvf72KMYX9yer440tWD9X4G4YA8IVvAqeH/Fxd82SDOjkN4r9QBqLocom2JWwuShbgAPcyjA87ozLkL8NintWjG2X62YvVebchN4JOZRuu/6wR6QKuDDpg/llQv8S+uk1vsMHDoeuatU4qnM23dhWB84L8Fwua58gwVCnrQtxRo9Zerer/cLBNDOOBaNPy9Mfj5mZ901drePQwX+Xh/4emZPS8fhyIuF6QSC4Na5xdgoHHUXQjlOfvif3oYHudLtpl8AGT2aFKVr6u75WuvmcpjQs+vhsCdDI1Vkx+RhqcoHRVny18e58XcOr0s6HBjM9JV/XtSRKL1d4yM84ivLarHFTKWg/jUPqrVJYwTDwR97larAt5POuCKqHziwOmX6cR3iC7mkC94Hin7PzmpBDs7b1DVKtR+cCpcm+KldSZ6WjpHp3TyB9bN3JKJr44UtpxZ+ncxy1IO544u0vDVcQGdf338e5XxiqY+KKJe8vNlMMwc5PYroMXYIhqgsJEj0BUQUYfP4arha+NHV413sR5mRyS0Q8xevb4Qg26KbddpzuGg0JAR4OdW37a/9BQ== administrator@badrobot
+    runcmd:
+      - touch /var/log/ansible.log
+      - runuser -l ansible -c "sudo chown ansible:ansible /var/log/ansible.log"
+      - runuser -l ansible -c "sudo chmod 0777 /var/log/ansible.log"
+      - runuser -l ansible -c "mkdir -pv /tmp/ansible"
+      - runuser -l ansible -c "sudo chown ansible:ansible /tmp/ansible"
+      - runuser -l ansible -c "sudo chmod 0777 /tmp/ansible"
+      - runuser -l ansible -c "mkdir -pv /tmp/ansible/facts"
+      - runuser -l ansible -c "sudo chown ansible:ansible /tmp/ansible/facts"
+      - runuser -l ansible -c "sudo chmod 0777 /tmp/ansible/facts"
+      - runuser -l ansible -c "mkdir -pv /tmp/ansible/facts.d"
+      - runuser -l ansible -c "sudo chown ansible:ansible /tmp/ansible/facts.d"
+      - runuser -l ansible -c "sudo chmod 0777 /tmp/ansible/facts.d"
+      - runuser -l ansible -c "mkdir -pv /tmp/ansible/facts.d/ansible_local.facts.d"
+      - runuser -l ansible -c "sudo chown ansible:ansible /tmp/ansible/facts.d/ansible_local.facts.d"
+      - runuser -l ansible -c "export ANSIBLE_COLLECTIONS_PATHS=/etc/ansible/collections"
+      - runuser -l ansible -c "ansible-galaxy collection install devsec.hardening"
+      - runuser -l ansible -c "ansible-galaxy collection install community.general"
+      - runuser -l ansible -c "ansible-galaxy collection install linuxhq.linux"
+      - runuser -l ansible -c "git clone https://github.com/amix/vimrc.git /home/ansible/.vim_runtime"
+      - runuser -l ubuntu -c "git clone https://github.com/amix/vimrc.git /home/ubuntu/.vim_runtime"
+      - runuser -l ansible -c "sh /home/ansible/.vim_runtime/install_awesome_vimrc.sh"
+      - runuser -l ubuntu -c "sh /home/ubuntu/.vim_runtime/install_awesome_vimrc.sh"
+      - chown -R ubuntu:ubuntu /home/ubuntu/.vim_runtime
+      - chown -R ansible:ansible /home/ansible/.vim_runtime
+    EOF
+  end
+  #config.vm.cloud_init :user_data, content_type: "text/cloud-config", path: "cloud-init.yaml"
+  # Provision with cloud-init from external file
+  #config.vm.provision "file", source: "cloud-init.yaml", destination: "/tmp/cloud-init.yaml"
+  #config.vm.provision "shell", inline: "cloud-init init --local && cloud-init init && cloud-init modules --mode=config && cloud-init modules --mode=final"
+end
+

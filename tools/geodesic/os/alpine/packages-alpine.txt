@@ -1,0 +1,14 @@
+# Essential alpine-only packages
+busybox-extras
+diffutils
+drill
+# fzf-bash-completion # not available in Alpine 3.16
+iputils
+keybase-client@testing
+libc6-compat
+libltdl
+make
+musl-dev
+mysql-client
+ncurses
+oath-toolkit-oathtool@community

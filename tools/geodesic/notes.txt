@@ -1,0 +1,26 @@
+   36  make all -f Makefile.custom
+   37  touch /usr/local/bin/frisbee
+   38  make all -f Makefile.custom
+   39  chmod 777 /usr/local/bin/frisbee
+   40  make all -f Makefile.custom
+   41  cat /usr/local/bin/frisbee
+   42  frisbee
+   43  docker run --rm cloudposs/geodesic:latest init | bash
+   44  docker pull cloudposse/geodesic:dev-debian
+   45  make all
+   46  docker run --rm cloudposs/geodesic:latest init | bash
+   47  frisbee
+   48  git config --global --add safe.directory /home/user/localprojects/frisbee_development/frisbee
+   49  frisbee
+   50  docker run --rm cloudposs/geodesic:latest init | bash
+   51  frisbee
+   52  make all
+   53  frisbee
+   54  docker run --rm cloudposs/geodesic:latest init | bash
+   55  docker login
+   56  docker push cloudposs/geodesic:latest
+   57  docker run --rm cloudposs/geodesic:latest init | bash
+   58  frisbee
+   59  make all -f Makefile.custom
+   60  frisbee
+   61  docker run -it --rm --volume $HOME:/localhost cloudposs/geodesic:latest --login opens a bash login shell 

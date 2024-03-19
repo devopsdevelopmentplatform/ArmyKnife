@@ -1,0 +1,82 @@
+# Essential packages
+# no arm64 awless@cloudposse
+aws-iam-authenticator@cloudposse
+bash
+bash-completion
+bats@community
+# no arm64 cfssl@cloudposse
+coreutils
+chamber@cloudposse
+curl
+direnv@community
+dumb-init
+emacs-nox
+fetch@cloudposse
+# no arm64 emailcli@cloudposse
+figlet
+figurine@cloudposse
+file
+fuse3
+fzf@cloudposse
+gettext
+git
+github-commenter@cloudposse
+gomplate@cloudposse
+#no arm64 support goofys@cloudposse
+gosu@cloudposse
+groff
+helm@cloudposse
+helm3@cloudposse
+helmfile@cloudposse
+jq
+# The latest version of kubectl is wrong for most of our customers, but the
+# version-specific packages are organized to automatically configure the latest
+# installed version as the default, meaning if we install a version and a user
+# installs an earlier version, the earlier version will not be the default version
+# even though the user explicitly installed it, which is very confusing.
+# Also, we do not have a good mechanism for keeping the installed kubectl version
+# up-to-date other than referencing the latest package. So we install the latest
+# version and hope it throws appropriate errors and/or warnings when working
+# with an older version, which is a better bet than hoping an old version gives
+# appropriate error messages about working with a newer version.
+kubectl@cloudposse
+kubectx@cloudposse
+kubens@cloudposse
+less
+make
+man-db
+musl-dev
+openssh-client
+openssl
+pandoc@cloudposse
+postgresql-client
+pwgen
+python3
+# no arm64 rakkess@cloudposse
+rbac-lookup@cloudposse
+retry@cloudposse
+# abandoned 2021-03-08 scenery@cloudposse
+shellcheck@cloudposse
+shfmt@cloudposse
+sops@cloudposse
+sshpass
+stern@cloudposse
+sudo
+syslog-ng
+tar
+terraform@cloudposse
+# Do not install terraform-* or terraform_* by default
+# because they are incompatible with each other and
+# will cause problems for people who install one or the other
+terragrunt@cloudposse
+terrahelp@cloudposse
+# no arm64 tfenv@cloudposse
+# no arm64 tfmask@cloudposse
+unzip
+util-linux
+variant@cloudposse
+variant2@cloudposse
+vert@cloudposse
+vim
+yq@cloudposse
+zip

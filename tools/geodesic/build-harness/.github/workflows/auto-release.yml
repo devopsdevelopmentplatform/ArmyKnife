@@ -1,0 +1,16 @@
+name: auto-release
+
+on:
+  push:
+    branches:
+    - master
+
+jobs:
+  semver:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: cloudposse/github-action-auto-release@v1
+        with:
+          prerelease: false
+          publish: true
+          config-name: auto-release.yml

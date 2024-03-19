@@ -1,0 +1,22 @@
+# Essential debian-only packages
+bindfs
+default-mysql-client
+dnsutils
+inetutils-ftp
+inetutils-ping
+inetutils-telnet
+inetutils-tools
+inetutils-traceroute
+iproute2
+ldnsutils
+# locales end up causing trouble because they change sort order, so best to avoid them
+# locales
+net-tools
+netcat
+oathtool
+procps
+wget
+
+# Not installing keybase
+# curl --remote-name https://prerelease.keybase.io/keybase_amd64.deb
+# sudo apt install ./keybase_amd64.deb

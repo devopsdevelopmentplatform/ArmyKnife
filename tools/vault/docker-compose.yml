@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  vault:
+    image: hashicorp/vault:latest
+    container_name: devopsvault
+    environment:
+      VAULT_ADDR: http://0.0.0.0:8200
+    ports:
+      - "8200:8200"
+    volumes:
+      - private-volume:/vault/file:rw
+      - ./vault:/vault/config:rw
+    cap_add:
+      - IPC_LOCK
+    entrypoint: vault server -config=/vault/config/vault-config.hcl
+    networks:
+      - bridge
+volumes:
+  private-volume:
+networks:
+  bridge:
+    driver: bridge
+

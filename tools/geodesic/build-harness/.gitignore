@@ -1,0 +1,6 @@
+./terraform
+.idea
+.project
+build-harness.iml
+build-harness
+templates/README.md.gotmpl

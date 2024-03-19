@@ -1,0 +1,20 @@
+# <type>(<scope>): <subject>
+# Type can be feat, fix, docs, style, refactor, test, chore, etc.
+# Scope is optional and could be file, module, package name, etc.
+# Subject is a brief description of the changes.
+#
+# Body is a more detailed description of the change.
+# - Use the imperative, present tense: "change" not "changed" nor "changes".
+# - Include motivation for the change and contrasts with previous behavior.
+#
+# If this commit closes issues, add lines of the form:
+# Closes #<issue number>
+# Fixes #<issue number>
+#
+# If this commit introduces breaking changes, describe them in the body section.
+# BREAKING CHANGE: <breaking change description>
+#
+# The footer can also include a list of co-authors:
+# Co-authored-by: name <name@example.com>
+#
+# Remember to keep each line under 72 characters.
