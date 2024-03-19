@@ -12,6 +12,7 @@
 # - ELK Stack
 
 # Include external Makefiles for Tier 1 targets
+# These are called Child or Sub Makefiles
 include Makefile.Libs.mk # Not tested on MacOS
 include Makefile.Vault.mk # Done
 include Makefile.Git.mk # Done
@@ -23,28 +24,43 @@ include Makefile.Geodesic.mk # Done
 
 
 # Define the default target when you run `make` without arguments
+# Make sure that you don't overlapping targets with the same name in the child makefiles.
 .DEFAULT_GOAL := help
 
 # Phony targets
+# These targets are not files, but they are commands that you want to run
+# Using the .PHONY special target, it tells make that these targets are not real files.
 .PHONY: help notify-user-add-secrets setup-workstation setup-vault vagrant-up connect-to-vault vagrant-destroy-all setup-git build-geodesic connect-to-geodesic ssh-vagrant download-minikube install-kubespray create-vbox-vm ova-import
 
 # Variables
+# These are the variables that are used in the Makefile
+# Makefiles have 5 types of variables. Here is an example of each. Each type has a unique assignment operator.
+# 1. Simple assignment operator (=)
+# 2. Recursively expanded variables (:=). This is the most common type of assignment.
+# 3. Simply expanded variables (=)
+# 4. Append operator (+=). Here is an example of the append operator COUNT += 1. This means COUNT = COUNT + 1.
+# 5. Conditional assignment operator (?=). Here is an example of the conditional assignment operator COUNT ?= 1. This means if COUNT is not already set, then set it to 1.
+
 ENV_FILE := .env
 EXAMPLE_ENV_FILE := env_sample.txt
 MESSAGE := "Please test a few of the commands before moving forward."
 
-# Heler Targets
+# Helper Targets
+# These are helper targets that are used to notify the user of important information.
+# You can redefine MESSAGE to be whatever you want to notify the user about.
 notify-user-add-secrets:
 	@echo "\033[1;33mIMPORTANT: $(MESSAGE) \033[0m"
 
 
-
+################################################################################################################
+# Setup Workstation MacOS and Ubuntu
+################################################################################################################
 # Main target for setting up the development workstation on both MacOS and Ubuntu checks to see what OS is running and runs the appropriate target
-# Testing the setup-workstation target
-# Everything tested and working but I'm thinking about changing it back to zsh.
-
+# This is just a starting point for the setup-workstation target. Later we will use a more advanced tool to install MacOS applications with Makefiles.
+# This is a conditional statement that checks the OS by comparing the output of the shell command uname to the string "Darwin". 
+# It translates to if Darwin = Darwin then run the following commands. The comma is used to separate the condition much like a == operator in a programming language.
 setup-workstation:
-ifeq ($(shell uname),Darwin)
+ifeq ($(shell uname),Darwin) 
 	@echo "Running MacOS setup"
 	@$(MAKE) -d -f Makefile.Workstation.mk setup-macos
 else
@@ -52,14 +68,21 @@ else
 	@$(MAKE) -d -f Makefile.Workstation.mk setup-ubuntu
 endif
 
+################################################################################################################
+# Vault Setup
+################################################################################################################
 # Creates Vault environment variables and connects to Vault
 # Testing the setup-vault target
+# The @$(MAKE) -d -f means run the make command with the -d flag and the -f flag to specify the Makefile to use.
 setup-vault:
 	@echo "Setting up Vault"
 	./vault.bash
 	@$(MAKE) -d -f Makefile.Vault.mk connect-to-vault
 	@echo "Vault setup completed."
 
+################################################################################################################
+# Setup Vagrant Boxes
+################################################################################################################
 # Vagrant Commands Need to add the rest of the vagrant commands.
 vagrant-up:
 	@echo "Launching Vagrant boxes"
@@ -78,12 +101,24 @@ ova-import:
 	@echo "Importing OVA files"
 	@$(MAKE) -d -f Makefile.VBox.mk import-ovas
 
+
+
+################################################################################################################
 # Configure Git with personal and global settings
+################################################################################################################
+
 setup-git:
 	@echo "Setting up Git"
 	@$(MAKE) -d -f Makefile.Git.mk setup-git-config
 	@echo "Git setup completed."
 
+
+
+
+################################################################################################################
+# Geodesic is a toolbox for cloud automation and devops. It's a cloud shell with Terraform, Packer, Docker, kubectl and other tools installed.
+################################################################################################################
+# Yes we have some duplication here. We will fix this later. LOL
 
 # Main target for building Geodesic
 build-geodesic:
@@ -92,7 +127,6 @@ build-geodesic:
 	@echo "Geodesic build completed."
 
 
-# Connect to Geodesic
 connect-to-geodesic:
 ifeq ($(shell uname), Darwin)
 	@echo "Connecting to Geodesic"
@@ -113,12 +147,17 @@ download-minikube:
 	@$(MAKE) -d -f Makefile.K8s.mk configure-minikube
 	@echo "Minikube download completed."
 
-
+################################################################################################################
+# Download and install Kubespray
+################################################################################################################
 install-kubespray:
 	@echo "Downloading and starting Kubespray"
 	@$(MAKE) -d -f Makefile.K8s.mk kubespray-install
 	@echo "Kubespray install completed."
 
+################################################################################################################
+# Create a Virtualbox from scratch
+################################################################################################################
 # Create Virtualbox VM and connect to it. Only works on Linux right now.
 
 ifeq ($(shell uname), Linux)
@@ -132,7 +171,9 @@ endif
 
 
 
-
+################################################################################################################
+# Show the user a menu of options to run make commands
+################################################################################################################
 
 # Help target needs updated last when finsihed with project development
 help:
