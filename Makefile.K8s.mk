@@ -6,6 +6,8 @@ define download_file
 	rm -f $(1)
 endef
 
+.PHONY: check-tools-now configure-minikube kubespray-install
+
 # Check for required tools and download if not present
 
 check-tools-now:
@@ -46,3 +48,8 @@ configure-minikube: check-tools-now
 	echo "Minikube is ready."
 
 
+# Setup KubeSpray
+kubespray-install:
+	@echo "Installing KubeSpray..."
+	cd tools/kubespray && python3 -m venv .venv && source .venv/bin/activate && pip3 install -r requirements.txt
+	cd tools/kubespray && vagrant up --provider=virtualbox

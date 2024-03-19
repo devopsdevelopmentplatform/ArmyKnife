@@ -26,7 +26,7 @@ include Makefile.Geodesic.mk # Done
 .DEFAULT_GOAL := help
 
 # Phony targets
-.PHONY: help notify-user-add-secrets setup-workstation setup-vault vagrant-up connect-to-vault vagrant-destroy-all setup-git build-geodesic connect-to-geodesic ssh-vagrant download-minikube
+.PHONY: help notify-user-add-secrets setup-workstation setup-vault vagrant-up connect-to-vault vagrant-destroy-all setup-git build-geodesic connect-to-geodesic ssh-vagrant download-minikube install-kubespray create-vbox-vm ova-import
 
 # Variables
 ENV_FILE := .env
@@ -74,7 +74,9 @@ vagrant-destroy-all:
 	@echo "Destroying Vagrant boxes"
 	@$(MAKE) -d -f Makefile.Vagrant.mk destroy-vagrant
 
-
+ova-import:
+	@echo "Importing OVA files"
+	@$(MAKE) -d -f Makefile.VBox.mk import-ovas
 
 # Configure Git with personal and global settings
 setup-git:
@@ -112,7 +114,10 @@ download-minikube:
 	@echo "Minikube download completed."
 
 
-
+install-kubespray:
+	@echo "Downloading and starting Kubespray"
+	@$(MAKE) -d -f Makefile.K8s.mk kubespray-install
+	@echo "Kubespray install completed."
 
 # Create Virtualbox VM and connect to it. Only works on Linux right now.
 

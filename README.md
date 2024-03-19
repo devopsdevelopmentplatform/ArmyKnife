@@ -1,89 +1,49 @@
 # ArmyKnife DevOps CI/CD Framework Development Environment Tier1
+![ArmyKnife Logo](ArmyKnife.png)
 ## Project for "Makefiles for Cloud/DevOps Engineers"
 
-## Overview
-ArmyKnife is an open-source project aimed at providing DevOps engineers with a robust, self-contained development environment. This tool allows for the development and testing of tools and scripts without the need for cloud or production resources. It is divied into three tiers for easy managmenant and support.
+## Exciting Overview
+Dive into the cutting-edge world of DevOps with ArmyKnife, an innovative, open-source project meticulously designed to empower DevOps engineers. ArmyKnife offers a robust, self-contained development environment that revolutionizes the way tools and scripts are developed and tested. Say goodbye to the dependency on cloud or production resources! Crafted with precision, ArmyKnife unfolds in three distinct tiers, each tier specifically architected to streamline management and support, ushering in a new era of efficient and optimized DevOps practice.
 
-### Key Features
-- **Tiered Architecture**: The project is structured into three distinct tiers, catering to various aspects of DevOps needs.
-    - **Tier-1 (DevOps)** Is the most important part of the stack where it builds the base for the entire project with Hashicorp Vault, Ansible, Geodesic, and ELK Stack. The entire process is automated with Makefiles and various shell/python scripts. After your done setting up Tier-1 your ready to begin your DevOps Development.
-    - **Tier-2 (DevSecOps)** This stack is where you setup your CICD Platforms. Gitlab, Gitea(Github Actions Clone), and Jenkins. Minikube is running for local development but you can easily connect your local CICD Platform to the Cloud.
-    - **Tier-3 (CyberSecurity)** This is where you take your DevOps Knowledge and apply it to CyberSecurity to automate and remediate pentesting and vulnerability remediation.
+## Transformative Features
 
-- **Scalability**: Designed to handle small to large scale projects with ease.
-    - The initial project uses Virtualbox and Vagrant but also uses ProxMox with unlimited Scalability.
-- **Isolation**: Develop and test in an environment separate from your production systems.
-    - You can connect your local development network to the cloud or anywhere else you like using a simple VPN.
+### Tiered Mastery
+- **Tier-1 (DevOps Nirvana)**: Embark on your DevOps journey with Tier-1, the cornerstone of ArmyKnife. It lays the foundation with a suite of powerhouse tools including Hashicorp Vault, Ansible, Geodesic, and the ELK Stack. Automated with Makefiles alongside versatile shell and Python scripts, setting up Tier-1 paves the path to an exhilarating DevOps development adventure.
+- **Tier-2 (DevSecOps Evolution)**: Elevate your setup with Tier-2, the realm where CI/CD platforms come alive. Discover the seamless integration of Gitlab, Gitea (a GitHub Actions Clone), and Jenkins, complemented by Minikube for local development. Connect your CI/CD platform to the cloud with ease, and watch your DevSecOps capabilities soar.
+- **Tier-3 (CyberSecurity Frontier)**: Apply your DevOps prowess to the cybersecurity domain in Tier-3. This tier empowers you to automate and remediate pentesting and vulnerability challenges, transforming your cybersecurity efforts with DevOps agility.
 
-## Getting Started
+### Scalability and Isolation
+- ArmyKnife is engineered for versatility, scaling effortlessly from small projects to large enterprises. With initial setups leveraging Virtualbox and Vagrant and the potential to scale up with ProxMox, the sky's the limit.
+- Enjoy the freedom of developing and testing in a dedicated environment, ensuring your production systems remain untouched and secure.
 
-### Notes
-- This only works with MacOS and Linux (Ubuntu) at this time but nothing stopping you from running virtualbox inside a Windows environment or WSL.
-- Use Ubuntu for the full experience.
-- 90% of the project works on MacOS. Custom Virtualbox Development does not work on MacOS so I added Vagrant development and that works fine.
+## Getting Started Made Simple
 
 ### Prerequisites
-- VSCode, Docker Desktop (Homebrew has a cask for VSCode so you could automate the install if you want to)
-- Intel Based Mac or Ubuntu (Arm Based Mac will work for most things but not Virtualbox. I will test vagrant)
+- Embrace the full ArmyKnife experience on Intel-based Mac or Ubuntu systems. While Arm-based Macs are compatible with most features, Virtualbox exclusions apply. Vagrant offers a seamless alternative for these cases.
 
-- 
-### Installation
-1. Clone the repo.
-2. Inside the repo take the env_sample.txt and rename it to .env
-3. Fill out your Github user information inside the .env and update as you go along.
-4. You will want to capture the root token for vault and the unseal token. It is kept inside a file on the root of the docker container if you lose it.
-5. Create a PAT for Github so you can clone things and update your development environment later.
-6. This is mean to be forked. A folder structure is in place for your own scripts and community scripts. but its best to keep pushing to your own repo after you fork it.
-7. You can set the upstream to this repo if you want to keep up to date on the changes.
-8. Since this is in Beta a lot can go wrong with a project this size and its complexity.
-9. The first thing you will want to do is run make import_ova. This will download the Bitnami VirtualBoxes we will be working with so you can Import them. This is automated.
-10. The first thing you want to do is stand up your ELK server. Why? Because this captures all the logs from all the servers and its easier to find out what is going wrong by looking through elasticsearch.
+### Quick Installation Guide
+1. Kickstart your journey by forking the repository.
+2. Transition `env_sample.txt` to `.env` and infuse it with your GitHub essence.
+3. Secure your vault's root and unseal tokens, crucial keys to your ArmyKnife kingdom.
+4. Forge a GitHub Personal Access Token (PAT) to unlock the full potential of your development environment.
+5. Embrace the ethos of ArmyKnife by forking the repository, crafting a domain for your scripts within the communal and personal script sanctuaries.
+6. Stay connected with the source of ArmyKnife's evolution by setting an upstream to the original repository.
+7. Navigate the beta waters of ArmyKnife, where complexity and size birth groundbreaking opportunities and challenges alike.
+8. Initiate your conquest with `make import_ova`, summoning the Bitnami VirtualBoxes to your realm.
+9. Prioritize the ELK server's ascent, a beacon that illuminates the path by capturing logs across servers, simplifying the troubleshooting odyssey.
 
+## Usage Unleashed
+ArmyKnife is not just a tool; it's your DevOps ally. With comprehensive guides on harnessing its power for everyday tasks, your journey from novice to guru is just beginning.
 
-## Usage
-- How to use ArmyKnife
-- Examples of common tasks
+## Contribute to the Evolution
+Join the vibrant ArmyKnife community in its continuous quest for improvement. Your contributions, whether code, documentation, or ideas, fuel the project's relentless innovation.
 
-## Contributing
-We welcome contributions to the ArmyKnife project. Please read our [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on how to contribute.
+## Unrivaled Support and Enlightenment
+- Encounter a challenge? The ArmyKnife community is here to help. Reach out through our GitHub issue tracker.
+- Seek wisdom? Our documentation is a treasure trove of knowledge, waiting to be explored.
 
-## Support and Documentation
-- For support, please open an issue in the GitHub issue tracker.
-- For documentation, please refer to [docs](link to documentation).
+## License to Innovate
+ArmyKnife is your canvas, offered under a license that encourages innovation. Dive into the details in our [LICENSE](LICENSE) document.
 
-## License
-This project is licensed under the [LICENSE](LICENSE) - see the file for details.
-
-## Acknowledgments
-- List any contributors, third-party libraries, etc.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+## A Tribute to Pioneers
+In our journey, we stand on the shoulders of giants. ArmyKnife is a testament to the spirit of collaboration and innovation, acknowledging every contributor and third-party library that has illuminated our path.
