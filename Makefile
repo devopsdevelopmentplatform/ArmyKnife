@@ -30,7 +30,7 @@ include Makefile.Geodesic.mk # Done
 # Phony targets
 # These targets are not files, but they are commands that you want to run
 # Using the .PHONY special target, it tells make that these targets are not real files.
-.PHONY: help notify-user-add-secrets setup-workstation setup-vault vagrant-up connect-to-vault vagrant-destroy-all setup-git build-geodesic connect-to-geodesic ssh-vagrant download-minikube install-kubespray create-vbox-vm ova-import
+.PHONY: help notify-user-add-secrets setup-workstation setup-vault vagrant-up connect-to-vault vagrant-destroy-all setup-git build-custom-geodesic connect-to-my-geodesic ssh-vagrant install-minikube install-kubespray create-vbox-vm ova-import
 
 # Variables
 # These are the variables that are used in the Makefile
@@ -121,13 +121,13 @@ setup-git:
 # Yes we have some duplication here. We will fix this later. LOL
 
 # Main target for building Geodesic
-build-geodesic:
+build-custom-geodesic:
 	@echo "Building Geodesic"
 	@$(MAKE) -d -f Makefile.Geodesic.mk build-geodesic
 	@echo "Geodesic build completed."
 
 
-connect-to-geodesic:
+connect-to-my-geodesic:
 ifeq ($(shell uname), Darwin)
 	@echo "Connecting to Geodesic"
 	@$(MAKE) -d -f Makefile.Geodesic.mk connect-to-geodesic
@@ -142,7 +142,7 @@ endif
 ################################################################################################################
 
 
-download-minikube:
+install-minikube:
 	@echo "Downloading and starting Minikube"
 	@$(MAKE) -d -f Makefile.K8s.mk configure-minikube
 	@echo "Minikube download completed."
@@ -150,6 +150,7 @@ download-minikube:
 ################################################################################################################
 # Download and install Kubespray
 ################################################################################################################
+
 install-kubespray:
 	@echo "Downloading and starting Kubespray"
 	@$(MAKE) -d -f Makefile.K8s.mk kubespray-install
@@ -187,15 +188,15 @@ help:
 	@echo "..:::::..::..:::::..::..:::::..:::::..:::::..::::..::..::::..::....::..::::::::........::"
 	@echo "                  Armyknife Help Menu                  "
 	@echo "--------------------------------------------------------"
-	@echo "setup           - Set up the environment (libraries and vault)"
-	@echo "build           - Build the project"
-	@echo "test            - Run tests"
-	@echo "clean           - Clean up the environment"
-	@echo "help            - Display this help"
-	@echo "libraries       - Set up libraries"
-	@echo "vault           - Set up and initialize vault"
-	@echo "github-install-gh-cli - Install GitHub CLI"
-	@echo "documentation   - Generate project documentation"
+	@echo "create-vbox-vm          - Create a custom virtualbox VM (Linux Only)"
+	@echo "install-kubespray       - Install Kubernetes Cluster complete with Masters/Etcd and Workers"
+	@echo "install-minikube        - Setup Kubernetes Test Environment"
+	@echo "connect-to-my-geodesic  - Connect to Geodesic ToolBox Shell"
+	@echo "build-custom-geodesic   - Build Geodesic Docker Image with Kali plugin"
+	@echo "setup-git               - Setup Git Configuration"
+	@echo "vagrant-up              - Launch Vagrant Box Jammy (Ansible)"
+	@echo "setup-workstation       - Install OS Packages and Tools"
+	@echo "setup-vault             - Create Vault Server for Development"
 	@echo "--------------------------------------------------------"
 	@echo "Use \"make <target>\" to run a specific command."
 
