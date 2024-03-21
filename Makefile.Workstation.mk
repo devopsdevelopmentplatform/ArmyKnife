@@ -2,7 +2,9 @@
 .DEFAULT_GOAL := help
 
 # Define the packages to be installed via Homebrew (common packages for both)
-COMMON_PACKAGES := wget curl jq vault virtualbox vagrant git
+
+COMMON_PACKAGES := wget curl jq vault
+
 # Define Python development tools
 PYTHON_DEV_TOOLS := pipenv pytest flake8 isort sphinx tox twine pylint autopep8 black mypy bandit poetry
 
@@ -18,7 +20,7 @@ VSCODE := visual-studio-code
 # Define the dotfile manager
 DOTFILE_MANAGER := stow
 
-.PHONY: macos-setup-homebrew install-common-packages install-python-tools install-kubernetes-tools install-jenkins-tools install-github-cli install-vscode setup-dotfile-manager generate-ssh-keys install-essential-dev-tools update-shell-config setup-macos setup-ubuntu setup ubuntu-setup-packages install-amix-vimrc install-full-vim-ubuntu install-oh-my-zsh install-go-support-tools install-rust-support-tools setup-linux	
+.PHONY: macos-setup-homebrew install-common-packages install-python-tools install-kubernetes-tools install-jenkins-tools install-github-cli install-vscode setup-dotfile-manager generate-ssh-keys install-essential-dev-tools update-shell-config setup-macos setup-ubuntu setup ubuntu-setup-packages install-amix-vimrc install-full-vim-ubuntu install-oh-my-zsh install-oh-my-bash install-go-support-tools install-rust-support-tools setup-linux	
 
 # Check if homebrew is already installed by checking if the homebrew folder exists /home/linuxbrew
 # Tested and working properly
@@ -62,7 +64,7 @@ setup-dotfile-manager:
 # Tested and working properly
 ubuntu-setup-packages:
 	sudo apt update
-	sudo apt install -y qemu-utils cloud-guest-utils cloud-init cloud-utils build-essential vim virtualbox vagrant libvirt-daemon-system libvirt-clients qemu-kvm libvirt-daemon bridge-utils virt-manager libguestfs-tools libosinfo-bin libguestfs-tools virt-top virtinst libvirt-doc wget curl jq make zsh git libz-dev vim vim-gtk3
+	sudo apt install -y qemu-utils cloud-guest-utils cloud-init virtualbox vagrant cloud-utils build-essential vim virtualbox vagrant libvirt-daemon-system libvirt-clients qemu-kvm libvirt-daemon bridge-utils virt-manager libguestfs-tools libosinfo-bin libguestfs-tools virt-top virtinst libvirt-doc wget curl jq make zsh git libz-dev vim vim-gtk3
 
 # Define the target to generate SSH keys
 create-ssh-keys:
@@ -123,9 +125,9 @@ install-full-vim-ubuntu:
 
 # Define the target to install Oh My Zsh
 install-oh-my-bash:
-    if [ "`uname`" = "Darwin" ]; then \
-        if [ ! -d "/Users/$(USER)/.oh-my-bash" ]; then \
-            bash -c "$$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)"; \
+	if [ "`uname`" = "Darwin" ]; then \
+        if [ ! -d "/Users/$(USER)/.oh-my-zsh" ]; then \
+            sh -c "$$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"; \
         fi \
     else \
         if [ ! -d "/home/$(USER)/.oh-my-bash" ]; then \
@@ -184,7 +186,7 @@ setup-linux:
 	@echo "--------------------------------------------------------------------------------"
 	@echo "Installing OS packages and Oh My Zsh..."
 	@$(MAKE) -f Makefile.Workstation.mk ubuntu-setup-packages
-	@$(MAKE) -f Makefile.Workstation.mk install-oh-my-zsh
+	@$(MAKE) -f Makefile.Workstation.mk install-oh-my-bash
 	@$(MAKE) -f Makefile.Workstation.mk setup-homebrew
 	@echo "--------------------------------------------------------------------------------"
 	@echo "Installing essential development tools..."
