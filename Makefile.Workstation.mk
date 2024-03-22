@@ -74,6 +74,7 @@ ubuntu-setup-packages:
 	sudo apt install -y qemu-utils cloud-guest-utils cloud-init virtualbox vagrant cloud-utils build-essential vim virtualbox vagrant libvirt-daemon-system libvirt-clients qemu-kvm libvirt-daemon bridge-utils virt-manager libguestfs-tools libosinfo-bin libguestfs-tools virt-top virtinst libvirt-doc wget curl jq make zsh git libz-dev vim vim-gtk3
 
 # Define the target to generate SSH keys
+# Make sure you update the keys in vagrant and virtualbox cloud-init files
 create-ssh-keys:
 	mkdir -p keys
 	ssh-keygen -t rsa -b 4096 -f keys/armyknife -C "YourEmail@example.com"
