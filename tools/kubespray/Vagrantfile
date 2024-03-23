@@ -50,9 +50,9 @@ $vm_memory ||= 2048
 $vm_cpus ||= 2
 $shared_folders ||= {}
 $forwarded_ports ||= {}
-$subnet ||= "172.18.8"
+$subnet ||= "192.168.1"
 $subnet_ipv6 ||= "fd3c:b398:0698:0756"
-$os ||= "ubuntu2004"
+$os ||= "ubuntu2204"
 $network_plugin ||= "flannel"
 # Setting multi_networking to true will install Multus: https://github.com/k8snetworkplumbingwg/multus-cni
 $multi_networking ||= "False"
@@ -220,7 +220,10 @@ Vagrant.configure("2") do |config|
 
       # Disable swap for each vm
       node.vm.provision "shell", inline: "swapoff -a"
-
+      node.vm.provision "shell", inline: <<-SHELL
+       sysctl -w net.ipv6.conf.all.disable_ipv6=1
+       sysctl -w net.ipv6.conf.default.disable_ipv6=1
+      SHELL
       # ubuntu2004 and ubuntu2204 have IPv6 explicitly disabled. This undoes that.
       if ["ubuntu2004", "ubuntu2204"].include? $os
         node.vm.provision "shell", inline: "rm -f /etc/modprobe.d/local.conf"
