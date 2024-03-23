@@ -10,7 +10,7 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 - Changed KubeSpray from host-only network to bridged. 
-- Updated subnet to mine 192.168.1 yours might be different
+- Updated subnet to mine 192.168.1 yours might be different Line 53 in Vagrantfile
 - Changed from ubuntu 20.04 to 22.04
 - Disabled IPV6 in the Vagrantfile
 
