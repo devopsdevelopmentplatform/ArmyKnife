@@ -21,6 +21,11 @@ Dive into the cutting-edge world of DevOps with ArmyKnife, an innovative, open-s
 ### Prerequisites
 - Embrace the full ArmyKnife experience on Intel-based Mac or Ubuntu systems. While Arm-based Macs are compatible with most features, Virtualbox exclusions apply. Vagrant offers a seamless alternative for these cases.
 
+1. Login to your Docker Hub account so you can push images.
+2. Copy env_sample.txt to .env and fill out settings so you can run the setup-git make target.
+3. After setup-workstation is completed install ansible with brew.
+4. Before running kubespray update the subnet in the Vagrantfile to match yours. Line 53
+
 ### Quick Installation Guide
 1. Kickstart your journey by forking the repository.
 2. Transition `env_sample.txt` to `.env` and infuse it with your GitHub essence.
