@@ -51,6 +51,9 @@ MESSAGE := "Please test a few of the commands before moving forward."
 notify-user-add-secrets:
 	@echo "\033[1;33mIMPORTANT: $(MESSAGE) \033[0m"
 
+# Target to do it all
+# This target is the main target that runs all the other targets.
+all: setup-workstation setup-vault setup-git build-custom-geodesic connect-to-my-geodesic vagrant-up install-minikube install-kubespray create-vbox-vm ova-import
 
 ################################################################################################################
 # Setup Workstation MacOS and Ubuntu

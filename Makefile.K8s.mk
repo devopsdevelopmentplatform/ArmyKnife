@@ -51,5 +51,5 @@ configure-minikube: check-tools-now
 # Setup KubeSpray
 kubespray-install:
 	@echo "Installing KubeSpray..."
-	cd tools/kubespray && python3 -m venv .venv && source .venv/bin/activate && pip3 install -r requirements.txt
+	cd tools/kubespray && python3 -m venv .venv && . .venv/bin/activate && pip3 install -r requirements.txt
 	cd tools/kubespray && vagrant up --provider=virtualbox
