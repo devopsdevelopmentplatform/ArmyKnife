@@ -4,10 +4,11 @@
 # Define the path to the local projects directory
 LOCALPROJECT := ~/localprojects/python_test_project
 
+ARMYKNIFE := ~/localprojects/ArmyKnife
 
 # Define the packages to be installed via Homebrew (common packages for both)
 
-COMMON_PACKAGES := wget curl jq vault
+COMMON_PACKAGES := wget curl jq vault vagrant
 
 # Define Python development tools
 PYTHON_DEV_TOOLS := pipenv pytest flake8 isort sphinx tox twine pylint autopep8 black mypy bandit poetry
@@ -43,7 +44,7 @@ install-python-tools:
 	@echo "Installing Python development tools..."
 	mkdir -p $(LOCALPROJECT); \
 	cp requirements.txt $(LOCALPROJECT); \
-	cd ~/localprojects/python_test_project && $(MAKE) -d -f ~/localprojects/ArmyKnife/Makefile.Python.mk setup; \
+	cd ~/localprojects/python_test_project && $(MAKE) -d -f $(ARMYKNIFE)/Makefile.Python.mk setup; \
 	brew install pyinstaller pyenv virtualenv
 
 # Install Conda for Python but does not support cask
@@ -201,7 +202,7 @@ install-docker-ubuntu:
 #setup-macos: setup-homebrew install-common-packages setup-dotfile-manager install-python-tools install-kubernetes-tools install-github-cli install-vscode install-essential-dev-tools update-shell-config install-amix-vimrc install-oh-my-zsh install-go-support-tools install-rust-support-tools	
 setup-macos: setup-homebrew update-shell-config install-common-packages install-kubernetes-tools install-github-cli setup-dotfile-manager install-essential-dev-tools install-amix-vimrc install-go-support-tools install-rust-support-tools install-oh-my-bash 
 # Main target for setting up the development workstation on Ubuntu
-setup-ubuntu: ubuntu-setup-packages setup-homebrew update-shell-config install-common-packages setup-dotfile-manager install-kubernetes-tools install-github-cli ubuntu-setup-packages install-essential-dev-tools update-shell-config install-full-vim-ubuntu install-oh-my-bash install-go-support-tools install-rust-support-tools install-docker-ubuntu
+setup-ubuntu: ubuntu-setup-packages setup-homebrew update-shell-config install-common-packages setup-dotfile-manager install-kubernetes-tools install-github-cli install-essential-dev-tools install-full-vim-ubuntu install-oh-my-bash install-go-support-tools install-rust-support-tools install-docker-ubuntu
 
 setup-linux:
 	@echo "Setting up Linux Workstation..."
