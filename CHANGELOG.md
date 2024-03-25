@@ -10,6 +10,8 @@ All notable changes to this project will be documented in this file.
 - Added credential helper settings for git in Makefile.Git.mk.
 - Created make target ingest secrets to ingest .env into vault.
 - Created Makefile to build docker images with docker buildx bake to build multiple architectures.
+- Added Multi-Stage Docker Build demo app called mygoapp.
+- Added a few security scans to test image.
 
 ### Changed
 - Changed KubeSpray from host-only network to bridged. 

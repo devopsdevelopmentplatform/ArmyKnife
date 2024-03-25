@@ -30,7 +30,7 @@ include Makefile.Geodesic.mk # Done
 # Phony targets
 # These targets are not files, but they are commands that you want to run
 # Using the .PHONY special target, it tells make that these targets are not real files.
-.PHONY: help notify-user-add-secrets setup-workstation setup-vault vagrant-up connect-to-vault vagrant-destroy-all setup-git build-custom-geodesic connect-to-my-geodesic ssh-vagrant install-minikube install-kubespray create-vbox-vm ova-import build-docker-images ingest-secrets ingest-secrets-into-vault	
+.PHONY: help notify-user-add-secrets setup-workstation setup-vault vagrant-up connect-to-vault vagrant-destroy-all setup-git build-custom-geodesic connect-to-my-geodesic ssh-vagrant install-minikube install-kubespray create-vbox-vm ova-import build-docker-images ingest-secrets ingest-secrets-into-vault build-go-demo-app security-test-mygoapp	
 
 # Variables
 # These are the variables that are used in the Makefile
@@ -195,6 +195,15 @@ build-docker-images:
 	@$(MAKE) -d -f Makefile.Docker.mk docker-build
 	@echo "Docker Images built."
 
+build-go-demo-app:
+	@echo "Building Go Demo App"
+	@$(MAKE) -d -f Makefile.Docker.mk build-go-demo-app
+	@echo "Go Demo App built."
+
+security-test-mygoapp:
+	@echo "Security Testing Go Demo App"
+	@$(MAKE) -d -f Makefile.Docker.mk pull-and-test-mygoapp
+	@echo "Security Testing completed."
 
 ################################################################################################################
 # Show the user a menu of options to run make commands
