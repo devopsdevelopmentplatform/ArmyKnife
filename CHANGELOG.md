@@ -13,6 +13,7 @@ All notable changes to this project will be documented in this file.
 - Added Multi-Stage Docker Build demo app called mygoapp.
 - Added a few security scans to test image.
 - Added more DevSecOps security scans to test before moving to CICD.
+- Added scanning with dockle and fixed trivy scanner.
 
 ### Changed
 - Changed KubeSpray from host-only network to bridged. 

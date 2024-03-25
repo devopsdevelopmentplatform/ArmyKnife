@@ -1,5 +1,5 @@
 # Default action is to run all stages
-.PHONY: docker-build docker-test docker-deploy build-go-demo-app pull-and-test-mygoapp
+.PHONY: docker-build docker-test docker-deploy build-go-demo-app scan-with-trivy scan-with-grype scan-with-syft scan-with-dockle
 
 # Build stage
 docker-build:
@@ -20,7 +20,7 @@ build-go-demo-app:
 	@echo "Building Go Demo App..."
 	cd tools/DockerBuilds/Go_Demo_App && docker buildx build --platform linux/amd64,linux/arm64 -t quay.io/fatporkrinds/mygoapp --push .
 
-pull-and-test-mygoapp:
+scan-with-trivy:
 	@echo "Pulling and testing Go Demo App..."
 	trivy image quay.io/fatporkrinds/mygoapp
 
@@ -31,3 +31,7 @@ scan-with-grype:
 scan-with-syft:
 	@echo "Scanning Go Demo App with Syft..."
 	syft packages --scope all-layers quay.io/fatporkrinds/mygoapp
+
+scan-with-dockle:
+	@echo "Scanning Go Demo App with Dockle..."
+	dockle quay.io/fatporkrinds/mygoapp
