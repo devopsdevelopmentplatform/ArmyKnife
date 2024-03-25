@@ -225,6 +225,11 @@ lint-mygoapp-dockerfile:
 	@$(MAKE) -d -f Makefile.Docker.mk lint-dockerfiles
 	@echo "Dockerfile linted."
 
+install-and-run-notary:
+	@echo "Installing Notary"
+	@$(MAKE) -d -f Makefile.Docker.mk install-notary
+	@echo "Notary installed."
+
 ################################################################################################################
 # Show the user a menu of options to run make commands
 ################################################################################################################

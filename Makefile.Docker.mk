@@ -39,3 +39,7 @@ scan-with-syft:
 scan-with-dockle:
 	@echo "Scanning Go Demo App with Dockle..."
 	dockle quay.io/fatporkrinds/mygoapp
+
+install-notary:
+	@echo "Installing Notary..."
+	go get github.com/theupdateframework/notary/v2/cmd/notary
