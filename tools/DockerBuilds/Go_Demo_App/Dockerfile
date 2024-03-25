@@ -30,7 +30,7 @@ RUN go mod download
 # Build the Go app
 RUN go build -o mygoapp .
 
-FROM scratch
+FROM ${IMAGE}
 
 # Copy the Pre-built binary file from the previous stage
 
@@ -39,6 +39,10 @@ COPY --from=builder /app/mygoapp /app/mygoapp
 # Expose port 8080 to the outside world
 EXPOSE 8080
 
+RUN adduser -D myuser
+USER myuser
+
+
 # Command to run the executable
-CMD ["./mygoapp"]
+CMD ["./app/mygoapp"]
 
