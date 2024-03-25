@@ -30,7 +30,7 @@ include Makefile.Geodesic.mk # Done
 # Phony targets
 # These targets are not files, but they are commands that you want to run
 # Using the .PHONY special target, it tells make that these targets are not real files.
-.PHONY: help notify-user-add-secrets setup-workstation setup-vault vagrant-up connect-to-vault vagrant-destroy-all setup-git build-custom-geodesic connect-to-my-geodesic ssh-vagrant install-minikube install-kubespray create-vbox-vm ova-import build-docker-images ingest-secrets ingest-secrets-into-vault build-go-demo-app security-test-mygoapp	
+.PHONY: help notify-user-add-secrets setup-workstation setup-vault vagrant-up connect-to-vault vagrant-destroy-all setup-git build-custom-geodesic connect-to-my-geodesic ssh-vagrant install-minikube install-kubespray create-vbox-vm ova-import build-docker-images ingest-secrets ingest-secrets-into-vault build-go-demo-app security-test-mygoapp scan-image-with-grype scan-image-with-syft	
 
 # Variables
 # These are the variables that are used in the Makefile
@@ -204,6 +204,16 @@ security-test-mygoapp:
 	@echo "Security Testing Go Demo App"
 	@$(MAKE) -d -f Makefile.Docker.mk pull-and-test-mygoapp
 	@echo "Security Testing completed."
+
+scan-image-with-grype:
+	@echo "Scanning Go Demo App with Grype"
+	@$(MAKE) -d -f Makefile.Docker.mk scan-with-grype
+	@echo "Grype scan completed."
+
+scan-image-with-syft:
+	@echo "Scanning Go Demo App with Syft"
+	@$(MAKE) -d -f Makefile.Docker.mk scan-with-syft
+	@echo "Syft scan completed."
 
 ################################################################################################################
 # Show the user a menu of options to run make commands

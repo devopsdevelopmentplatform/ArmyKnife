@@ -23,3 +23,11 @@ build-go-demo-app:
 pull-and-test-mygoapp:
 	@echo "Pulling and testing Go Demo App..."
 	trivy image quay.io/fatporkrinds/mygoapp
+
+scan-with-grype:
+	@echo "Scanning Go Demo App with Grype..."
+	grype quay.io/fatporkrinds/mygoapp
+
+scan-with-syft:
+	@echo "Scanning Go Demo App with Syft..."
+	syft packages --scope all-layers quay.io/fatporkrinds/mygoapp

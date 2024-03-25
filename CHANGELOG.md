@@ -12,6 +12,7 @@ All notable changes to this project will be documented in this file.
 - Created Makefile to build docker images with docker buildx bake to build multiple architectures.
 - Added Multi-Stage Docker Build demo app called mygoapp.
 - Added a few security scans to test image.
+- Added more DevSecOps security scans to test before moving to CICD.
 
 ### Changed
 - Changed KubeSpray from host-only network to bridged. 
