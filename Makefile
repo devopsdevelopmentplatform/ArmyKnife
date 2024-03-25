@@ -30,7 +30,7 @@ include Makefile.Geodesic.mk # Done
 # Phony targets
 # These targets are not files, but they are commands that you want to run
 # Using the .PHONY special target, it tells make that these targets are not real files.
-.PHONY: help notify-user-add-secrets setup-workstation setup-vault vagrant-up connect-to-vault vagrant-destroy-all setup-git build-custom-geodesic connect-to-my-geodesic ssh-vagrant install-minikube install-kubespray create-vbox-vm ova-import build-docker-images ingest-secrets ingest-secrets-into-vault build-go-demo-app security-test-mygoapp scan-image-with-grype scan-image-with-syft scan-image-with-trivy scan-image-with-dockle	
+.PHONY: help notify-user-add-secrets setup-workstation setup-vault vagrant-up connect-to-vault vagrant-destroy-all setup-git build-custom-geodesic connect-to-my-geodesic ssh-vagrant install-minikube install-kubespray create-vbox-vm ova-import build-docker-images ingest-secrets ingest-secrets-into-vault build-go-demo-app security-test-mygoapp scan-image-with-grype scan-image-with-syft scan-image-with-trivy scan-image-with-dockle lint-mygoapp-dockerfile	
 
 # Variables
 # These are the variables that are used in the Makefile
@@ -219,6 +219,12 @@ scan-image-with-dockle:
 	@echo "Scanning Go Demo App with Dockle"
 	@$(MAKE) -d -f Makefile.Docker.mk scan-with-dockle
 	@echo "Dockle scan completed."
+
+lint-mygoapp-dockerfile:
+	@echo "Linting Dockerfile"
+	@$(MAKE) -d -f Makefile.Docker.mk lint-dockerfiles
+	@echo "Dockerfile linted."
+
 ################################################################################################################
 # Show the user a menu of options to run make commands
 ################################################################################################################

@@ -1,5 +1,5 @@
 # Default action is to run all stages
-.PHONY: docker-build docker-test docker-deploy build-go-demo-app scan-with-trivy scan-with-grype scan-with-syft scan-with-dockle
+.PHONY: docker-build docker-test docker-deploy build-go-demo-app scan-with-trivy scan-with-grype scan-with-syft scan-with-dockle lint-dockerfiles
 
 # Build stage
 docker-build:
@@ -19,6 +19,10 @@ docker-deploy:
 build-go-demo-app:
 	@echo "Building Go Demo App..."
 	cd tools/DockerBuilds/Go_Demo_App && docker buildx build --platform linux/amd64,linux/arm64 -t quay.io/fatporkrinds/mygoapp --push .
+
+lint-dockerfiles:
+	@echo "Linting Dockerfiles..."
+	hadolint tools/DockerBuilds/Go_Demo_App/Dockerfile --config tools/DockerBuilds/config.yaml
 
 scan-with-trivy:
 	@echo "Pulling and testing Go Demo App..."
