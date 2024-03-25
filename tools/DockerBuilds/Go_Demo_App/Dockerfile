@@ -1,4 +1,4 @@
-ARG IMAGE=golang:1.22.1-alpine3.18
+ARG IMAGE=
 FROM $IMAGE as builder
 
 LABEL maintainer="fatporkrinds[at]gmail.com"
@@ -9,7 +9,10 @@ RUN apk --no-cache --update add \
     build-base \
     openssh-client \
     make \
-    curl 
+    curl \
+    gcc \
+    musl-dev \
+    go
 
 # Set the current working directory inside the container
 WORKDIR /app

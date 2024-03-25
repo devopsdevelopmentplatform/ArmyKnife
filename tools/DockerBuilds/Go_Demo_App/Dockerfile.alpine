@@ -1,0 +1,4 @@
+ARG IMAGE=
+FROM $IMAGE
+
+LABEL maintainer="fatporkrinds[at]gmail.com"
