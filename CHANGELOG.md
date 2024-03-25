@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 - Created Prerequisites list and added to README.md.
 - Added credential helper settings for git in Makefile.Git.mk.
 - Created make target ingest secrets to ingest .env into vault.
+- Created Makefile to build docker images with docker buildx bake to build multiple architectures.
 
 ### Changed
 - Changed KubeSpray from host-only network to bridged. 

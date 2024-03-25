@@ -30,7 +30,7 @@ include Makefile.Geodesic.mk # Done
 # Phony targets
 # These targets are not files, but they are commands that you want to run
 # Using the .PHONY special target, it tells make that these targets are not real files.
-.PHONY: help notify-user-add-secrets setup-workstation setup-vault vagrant-up connect-to-vault vagrant-destroy-all setup-git build-custom-geodesic connect-to-my-geodesic ssh-vagrant install-minikube install-kubespray create-vbox-vm ova-import
+.PHONY: help notify-user-add-secrets setup-workstation setup-vault vagrant-up connect-to-vault vagrant-destroy-all setup-git build-custom-geodesic connect-to-my-geodesic ssh-vagrant install-minikube install-kubespray create-vbox-vm ova-import build-docker-images ingest-secrets ingest-secrets-into-vault	
 
 # Variables
 # These are the variables that are used in the Makefile
@@ -53,8 +53,8 @@ notify-user-add-secrets:
 
 # Target to do it all
 # This target is the main target that runs all the other targets.
-all: setup-workstation setup-vault setup-git build-custom-geodesic connect-to-my-geodesic vagrant-up install-minikube install-kubespray create-vbox-vm ova-import connect-to-vault notify-user-add-secrets ingest-secrets
-	@echo "All targets completed."
+#all: setup-workstation setup-vault setup-git build-custom-geodesic connect-to-my-geodesic vagrant-up install-minikube install-kubespray create-vbox-vm ova-import connect-to-vault notify-user-add-secrets ingest-secrets docker-build
+#	@echo "All targets completed."
 
 ################################################################################################################
 # Setup Workstation MacOS and Ubuntu
@@ -184,6 +184,16 @@ else
 	@echo "This target only works on Linux"
 endif
 
+
+################################################################################################################
+# Build Docker Images
+################################################################################################################
+
+# Build Docker Images
+build-docker-images:
+	@echo "Building Docker Images"
+	@$(MAKE) -d -f Makefile.Docker.mk docker-build
+	@echo "Docker Images built."
 
 
 ################################################################################################################
