@@ -6,8 +6,9 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 - Feature Automate All: Created "all" make target to run everything at once.
-- Created Prerequisites list and added to README.md
-- Added credential helper settings for git in Makefile.Git.mk
+- Created Prerequisites list and added to README.md.
+- Added credential helper settings for git in Makefile.Git.mk.
+- Created make target ingest secrets to ingest .env into vault.
 
 ### Changed
 - Changed KubeSpray from host-only network to bridged. 

@@ -53,7 +53,8 @@ notify-user-add-secrets:
 
 # Target to do it all
 # This target is the main target that runs all the other targets.
-all: setup-workstation setup-vault setup-git build-custom-geodesic connect-to-my-geodesic vagrant-up install-minikube install-kubespray create-vbox-vm ova-import
+all: setup-workstation setup-vault setup-git build-custom-geodesic connect-to-my-geodesic vagrant-up install-minikube install-kubespray create-vbox-vm ova-import connect-to-vault notify-user-add-secrets ingest-secrets
+	@echo "All targets completed."
 
 ################################################################################################################
 # Setup Workstation MacOS and Ubuntu
@@ -82,6 +83,16 @@ setup-vault:
 	./vault.bash
 	@$(MAKE) -d -f Makefile.Vault.mk connect-to-vault
 	@echo "Vault setup completed."
+
+connect-to-vault:
+	@echo "Connecting to Vault"
+	@$(MAKE) -d -f Makefile.Vault.mk connect-to-vault
+
+ingest-secrets:
+	@echo "Ingesting secrets into Vault"
+	@$(MAKE) -d -f Makefile.Vault.mk ingest-secrets-into-vault
+	@echo "Secrets ingested into Vault."
+
 
 ################################################################################################################
 # Setup Vagrant Boxes
