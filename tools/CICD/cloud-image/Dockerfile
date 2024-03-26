@@ -66,16 +66,6 @@ RUN apt-get update && apt-get install -y wget curl unzip npm git kubectl ansible
 # Install the AWS Copilot CLI
 RUN curl -Lo copilot https://github.com/aws/copilot-cli/releases/latest/download/copilot-linux && chmod +x copilot && mv copilot /usr/local/bin/copilot && copilot --help
 
-
-# Install the Serverless Framework
-RUN npm install -g serverless
-
-# Install the AWS CDK
-RUN npm install -g aws-cdk
-
-# Install the Azure Functions Core Tools
-RUN npm install -g azure-functions-core-tools@3 --unsafe-perm true
-
 # Install Terraform
 RUN wget https://releases.hashicorp.com/terraform/1.1.7/terraform_1.1.7_linux_amd64.zip \
     && unzip terraform_1.1.7_linux_amd64.zip -d /usr/local/bin/ \
@@ -113,6 +103,12 @@ RUN node -v && npm -v
 
 # Install Serverless Framework
 RUN npm install -g serverless && serverless --version
+
+# Install the AWS CDK
+RUN npm install -g aws-cdk
+
+# Install the Azure Functions Core Tools
+RUN npm install -g azure-functions-core-tools@3 --unsafe-perm true
 
 # Make sure the local bin directory is in the PATH
 ENV PATH="/root/.local/bin:/usr/local/bin:/usr/local/nvm:${PATH}"
