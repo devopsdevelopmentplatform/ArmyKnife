@@ -1,0 +1,57 @@
+# Stage 1: Build stage for downloading and installing dependencies
+FROM alpine:latest
+
+# Install build dependencies
+RUN apk add --no-cache curl jq bash python3-dev musl-dev linux-headers py3-pip unzip tar nodejs npm groff less gcc musl-dev libffi-dev openssl-dev
+
+# Setup virtual environment for Azure CLI to avoid system Python conflicts
+RUN python3 -m venv /az-cli-venv && \
+    source /az-cli-venv/bin/activate && \
+    pip install azure-cli
+
+# Install AWS CLI
+RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && \
+    unzip awscliv2.zip && \
+    ./aws/install && \
+    rm -rf awscliv2.zip ./aws
+
+# Install Google Cloud SDK
+RUN curl https://sdk.cloud.google.com > install.sh && \
+    bash install.sh --disable-prompts && \
+    rm install.sh
+
+# # Stage 2: Create a minimal runtime image
+# FROM alpine:latest
+
+# # Copy installed binaries and other artifacts from the builder stage
+# COPY --from=builder /usr/local /usr/local
+# COPY --from=builder /usr/local/lib/google-cloud-sdk/bin/google-cloud-sdk/bin /google-cloud-sdk
+# COPY --from=builder /usr/local/aws-cli /usr/local/aws-cli
+# COPY --from=builder /usr/local/bin/aws /usr/local/bin/aws
+# # Copy the Azure CLI virtual environment
+# COPY --from=builder /az-cli-venv /az-cli-venv
+
+
+# Setting up environment variables and paths
+#ENV PATH="/usr/local/aws-cli/v2/current/bin:/google-cloud-sdk/bin:/az-cli-venv/bin:${PATH}"
+
+# Install runtime dependencies
+RUN apk add --no-cache bash jq groff less
+
+# Ensure Python and pip point to the ones in the Azure CLI venv
+# RUN ln -s /az-cli-venv/bin/python3 /usr/bin/python3 && \
+#     ln -s /az-cli-venv/bin/pip /usr/bin/pip
+
+# Verify installation of key components
+# RUN gcloud --version && \
+#     aws --version && \
+#     az --version
+
+# Additional runtime setup can be done here
+
+# Set the entrypoint to a shell
+ENTRYPOINT ["/bin/bash"]
+
+
+
+
