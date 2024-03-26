@@ -38,7 +38,7 @@ include Makefile.CICD.mk
 # Phony targets
 # These targets are not files, but they are commands that you want to run
 # Using the .PHONY special target, it tells make that these targets are not real files.
-.PHONY: help notify-user-add-secrets setup-workstation setup-vault vagrant-up connect-to-vault vagrant-destroy-all setup-git build-custom-geodesic connect-to-my-geodesic ssh-vagrant install-minikube install-kubespray create-vbox-vm ova-import build-docker-images ingest-secrets ingest-secrets-into-vault build-go-demo-app security-test-mygoapp scan-image-with-grype scan-image-with-syft scan-image-with-trivy scan-image-with-dockle lint-mygoapp-dockerfile install-and-run-notary build-docker-images-alpine-golang build-cloud-cli-image test-cloud-cli-image login-to-registries push-cloud-cli-image-to-registries run-local build-python-demo-app		
+.PHONY: help notify-user-add-secrets setup-workstation setup-vault vagrant-up connect-to-vault vagrant-destroy-all setup-git build-custom-geodesic connect-to-my-geodesic ssh-vagrant install-minikube install-kubespray create-vbox-vm ova-import build-docker-images ingest-secrets ingest-secrets-into-vault build-go-demo-app security-test-mygoapp scan-image-with-grype scan-image-with-syft scan-image-with-trivy scan-image-with-dockle lint-mygoapp-dockerfile install-and-run-notary build-docker-images-alpine-golang build-cloud-cli-image test-cloud-cli-image login-to-registries push-cloud-cli-image-to-registries run-local build-python-demo-app k8s-smoke-test		
 
 # Variables
 # These are the variables that are used in the Makefile
@@ -123,7 +123,11 @@ ova-import:
 	@echo "Importing OVA files"
 	@$(MAKE) -d -f Makefile.VBox.mk import-ovas
 
-
+k8s-smoke-test:
+	@echo "Running smoke test..."
+	@$(MAKE) -d -f Makefile.K8s.mk kubespray-up
+	@$(MAKE) -d -f Makefile.K8s-Admin.mk smoke-test
+	@echo "Smoke test completed."
 
 ################################################################################################################
 # Configure Git with personal and global settings

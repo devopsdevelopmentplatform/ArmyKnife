@@ -6,7 +6,73 @@ define download_file
 	rm -f $(1)
 endef
 
-.PHONY: check-tools-now configure-minikube kubespray-install
+.PHONY: check-tools-now configure-minikube kubespray-install cost-optimization
+
+include Makefile.K8s-Admin.mk
+
+# Deploy Cost Optimization Tool and get reports from it
+
+cost-optimization:
+	@echo "Optimizing cluster costs..."
+	@make -d -f Makefile.K8s-Admin.mk cost-optimization
+	@echo "Cluster costs optimized."
+
+smoke-test:
+	@echo "Running smoke test..."
+	@make -d -f Makefile.K8s.mk kubespray-up
+	@make -d -f Makefile.K8s-Admin.mk smoke-test
+	@echo "Smoke test completed."
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # Check for required tools and download if not present
 
@@ -52,4 +118,8 @@ configure-minikube: check-tools-now
 kubespray-install:
 	@echo "Installing KubeSpray..."
 	cd tools/kubespray && python3 -m venv .venv && . .venv/bin/activate && pip3 install -r requirements.txt
+	cd tools/kubespray && vagrant up --provider=virtualbox
+
+kubespray-up:
+	@echo "Starting KubeSpray..."
 	cd tools/kubespray && vagrant up --provider=virtualbox

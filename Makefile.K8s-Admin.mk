@@ -1,6 +1,15 @@
 
 # Task 1: Zero-Downtime Cluster Upgrades
 # Perform zero-downtime upgrades of the Kubernetes cluster to the latest version using a canary approach to gradually shift traffic to nodes running the newer version.
+
+# Daily smoke test to make sure cluster is up and responding.
+smoke-test:
+	@echo "Running smoke test..."
+	kubectl get pods --all-namespaces
+	kubectl cluster-info
+
+
+
 upgrade-cluster:
 	@echo "Upgrading Kubernetes cluster with zero downtime..."
 	kubectl drain $(NODE) --ignore-daemonsets --delete-local-data
