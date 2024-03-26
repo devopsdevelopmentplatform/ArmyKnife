@@ -24,6 +24,11 @@ build-go-demo-app:
 	@echo "Building Go Demo App..."
 	cd tools/DockerBuilds/Go_Demo_App && docker buildx bake --platform linux/amd64,linux/arm64 -t quay.io/fatporkrinds/mygoapp --push .
 
+build-python-demo-app:
+	@echo "Building Python Demo App..."
+	cd tools/DockerBuilds/Python && docker build -t quay.io/fatporkrinds/python-app-base:latest --push .
+
+
 lint-dockerfiles:
 	@echo "Linting Dockerfiles..."
 	hadolint tools/DockerBuilds/Go_Demo_App/Dockerfile --config tools/DockerBuilds/config.yaml

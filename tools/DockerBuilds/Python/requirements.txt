@@ -1,0 +1,10 @@
+black 
+pylint 
+pytest 
+mypy 
+isort 
+pylama 
+flake8 
+radon 
+mccabe 
+bandit
