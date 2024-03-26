@@ -1,0 +1,31 @@
+---
+# General settings
+ansible_os_family: "Debian" # Or "Darwin" for MacOS. You might not need this if Ansible automatically detects the OS family.
+
+# Vault settings
+vault_address: "http://127.0.0.1:8200"
+vault_token: "s.1234567890abcdef"
+
+# Git configuration settings
+git_user_name: "Your Name"
+git_user_email: "youremail@example.com"
+
+# Docker registry credentials
+docker_registry_username: "yourusername"
+docker_registry_password: "yourpassword"
+docker_registry_address: "registry.example.com"
+
+# Kubernetes settings
+kubernetes_version: "1.20.0"
+
+# Vagrant settings
+vagrant_box_name: "ubuntu/bionic64"
+
+# Geodesic settings
+geodesic_image_name: "custom-geodesic:latest"
+
+# Cloud CLI settings
+cloud_cli_image_name: "cloud-cli:latest"
+cloud_cli_image_test_command: "cloud-cli --version"
+
+# Define any other variables here that your playbook might reference

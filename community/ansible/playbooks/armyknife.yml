@@ -1,0 +1,77 @@
+---
+- name: Setup and Manage ArmyKnife DevOps CI/CD Framework
+  hosts: localhost
+  become: yes
+  tasks:
+    - name: Notify user to add secrets to Vault
+      debug:
+        msg: "IMPORTANT: Please test a few of the commands before moving forward."
+
+    - name: Setup development workstation
+      block:
+        - name: Setup MacOS Workstation
+          command: make -f Makefile.Workstation.mk setup-macos
+          when: ansible_os_family == 'Darwin'
+
+        - name: Setup Ubuntu Workstation
+          command: make -f Makefile.Workstation.mk setup-ubuntu
+          when: ansible_os_family == 'Debian'
+
+    - name: Setup Vault
+      include_tasks: setup-vault.yml
+
+    - name: Setup Git Configuration
+      command: make -f Makefile.Git.mk setup-git-config
+
+    - name: Build and connect to custom Geodesic
+      block:
+        - name: Build custom Geodesic
+          command: make -f Makefile.Geodesic.mk build-geodesic
+
+        - name: Connect to Geodesic
+          command: make -f Makefile.Geodesic.mk connect-to-geodesic
+
+    - name: Setup and manage Kubernetes with Minikube and Kubespray
+      block:
+        - name: Install Minikube
+          command: make -f Makefile.K8s.mk configure-minikube
+
+        - name: Install Kubespray
+          command: make -f Makefile.K8s.mk kubespray-install
+
+    - name: Manage Docker Images and Containers
+      block:
+        - name: Build Docker Images
+          command: make -f Makefile.Docker.mk docker-build
+
+        - name: Build Go Demo App
+          command: make -f Makefile.Docker.mk build-go-demo-app
+
+        - name: Security test Go Demo App with Trivy
+          command: make -f Makefile.Docker.mk scan-with-trivy
+
+    - name: Deploy and manage applications with Vagrant
+      block:
+        - name: Launch Vagrant boxes
+          command: make -f Makefile.Vagrant.mk up-vagrant
+
+        - name: SSH into Vagrant box
+          command: make -f Makefile.Vagrant.mk ssh-vagrant
+          ignore_errors: yes
+
+        - name: Destroy Vagrant boxes
+          command: make -f Makefile.Vagrant.mk destroy-vagrant
+
+    - name: Build and push Cloud CLI Image to Registries
+      block:
+        - name: Build Cloud CLI Image
+          command: make -f Makefile.CICD.mk build_cloud_cli_image
+
+        - name: Test Cloud CLI Image
+          command: make -f Makefile.CICD.mk test_cloud_cli_image
+
+        - name: Push Cloud CLI Image to Registries
+          command: make -f Makefile.CICD.mk push_cloud_cli_image_to_registries
+
+  vars_files:
+    - vars/armyknife-vars.yml
