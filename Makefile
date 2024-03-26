@@ -23,8 +23,8 @@ include Makefile.Vagrant.mk # Done
 include Makefile.Geodesic.mk # Done
 include Makefile.Docker.mk # Done
 include Makefile.Python.mk # Done
-# include Makefile.Ansible.mk
-# include Makefile.Terraform.mk
+include Makefile.Ansible.mk
+include Makefile.Terraform.mk
 # include Makefile.Packer.mk
 # include Makefile.Kubeless.mk
 
