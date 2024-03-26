@@ -125,8 +125,8 @@ ova-import:
 
 k8s-smoke-test:
 	@echo "Running smoke test..."
-	@$(MAKE) -d -f Makefile.K8s.mk kubespray-up
-	@$(MAKE) -d -f Makefile.K8s-Admin.mk smoke-test
+	@$(MAKE) -f Makefile.K8s.mk kubespray-up
+	@$(MAKE) -f Makefile.K8s-Admin.mk smoke-test
 	@echo "Smoke test completed."
 
 ################################################################################################################

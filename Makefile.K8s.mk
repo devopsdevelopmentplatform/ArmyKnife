@@ -19,8 +19,8 @@ cost-optimization:
 
 smoke-test:
 	@echo "Running smoke test..."
-	@make -d -f Makefile.K8s.mk kubespray-up
-	@make -d -f Makefile.K8s-Admin.mk smoke-test
+	@make -f Makefile.K8s.mk kubespray-up
+	@make -f Makefile.K8s-Admin.mk smoke-test
 	@echo "Smoke test completed."
 
 
