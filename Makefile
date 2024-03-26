@@ -21,6 +21,13 @@ include Makefile.VBox.mk # Not tested on MacOS because cloud image tools not wor
 include Makefile.Workstation.mk # Done
 include Makefile.Vagrant.mk # Done
 include Makefile.Geodesic.mk # Done
+include Makefile.Docker.mk # Done
+include Makefile.Python.mk # Done
+# include Makefile.Ansible.mk
+# include Makefile.Terraform.mk
+# include Makefile.Packer.mk
+# include Makefile.Kubeless.mk
+
 
 
 # Define the default target when you run `make` without arguments
