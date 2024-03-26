@@ -1,4 +1,29 @@
-ARG IMAGE=
+# Assuming IMAGE is dynamically provided and based on Alpine
+ARG IMAGE
+
+FROM $IMAGE as builder
+
+LABEL maintainer="fatporkrinds@gmail.com"
+
+# Install wget if not available and download grpc_health_probe
+RUN apk add --no-cache wget && \
+    GRPC_HEALTH_PROBE_VERSION=v0.4.2 && \
+    wget -qO/grpc_health_probe "https://github.com/grpc-ecosystem/grpc-health-probe/releases/download/${GRPC_HEALTH_PROBE_VERSION}/grpc_health_probe-linux-amd64" && \
+    chmod +x /grpc_health_probe
+
 FROM $IMAGE
 
-LABEL maintainer="fatporkrinds[at]gmail.com"
+# Copy the grpc_health_probe from the builder stage
+COPY --from=builder /grpc_health_probe /bin/grpc_health_probe
+
+
+HEALTHCHECK --interval=30s --timeout=3s \
+  CMD wget localhost:8080/healthz -q -O - > /dev/null 2>&1
+
+
+# HEALTHCHECK instruction
+# HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
+#   CMD [ "/bin/grpc_health_probe", "-addr=localhost:50051" ]  
+
+
+
