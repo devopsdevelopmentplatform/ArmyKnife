@@ -78,7 +78,7 @@ ubuntu-setup-packages:
 # Make sure you update the keys in vagrant and virtualbox cloud-init files
 create-ssh-keys:
 	mkdir -p keys
-	ssh-keygen -t rsa -b 4096 -f keys/armyknife -C "YourEmail@example.com"
+	ssh-keygen -t rsa -b 4096 -f keys/armyknife -C "fatporkrinds@gmail.com"
 
 # Define the target to check and install essential development tools
 install-essential-dev-tools:
