@@ -1,0 +1,61 @@
+# Makefile.essentialgroups - Create Essential Groups, Configure sudo Permissions, and Create Default Users
+
+.PHONY: create-groups configure-sudo create-default-users
+
+create-groups:
+	@echo "Creating essential groups..."
+	@for group in DBA SysAdmins SoftwareInstallers LoggingAdmins USERS; do \
+		if ! getent group $$group > /dev/null; then \
+			sudo groupadd $$group && echo "Created group: $$group"; \
+		else \
+			echo "Group $$group already exists."; \
+		fi; \
+	done
+	@echo "Essential groups created."
+
+configure-sudo:
+	@echo "Configuring sudo permissions for groups..."
+	@if ! grep -q '%DBA ALL=(ALL) ALL' /etc/sudoers; then \
+		echo "%DBA ALL=(ALL) ALL" | sudo EDITOR='tee -a' visudo; \
+	fi
+	@if ! grep -q '%SysAdmins ALL=(ALL) NOPASSWD: ALL' /etc/sudoers; then \
+		echo "%SysAdmins ALL=(ALL) NOPASSWD: ALL" | sudo EDITOR='tee -a' visudo; \
+	fi
+	@if ! grep -q '%SoftwareInstallers ALL=(ALL) NOPASSWD: /usr/bin/apt, /usr/bin/apt-get' /etc/sudoers; then \
+		echo "%SoftwareInstallers ALL=(ALL) NOPASSWD: /usr/bin/apt, /usr/bin/apt-get" | sudo EDITOR='tee -a' visudo; \
+	fi
+	@if ! grep -q '%LoggingAdmins ALL=(ALL) NOPASSWD: /var/log' /etc/sudoers; then \
+		echo "%LoggingAdmins ALL=(ALL) NOPASSWD: /var/log" | sudo EDITOR='tee -a' visudo; \
+	fi
+	@echo "sudo permissions configured."
+
+create-default-users:
+	@echo "Creating default users for each group..."
+	@if ! id -u dba_user >/dev/null 2>&1; then \
+		sudo useradd -m -s /usr/sbin/nologin -G DBA dba_user; \
+		echo "Created user: dba_user"; \
+	else \
+		echo "User dba_user already exists."; \
+	fi
+	@if ! id -u sysadmin_user >/dev/null 2>&1; then \
+		sudo useradd -m -s /usr/sbin/nologin -G SysAdmins sysadmin_user; \
+		echo "Created user: sysadmin_user"; \
+	else \
+		echo "User sysadmin_user already exists."; \
+	fi
+	@if ! id -u installer_user >/dev/null 2>&1; then \
+		sudo useradd -m -s /usr/sbin/nologin -G SoftwareInstallers installer_user; \
+		echo "Created user: installer_user"; \
+	else \
+		echo "User installer_user already exists."; \
+	fi
+	@if ! id -u logging_user >/dev/null 2>&1; then \
+		sudo useradd -m -s /usr/sbin/nologin -G LoggingAdmins logging_user; \
+		echo "Created user: logging_user"; \
+	else \
+		echo "User logging_user already exists."; \
+	fi
+	@echo "Default users created."
+
+all: create-groups configure-sudo create-default-users
+

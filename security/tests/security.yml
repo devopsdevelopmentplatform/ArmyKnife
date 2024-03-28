@@ -1,0 +1,243 @@
+---
+- name: Comprehensive Security Hardening
+  hosts: localhost 
+  become: true
+  vars:
+    essential_groups:
+      - DBA
+      - SysAdmins
+      - SoftwareInstallers
+      - LoggingAdmins
+      - USERS
+    default_users:
+      - { name: 'dba_user', group: 'DBA', shell: '/usr/sbin/nologin' }
+      - { name: 'sysadmin_user', group: 'SysAdmins', shell: '/usr/sbin/nologin' }
+      - { name: 'installer_user', group: 'SoftwareInstallers', shell: '/usr/sbin/nologin' }
+      - { name: 'logging_user', group: 'LoggingAdmins', shell: '/usr/sbin/nologin' }
+    standard_user: { name: 'standard_user', shell: '/bin/rbash', group: 'USERS' }
+
+  tasks:
+    # Unattended Upgrades Setup
+    - name: Install unattended-upgrades package
+      apt:
+        name: unattended-upgrades
+        update_cache: yes
+        state: latest
+
+    - name: Configure Unattended Upgrades
+      command: dpkg-reconfigure -plow unattended-upgrades
+      args:
+        warn: false
+
+    - name: Enable automatic reboot at 2 AM for Unattended Upgrades
+      lineinfile:
+        path: /etc/apt/apt.conf.d/50unattended-upgrades
+        regexp: '{{ item.regexp }}'
+        line: '{{ item.line }}'
+      loop:
+        - { regexp: '\/\/Unattended-Upgrade::Automatic-Reboot "false";', line: 'Unattended-Upgrade::Automatic-Reboot "true";' }
+        - { regexp: '\/\/Unattended-Upgrade::Automatic-Reboot-Time "02:00";', line: 'Unattended-Upgrade::Automatic-Reboot-Time "02:00";' }
+
+    # Essential Groups and Users Setup
+    - name: Create essential groups
+      group:
+        name: '{{ item }}'
+        state: present
+      loop: '{{ essential_groups }}'
+
+    - name: Create default users
+      user:
+        name: '{{ item.name }}'
+        shell: '{{ item.shell }}'
+        groups: '{{ item.group }}'
+        create_home: yes
+      loop: '{{ default_users }}'
+
+    - name: Configure sudo permissions for groups
+      lineinfile:
+        path: /etc/sudoers.d/90-custom-users
+        line: '{{ item.line }}'
+        create: yes
+        validate: 'visudo -cf %s'
+      loop:
+        - { line: '%DBA ALL=(ALL) ALL' }
+        - { line: '%SysAdmins ALL=(ALL) NOPASSWD: ALL' }
+        - { line: '%SoftwareInstallers ALL=(ALL) NOPASSWD: /usr/bin/apt, /usr/bin/apt-get' }
+        - { line: '%LoggingAdmins ALL=(ALL) NOPASSWD: /var/log' }
+
+    # Disable Auto Update
+    - name: Disable automatic upgrades
+      lineinfile:
+        path: /etc/apt/apt.conf.d/50unattended-upgrades
+        regexp: 'Unattended-Upgrade::Automatic-Reboot "true";'
+        line: '//Unattended-Upgrade::Automatic-Reboot "false";'
+      when: ansible_distribution == 'Ubuntu'
+
+    # Disable Sudo Timeout
+    - name: Disable sudo timeout
+      lineinfile:
+        path: /etc/sudoers.d/90-custom-timeout
+        line: 'Defaults timestamp_timeout=0'
+        create: yes
+        validate: 'visudo -cf %s'
+
+    # Prevent Root Shell Access and Shell Escapes
+    - name: Prevent root shell access
+      user:
+        name: root
+        shell: /usr/sbin/nologin
+
+    - name: Update USERS group restrictions in sudoers to prevent shell escapes
+      blockinfile:
+        path: /etc/sudoers.d/90-custom-shell
+        block: |
+          Cmnd_Alias SHELLS = /bin/bash, /bin/sh, /bin/dash, /bin/zsh, /usr/bin/su, /usr/bin/vim, /usr/bin/vi, /usr/bin/nano, /usr/bin/less, /usr/bin/man, /usr/bin/awk, /usr/bin/sed, /usr/bin/strace
+          %USERS ALL=(ALL) ALL, !SHELLS
+        create: yes
+        validate: 'visudo -cf %s'
+
+    # Disable Non-Essential Accounts
+    - name: Disable non-essential service accounts
+      user:
+        name: '{{ item }}'
+        shell: /usr/sbin/nologin
+      loop: '{{ query("etc_services", "users") }}'
+      when: item not in (ansible_user_id, standard_user.name)
+
+    # Lock Root Account
+    - name: Lock the root account
+      user:
+        name: root
+        password_lock: yes
+
+    # Set Password Expiration
+    - name: Set password expiration for all users
+      user:
+        name: '{{ item }}'
+        password_max_days: 90
+      loop: '{{ query("passwd", "users") }}'
+      when: item not in (ansible_user_id, standard_user.name)
+
+    # Set Password Complexity
+    - name: Set password complexity
+      pam_pwquality:
+        users: '*'
+        minlen: 14
+        dcredit: -1
+        ucredit: -1
+        lcredit: -1
+        ocredit: -1
+        retry: 3
+        difok: 3
+        enforce_for_root: yes
+
+    # Set Password History
+    - name: Set password history
+      pam_unix:
+        name: password
+        remember: 5
+        sha512_crypt: yes
+
+    # Set Password Lockout
+    - name: Set password lockout
+      pam_faillock:
+        name: login
+        unlock_time: 300
+        fail_interval: 900
+        even_deny_root: yes
+
+    # Set Password Hashing Algorithm
+    - name: Set password hashing algorithm
+      lineinfile:
+        path: /etc/login.defs
+        regexp: '^ENCRYPT_METHOD'
+        line: 'ENCRYPT_METHOD SHA512'
+        create: yes
+    
+    # Set Password Expiration Warning
+    - name: Set password expiration warning
+      lineinfile:
+        path: /etc/login.defs
+        regexp: '^PASS_WARN_AGE'
+        line: 'PASS_WARN_AGE 7'
+        create: yes
+
+    # Set Password Inactivity
+    - name: Set password inactivity
+      lineinfile:
+        path: /etc/login.defs
+        regexp: '^INACTIVE'
+        line: 'INACTIVE 30'
+        create: yes
+
+    # Set Password Change Minimum Age
+    - name: Set password change minimum age
+      lineinfile:
+        path: /etc/login.defs
+        regexp: '^PASS_MIN_DAYS'
+        line: 'PASS_MIN_DAYS 7'
+        create: yes
+    
+    # Set Password Change Maximum Age
+    - name: Set password change maximum age
+      lineinfile:
+        path: /etc/login.defs
+        regexp: '^PASS_MAX_DAYS'
+        line: 'PASS_MAX_DAYS 90'
+        create: yes
+
+    # Set Password Change Warning
+    - name: Set password change warning
+      lineinfile:
+        path: /etc/login.defs
+        regexp: '^PASS_WARN_AGE'
+        line: 'PASS_WARN_AGE 7'
+        create: yes
+
+    # Set Password Change Minimum Length
+    - name: Set password change minimum length
+      lineinfile:
+        path: /etc/pam.d/common-password
+        regexp: '^password\s+requisite\s+pam_pwquality.so'
+        line: 'password requisite pam_pwquality.so retry=3 minlen=14 dcredit=-1 ucredit=-1 lcredit=-1 ocredit=-1 difok=3 enforce_for_root'
+        create: yes
+
+    # Set Password Change Complexity
+    - name: Set password change complexity
+      lineinfile:
+        path: /etc/pam.d/common-password
+        regexp: '^password\s+requisite\s+pam_pwquality.so'
+        line: 'password requisite pam_pwquality.so retry=3 minlen=14 dcredit=-1 ucredit=-1 lcredit=-1 ocredit=-1 difok=3 enforce_for_root'
+        create: yes
+
+    # Add Open SSH Server Hardening and package installation change to port 2222
+    - name: Install OpenSSH Server
+      apt:
+        name: openssh-server
+        update_cache: yes
+        state: latest
+
+    - name: Configure OpenSSH Server
+      template:
+        src: /etc/ansible/templates/sshd_config.j2
+        dest: /etc/ssh/sshd_config
+      notify: restart sshd
+
+    - name: Restart SSHD
+      service:
+        name: sshd
+        state: restarted
+
+    # Create Ansible playbook entry to create and install ssh banner and login banner
+    - name: Create SSH Banner
+      template:
+        src: /etc/ansible/templates/issue.net.j2
+        dest: /etc/issue.net
+    
+    - name: Create Login Banner
+      template:
+        src: /etc/ansible/templates/issue.j2
+        dest: /etc/issue
+    
+
+

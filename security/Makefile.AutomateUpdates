@@ -1,0 +1,23 @@
+# Makefile.unattendedupgrades - Setup Unattended Upgrades
+
+.PHONY: unattended-upgrades
+
+unattended-upgrades:
+	@echo "Setting up Unattended Upgrades..."
+	@sudo apt-get update && sudo apt-get install -y unattended-upgrades || { echo "Failed to install unattended-upgrades, aborting"; exit 1; }
+	@echo "Configuring Unattended Upgrades..."
+	@sudo dpkg-reconfigure -plow unattended-upgrades
+	@echo "Editing configuration to enable automatic reboot at 2 AM..."
+	@if grep -q 'Unattended-Upgrade::Automatic-Reboot' /etc/apt/apt.conf.d/50unattended-upgrades; then \
+		sudo sed -i 's|Unattended-Upgrade::Automatic-Reboot.*|Unattended-Upgrade::Automatic-Reboot "true";|' /etc/apt/apt.conf.d/50unattended-upgrades; \
+	else \
+		echo 'Unattended-Upgrade::Automatic-Reboot "true";' | sudo tee -a /etc/apt/apt.conf.d/50unattended-upgrades; \
+	fi
+	@if grep -q 'Unattended-Upgrade::Automatic-Reboot-Time' /etc/apt/apt.conf.d/50unattended-upgrades; then \
+		sudo sed -i 's|Unattended-Upgrade::Automatic-Reboot-Time.*|Unattended-Upgrade::Automatic-Reboot-Time "02:00";|' /etc/apt/apt.conf.d/50unattended-upgrades; \
+	else \
+		echo 'Unattended-Upgrade::Automatic-Reboot-Time "02:00";' | sudo tee -a /etc/apt/apt.conf.d/50unattended-upgrades; \
+	fi
+	@echo "Unattended Upgrades setup complete."
+
+

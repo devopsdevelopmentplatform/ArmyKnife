@@ -1,0 +1,16 @@
+# Makefile.disableautoupdate - Disable Automatic Upgrades
+
+.PHONY: disable-autoupdate
+
+disable-autoupdate:
+	@echo "Checking if automatic upgrades are enabled..."
+	@if grep -q 'Unattended-Upgrade::Automatic-Reboot "true";' /etc/apt/apt.conf.d/50unattended-upgrades; then \
+		echo "Automatic upgrades are enabled. Disabling them now..."; \
+		sudo sed -i 's|Unattended-Upgrade::Automatic-Reboot "true";|//Unattended-Upgrade::Automatic-Reboot "false";|' /etc/apt/apt.conf.d/50unattended-upgrades; \
+		sudo sed -i 's|Unattended-Upgrade::Automatic-Reboot-Time "02:00";|//Unattended-Upgrade::Automatic-Reboot-Time "02:00";|' /etc/apt/apt.conf.d/50unattended-upgrades; \
+		echo "Automatic upgrades have been disabled."; \
+	else \
+		echo "Automatic upgrades are not enabled. No changes made."; \
+	fi
+
+

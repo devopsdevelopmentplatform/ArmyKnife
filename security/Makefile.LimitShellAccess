@@ -1,0 +1,16 @@
+# Makefile.preventrootshell - Prevent Root Shell Access and Shell Escapes for Regular Users
+
+.PHONY: prevent-root-shell
+
+prevent-root-shell:
+	@echo "Updating USERS group restrictions in sudoers to prevent shell escapes..."
+	@sudo groupadd -f USERS
+	# Define command aliases for restricted shells and commands that can spawn a shell
+	@echo "Cmnd_Alias SHELLS = /bin/bash, /bin/sh, /bin/dash, /bin/zsh, /usr/bin/su, /usr/bin/vim, /usr/bin/vi, /usr/bin/nano, /usr/bin/less, /usr/bin/man, /usr/bin/awk, /usr/bin/sed, /usr/bin/strace" | sudo EDITOR='tee -a' visudo
+	# Example: Adding a standard user to the USERS group
+	@sudo usermod -aG USERS standard_user
+	# Restricting USERS group members from accessing defined shells and commands
+	@echo "%USERS ALL=(ALL) ALL, !SHELLS" | sudo EDITOR='tee -a' visudo
+	@echo "Shell escapes have been restricted for USERS group members."
+
+

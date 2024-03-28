@@ -1,0 +1,9 @@
+# Makefile.disablesudotimeout - Disable sudo Timeout
+
+.PHONY: disable-sudo-timeout
+
+disable-sudo-timeout:
+	@echo "Disabling sudo timeout..."
+	@echo "Defaults timestamp_timeout=0" | sudo EDITOR='tee -a' visudo
+	@echo "sudo timeout has been disabled."
+

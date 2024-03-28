@@ -1,0 +1,9 @@
+# Makefile.lockroot - Lock Root Account
+
+.PHONY: lockroot
+
+lockroot:
+	@echo "Locking the root account..."
+	@sudo passwd -l root
+	@echo "Root account has been locked."
+
