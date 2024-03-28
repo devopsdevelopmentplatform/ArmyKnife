@@ -13,6 +13,11 @@ Thumbs.db
 
 # Linux system files
 *~
+ .env
+ tools/vagrant/.vagrant
+ keys/
+ tools/vbox/ova/
+ tools/vbox/servers/ansible/images/
 
 # Python files
 __pycache__/

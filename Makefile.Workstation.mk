@@ -8,7 +8,7 @@ ARMYKNIFE := ~/localprojects/ArmyKnife
 
 # Define the packages to be installed via Homebrew (common packages for both)
 
-COMMON_PACKAGES := wget curl jq vault vagrant
+COMMON_PACKAGES := wget curl jq vault
 
 # Define Python development tools
 PYTHON_DEV_TOOLS := pipenv pytest flake8 isort sphinx tox twine pylint autopep8 black mypy bandit poetry
@@ -72,7 +72,7 @@ setup-dotfile-manager:
 # Tested and working properly
 ubuntu-setup-packages:
 	sudo apt update
-	sudo apt install -y qemu-utils cloud-guest-utils cloud-init virtualbox vagrant cloud-utils build-essential vim virtualbox vagrant libvirt-daemon-system libvirt-clients qemu-kvm libvirt-daemon bridge-utils virt-manager libguestfs-tools libosinfo-bin libguestfs-tools virt-top virtinst libvirt-doc wget curl jq make zsh git libz-dev vim vim-gtk3
+	sudo apt install -y git make wget curl jq qemu-utils cloud-guest-utils cloud-init virtualbox vagrant cloud-utils build-essential vim virtualbox vagrant libvirt-daemon-system libvirt-clients qemu-kvm libvirt-daemon bridge-utils virt-manager libguestfs-tools libosinfo-bin libguestfs-tools virt-top virtinst libvirt-doc wget curl jq make zsh git libz-dev vim vim-gtk3
 
 # Define the target to generate SSH keys
 # Make sure you update the keys in vagrant and virtualbox cloud-init files

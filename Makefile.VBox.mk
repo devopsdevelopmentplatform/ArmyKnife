@@ -19,7 +19,7 @@ SUFFIX := $(shell date +%Y%m%d%H%M%S)
 .PHONY: setup-vm create-vm-dir run-vbox-setup-script import-ovas
 
 # Default target for setting up VM
-setup-vm: run-vbox-setup-script import-ovas
+setup-vm: run-vbox-setup-script
 
 connect-ansible:
 	@echo "Connecting to Ansible"
@@ -43,5 +43,5 @@ import-ovas:
 # Target to run the setup script
 run-vbox-setup-script:
 	@echo "Running VM setup script for $(VM_NAME)"
-	python3 community/python/create_server_ubuntu.py --name ubuntu --memory 2048 --cpu 1 --disk 10096 --os Ubuntu_64 --user ubuntu --folder ubuntu
+	python3 community/python/create_server_ubuntu.py --name ansible --memory 2048 --cpu 1 --disk 10096 --os Ubuntu_64 --user ansible --folder ansible 
 	# python3 community/python/create_server_ubuntu.py --name ansible --memory 4096 --cpu 2 --disk 124096 --os Ubuntu_64 --user ubuntu --folder ansible
