@@ -1,10 +1,10 @@
 # Define variables for Terraform commands
 TERRAFORM := terraform
-ENV ?= default
+ENV ?= dev
 PLAN := plan-$(ENV).tfplan
 
 # Directory for environment-specific configurations
-CONFIG_DIR := environments/$(ENV)
+CONFIG_DIR := tools/terraform/Docker_Build
 
 # Default Terraform options
 TF_INIT_OPTS := -reconfigure
@@ -14,38 +14,44 @@ TF_DESTROY_OPTS := -auto-approve
 
 # Helper function to run Terraform commands in the context of an environment
 define terraform-cmd
-	cd $(CONFIG_DIR) && $(TERRAFORM) $(1) $(if $(filter $(1),apply destroy),,$(TF_INIT_OPTS)) $(2)
+	@if [ "$(1)" = "init" ]; then \
+		cd $(CONFIG_DIR) && $(TERRAFORM) $(1) $(TF_INIT_OPTS) $(2); \
+	elif [ "$(1)" = "apply" ] || [ "$(1)" = "destroy" ]; then \
+		cd $(CONFIG_DIR) && $(TERRAFORM) $(1) $(2); \
+	else \
+		cd $(CONFIG_DIR) && $(TERRAFORM) $(1) $(2); \
+	fi
 endef
 
 # Phony targets for standard Terraform workflow
-.PHONY: init plan apply destroy validate fmt output
+.PHONY: terraform-init terraform-plan terraform-apply terraform-destroy terraform-validate terraform-fmt terraform-output
 
 # Initialize Terraform
-init:
-	@$(call terraform-cmd,init)
+terraform-init:
+	@$(call terraform-cmd,init,$(TF_INIT_OPTS))
 
 # Create a Terraform plan
-plan:
+terraform-plan:
 	@$(call terraform-cmd,plan,$(TF_PLAN_OPTS) -out=$(PLAN))
 
 # Apply a Terraform plan
-apply:
+terraform-apply:
 	@$(call terraform-cmd,apply,$(TF_APPLY_OPTS) $(PLAN))
 
 # Destroy Terraform-managed infrastructure
-destroy:
+terraform-destroy:
 	@$(call terraform-cmd,destroy,$(TF_DESTROY_OPTS))
 
 # Validate Terraform files
-validate:
+terraform-validate:
 	@$(call terraform-cmd,validate)
 
 # Format Terraform files
-fmt:
+terraform-fmt:
 	@$(call terraform-cmd,fmt -recursive)
 
 # Show output
-output:
+terraform-output:
 	@$(call terraform-cmd,output)
 
 # Example usage:
