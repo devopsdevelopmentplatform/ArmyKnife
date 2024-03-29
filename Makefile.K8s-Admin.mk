@@ -78,6 +78,6 @@ secure-access:
 	kubectl apply -f opa_policy.yaml
 
 # Default rule
-all: upgrade-cluster autoscale-custom-metrics gitops-deploy enforce-network-policies cost-optimization manage-multi-cluster implement-service-mesh ai-autoscaling disaster-recovery secure-access
+k8s-all: upgrade-cluster autoscale-custom-metrics gitops-deploy enforce-network-policies cost-optimization manage-multi-cluster implement-service-mesh ai-autoscaling disaster-recovery secure-access
 	@echo "All cutting-edge administrative tasks completed with best practices."
 

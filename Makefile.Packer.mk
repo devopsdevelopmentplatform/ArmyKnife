@@ -15,22 +15,22 @@ define packer-cmd
 endef
 
 # Phony targets for Packer operations
-.PHONY: validate build format inspect
+.PHONY: packer-validate packer-build packer-format packer-inspect
 
 # Validate the Packer template
-validate:
+packer-validate:
 	@$(call packer-cmd,validate)
 
 # Build the image(s) from the Packer template
-build:
+packer-build:
 	@$(call packer-cmd,build)
 
 # Format Packer template files
-format:
+packer-format:
 	@$(call packer-cmd,fmt -recursive $(BUILD_DIR))
 
 # Inspect a Packer template
-inspect:
+packer-inspect:
 	@$(call packer-cmd,inspect)
 
 # Example usage:

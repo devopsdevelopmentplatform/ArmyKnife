@@ -25,6 +25,7 @@ All notable changes to this project will be documented in this file.
 ### Fixed
 - Bug in KubeSpray make target where the script does not have permission on .venv.
 - Line 213 in Vagrantfile for KubeSpray updated host network interface name.
+- Cleaned up all the makefile errors from duplicate targets.
 
 
 

@@ -21,10 +21,10 @@ define RUN_LINT
 endef
 
 # Targets
-.PHONY: lint syntax check deploy
+.PHONY: ansible-lint syntax check deploy
 
 # Linting your playbooks
-lint:
+ansible-lint:
 	@$(call RUN_LINT,.)
 
 # Check the syntax of your playbook

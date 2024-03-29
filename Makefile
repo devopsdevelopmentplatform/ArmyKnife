@@ -1,5 +1,7 @@
 # Parent Makefile for ArmyKnife DevOps CI/CD Framework Development Environment
 
+
+
 include Makefile.Libs.mk # Not tested on MacOS
 include Makefile.Vault.mk # Done
 include Makefile.Git.mk # Done
@@ -17,7 +19,6 @@ include Makefile.CICD.mk
 include Makefile.Setup.mk
 include Makefile.K8s-Admin.mk
 include Makefile.ELK.mk
-include Makefile.Packer.mk
 include Makefile.Security.mk
 
 

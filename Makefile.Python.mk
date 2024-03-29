@@ -28,7 +28,7 @@ format:
 	$(VENV_NAME)/bin/isort .
 
 # Lint code with multiple tools
-lint:
+python-lint:
 	$(VENV_NAME)/bin/pylint $1
 	$(VENV_NAME)/bin/flake8 .
 	$(VENV_NAME)/bin/isort --check-only .
@@ -49,4 +49,4 @@ clean:
 	find . -name "*.pyc" -exec rm {} \;
 	find . -name "__pycache__" -exec rm -r {} \;
 
-.PHONY: all venv setup install format lint test typecheck clean config
+.PHONY: all venv setup install format python-lint test typecheck clean config

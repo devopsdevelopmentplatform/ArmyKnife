@@ -6,66 +6,9 @@ define download_file
 	rm -f $(1)
 endef
 
-.PHONY: check-tools-now configure-minikube kubespray-install cost-optimization
-
-include Makefile.K8s-Admin.mk
+.PHONY: check-tools-now configure-minikube kubespray-install
 
 # Deploy Cost Optimization Tool and get reports from it
-
-cost-optimization:
-	@echo "Optimizing cluster costs..."
-	@make -d -f Makefile.K8s-Admin.mk cost-optimization
-	@echo "Cluster costs optimized."
-
-smoke-test:
-	@echo "Running smoke test..."
-	@make -f Makefile.K8s.mk kubespray-up
-	@make -f Makefile.K8s-Admin.mk smoke-test
-	@echo "Smoke test completed."
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

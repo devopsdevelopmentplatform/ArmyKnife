@@ -59,9 +59,9 @@ setup-vault:
 	@$(MAKE) -d -f Makefile.Vault.mk connect-to-vault
 	@echo "Vault setup completed."
 
-connect-to-vault:
-	@echo "Connecting to Vault"
-	@$(MAKE) -d -f Makefile.Vault.mk connect-to-vault
+# connect-to-vault:
+# 	@echo "Connecting to Vault"
+# 	@$(MAKE) -d -f Makefile.Vault.mk connect-to-vault
 
 ingest-secrets:
 	@echo "Ingesting secrets into Vault"
@@ -179,15 +179,15 @@ build-docker-images-alpine-golang:
 	@$(MAKE) -d -f Makefile.Docker.mk docker-build-alpine-golang
 	@echo "Docker Images built."
 
-build-go-demo-app:
-	@echo "Building Go Demo App"
-	@$(MAKE) -d -f Makefile.Docker.mk build-go-demo-app
-	@echo "Go Demo App built."
+# build-go-demo-app:
+# 	@echo "Building Go Demo App"
+# 	@$(MAKE) -d -f Makefile.Docker.mk build-go-demo-app
+# 	@echo "Go Demo App built."
 
-build-python-demo-app:
-	@echo "Building Python Demo App"
-	@$(MAKE) -d -f Makefile.Docker.mk build-python-demo-app
-	@echo "Python Demo App built."
+# build-python-demo-app:
+# 	@echo "Building Python Demo App"
+# 	@$(MAKE) -d -f Makefile.Docker.mk build-python-demo-app
+# 	@echo "Python Demo App built."
 
 scan-image-with-trivy:
 	@echo "Security Testing Go Demo App"
