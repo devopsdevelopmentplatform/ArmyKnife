@@ -3,14 +3,17 @@
 start:
 	@echo "Starting ELK services..."
 	# Add your start commands here (systemctl or docker-compose)
+	# I'm usiong Bitnami ELK stack
 
 stop:
 	@echo "Stopping ELK services..."
 	# Add your stop commands here (systemctl or docker-compose)
+	# I'm usiong Bitnami ELK stack, so I'm using VirtualBox to stop the VM
 
 status:
 	@echo "Checking status of ELK services..."
 	# Add your status commands here (systemctl, docker ps, or docker-compose)
+	# I'm usiong Bitnami ELK stack
 
 cluster_health:
 	@echo "Checking cluster health..."
