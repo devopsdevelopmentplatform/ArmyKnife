@@ -3,7 +3,8 @@
 ## Project for "Makefiles for Cloud/DevOps Engineers"
 
 ## Exciting Overview
-Dive into the cutting-edge world of DevOps with ArmyKnife, an innovative, open-source project meticulously designed to empower DevOps engineers. ArmyKnife offers a robust, self-contained development environment that revolutionizes the way tools and scripts are developed and tested. Say goodbye to the dependency on cloud or production resources! Crafted with precision, ArmyKnife unfolds in three distinct tiers, each tier specifically architected to streamline management and support, ushering in a new era of efficient and optimized DevOps practice.
+Dive into the cutting-edge world of DevOps with ArmyKnife, an innovative, open-source project meticulously designed to empower DevOps engineers. ArmyKnife offers a robust, self-contained development environment that revolutionizes the way tools and scripts are developed and tested. Say goodbye to the dependency on cloud or production resources! Crafted with precision, ArmyKnife unfolds in three distinct tiers, each tier specifically architected to streamline management and support, ushering in a new era of efficient and optimized DevOps practice. We cover all five areas of IaC. Ad-Hoc Scripts, Configuration Managment tools, Server Templating Tools,
+Orchestration Tools, and Provisioning Tools.
 
 ## Transformative Features
 
