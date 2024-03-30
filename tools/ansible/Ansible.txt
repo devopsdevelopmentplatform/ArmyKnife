@@ -1,0 +1,31 @@
+Setup a new VBox with the same script you used to create the Ansible control server.
+
+python3 community/python/create_server_ubuntu.py --name ubuntu --memory 2048 --cpu 2 --disk 24096 --os Ubuntu_64 --user ubuntu --folder ubuntu
+
+Then scp the armyknife priveate key to the ansible control server. It is in a folder under keys. ArmyKnife/keys/armyknife.
+
+Copy armyknife to ~/.ssh/armyknife
+chmod 0600 ~/.ssh/armyknife
+eval $(ssh-agent -s)
+ssh-add ~/.ssh/armyknife
+cd /etc/ansible
+
+cat hosts
+
+[all]
+localhost ansible_connection=local
+
+[ubuntu]
+ubuntu ansible_host=10.0.0.97
+
+[all:vars]
+ansible_user=ansible
+ansible_become=yes
+ansible_become_method=sudo
+ansible_python_interpreter=/usr/bin/python3
+ansible_ssh_private_key_file=/home/development/.ssh/armyknife
+
+
+ansible ubuntu -i hosts -m ping   
+
+
