@@ -31,8 +31,6 @@ packages:
   - cloud-guest-utils
   - cloud-image-utils
   - make
-  - lightdm
-  - ubuntu-gnome-desktop
   - curl
   - dnsutils
   - docker-ce

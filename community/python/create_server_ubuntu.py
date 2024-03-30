@@ -99,7 +99,7 @@ def create_vbox_server(name, memory, cpu, disk, os, user, user_data_path, meta_d
     subprocess.run(['VBoxManage', 'createvm', '--name', name, '--ostype', os, '--register'])
 
     # Modify Virtualbox server
-    subprocess.run(['VBoxManage', 'modifyvm', name, '--memory', memory, '--cpus', cpu, '--nic1', "bridged", '--bridgeadapter1', "wlp4s0", '--nic2', "bridged", '--bridgeadapter2', "wlp4s0"])
+    subprocess.run(['VBoxManage', 'modifyvm', name, '--memory', memory, '--cpus', cpu, '--nic1', "bridged", '--bridgeadapter1', "eno1", '--nic2', "bridged", '--bridgeadapter2', "eno1"])
 
     # Modify Virtualbox to turn on nested hardware virtualization
     subprocess.run(['VBoxManage', 'modifyvm', name, '--nested-hw-virt', 'on'])

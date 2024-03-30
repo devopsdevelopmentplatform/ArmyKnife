@@ -15,6 +15,8 @@ All notable changes to this project will be documented in this file.
 - Added more DevSecOps security scans to test before moving to CICD.
 - Added scanning with dockle and fixed trivy scanner.
 - Added Dockerfile linter called hadolint
+- Line 102 needs to be updated for each person so it points to the correct network interface.
+  ArmyKnife/community/python/create_server_ubuntu.py
 
 ### Changed
 - Changed KubeSpray from host-only network to bridged. 
