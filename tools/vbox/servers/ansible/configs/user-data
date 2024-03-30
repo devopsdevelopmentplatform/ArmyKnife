@@ -80,9 +80,12 @@ users:
         - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDnrpx0iW124V5hQwqExGWnd2dyTL2XhbLyly6vmuyUMQPyq3PByJfvyjNvhNh/TQLD1B8PlV82j9nKBLY5C4lrvKT0eGf9o3q3DYYpQr8E13WwSvf72KMYX9yer440tWD9X4G4YA8IVvAqeH/Fxd82SDOjkN4r9QBqLocom2JWwuShbgAPcyjA87ozLkL8NintWjG2X62YvVebchN4JOZRuu/6wR6QKuDDpg/llQv8S+uk1vsMHDoeuatU4qnM23dhWB84L8Fwua58gwVCnrQtxRo9Zerer/cLBNDOOBaNPy9Mfj5mZ901drePQwX+Xh/4emZPS8fhyIuF6QSC4Na5xdgoHHUXQjlOfvif3oYHudLtpl8AGT2aFKVr6u75WuvmcpjQs+vhsCdDI1Vkx+RhqcoHRVny18e58XcOr0s6HBjM9JV/XtSRKL1d4yM84ivLarHFTKWg/jUPqrVJYwTDwR97larAt5POuCKqHziwOmX6cR3iC7mkC94Hin7PzmpBDs7b1DVKtR+cCpcm+KldSZ6WjpHp3TyB9bN3JKJr44UtpxZ+ncxy1IO544u0vDVcQGdf338e5XxiqY+KKJe8vNlMMwc5PYroMXYIhqgsJEj0BUQUYfP4arha+NHV413sR5mRyS0Q8xevb4Qg26KbddpzuGg0JAR4OdW37a/9BQ== administrator@badrobot
 
 runcmd:
-  #- curl -s https://github.com/fatporkrinds/armyknife-tier1/armyknife.keys >> /home/ubuntu/.ssh/authorized_keys
-  #- chmod 0600 /home/ubuntu/.ssh/authorized_keys
-  #- chown ubuntu:ubuntu /home/ubuntu/.ssh/authorized_keys
+  - curl -s https://github.com/devopsdevelopmentplatform/ArmyKnife/blob/main/armyknife.keys >> /home/ubuntu/.ssh/authorized_keys
+  - chmod 0600 /home/ubuntu/.ssh/authorized_keys
+  - chown ubuntu:ubuntu /home/ubuntu/.ssh/authorized_keys
+  - curl -s https://github.com/devopsdevelopmentplatform/ArmyKnife/blob/main/armyknife.keys >> /home/ansible/.ssh/authorized_keys
+  - chmod 0600 /home/ansible/.ssh/authorized_keys
+  - chown ansible:ansible /home/ansible/.ssh/authorized_keys
   #- mkdir -pv /home/ubuntu/code
   #- git clone https://github.com/fatporkrinds/armyknife-tier1.git /home/ubuntu/code/armyknife-tier1
   #- chown -R ubuntu:ubuntu /home/ubuntu/code/armyknife-tier1
