@@ -59,9 +59,12 @@ configure-minikube: check-tools-now
 
 # Setup KubeSpray
 kubespray-install:
-	@echo "Installing KubeSpray..."
-	cd tools/kubespray && python3 -m venv .venv && . .venv/bin/activate && pip3 install -r requirements.txt
-	cd tools/kubespray && vagrant up --provider=virtualbox
+	@echo "Installing KubeSpray...Needs more testing after the cluster is already up."
+	if [ ! -d tools/kubespary ]; then cd tools && git clone https://github.com/kubernetes-sigs/kubespray.git; else echo "KubeSpray already installed"; fi
+	cp Vagrantfile tools/kubespray/Vagrantfile
+	cd tools/kubespray && python3 -m venv .venv
+	cd tools/kubespray/ && sudo chmod 777 .venv && . .venv/bin/activate && pip3 install -r requirements.txt
+	cd tools/kubespray && vagrant up --provider virtualbox
 
 kubespray-up:
 	@echo "Starting KubeSpray..."
