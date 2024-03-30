@@ -1,10 +1,46 @@
 # ArmyKnife DevOps CI/CD Framework Development Environment Tier1
 ![ArmyKnife Logo](ArmyKnife.png)
+
+[![GitHub license](https://img.shields.io/github/license/devopsdevelopmentplatform/repository.svg)](https://github.com/username/repository/blob/master/LICENSE)
+[![GitHub issues](https://img.shields.io/github/issues/devopsdevelopmentplatform/repository.svg)](https://github.com/username/repository/issues)
+[![GitHub stars](https://img.shields.io/github/stars/devopsdevelopmentplatform/repository.svg)](https://github.com/username/repository/stargazers)
+
+
 ## Project for "Makefiles for Cloud/DevOps Engineers"
 
 ## Exciting Overview
 Dive into the cutting-edge world of DevOps with ArmyKnife, an innovative, open-source project meticulously designed to empower DevOps engineers. ArmyKnife offers a robust, self-contained development environment that revolutionizes the way tools and scripts are developed and tested. Say goodbye to the dependency on cloud or production resources! Crafted with precision, ArmyKnife unfolds in three distinct tiers, each tier specifically architected to streamline management and support, ushering in a new era of efficient and optimized DevOps practice. We cover all five areas of IaC. Ad-Hoc Scripts, Configuration Managment tools, Server Templating Tools,
 Orchestration Tools, and Provisioning Tools.
+
+Here is the short list of tools we are presenting in this platform. This will probably change but here it is for now. 
+
+1. **Ansible**: Ansible is a powerful automation tool that simplifies the process of managing configurations and orchestrating deployments across various systems. Its importance in DevOps lies in its ability to streamline repetitive tasks, enforce consistency in infrastructure, and facilitate continuous delivery. By utilizing Ansible within ArmyKnife, users can learn how to automate provisioning, configuration management, and application deployment, thus enhancing their efficiency as DevOps practitioners.
+
+2. **Continuous Integration and Continuous Deployment (CICD) Platforms**: Platforms like GitHub Actions, GitHub, Jenkins, and Bitbucket are essential components of a DevOps pipeline, enabling seamless integration, testing, and deployment of code changes. ArmyKnife provides comprehensive guidance and examples on configuring and optimizing CICD workflows using these platforms, empowering users to implement efficient automation practices and foster collaboration within their teams.
+
+3. **Docker**: Docker revolutionized the way applications are deployed and managed by providing lightweight, portable containers. In the context of DevOps, Docker facilitates consistent environments across development, testing, and production, leading to smoother workflows and faster deployments. ArmyKnife equips users with the knowledge and tools to leverage Docker for containerization, enabling them to build, ship, and run applications efficiently in any environment.
+
+4. **ELK Stack**: The ELK (Elasticsearch, Logstash, Kibana) Stack is a powerful combination of tools for log management and analytics. DevOps teams rely on ELK for monitoring and troubleshooting applications, infrastructure, and security incidents. ArmyKnife offers guidance on setting up and configuring the ELK Stack, enabling users to gain valuable insights into their systems and improve their overall operational efficiency.
+
+5. **Geodesic**: Geodesic is a cloud automation shell that provides a consistent environment for DevOps workflows across different cloud providers. By incorporating Geodesic into ArmyKnife, users can learn how to standardize their development and deployment processes, ensuring portability and scalability across diverse cloud environments.
+
+6. **Git and Source Code Management**: Git is the de facto standard for version control and source code management in DevOps. ArmyKnife emphasizes the importance of Git proficiency for collaboration, versioning, and tracking changes in codebases. Through comprehensive tutorials and examples, users can master Git workflows and best practices, fostering efficient collaboration and code management within their teams.
+
+7. **Kubernetes (K8s) Clusters**: Kubernetes has become the industry standard for container orchestration, enabling automated deployment, scaling, and management of containerized applications. ArmyKnife provides comprehensive resources for setting up and managing Kubernetes clusters, empowering users to harness the full potential of containerization and microservices architecture in their DevOps workflows.
+
+8. **Packer from HashiCorp**: Packer is a tool for creating identical machine images for multiple platforms from a single source configuration. ArmyKnife demonstrates the importance of Packer in building consistent, reproducible infrastructure images, which are essential for maintaining uniformity across development, testing, and production environments.
+
+9. **Python**: Python is a versatile programming language widely used in DevOps for automation, scripting, and building infrastructure as code. ArmyKnife offers tutorials and examples on using Python for various DevOps tasks, empowering users to automate workflows, develop custom tooling, and integrate with other technologies effectively.
+
+10. **DevSecOps**: DevSecOps integrates security practices into the DevOps pipeline, ensuring that security is built into every stage of the software development lifecycle. ArmyKnife promotes a security-first mindset by providing guidance on implementing security controls, vulnerability scanning, and compliance automation within DevOps workflows, thus fostering a culture of continuous security improvement.
+
+11. **Terraform**: Terraform is a popular infrastructure as code tool for provisioning and managing cloud resources. ArmyKnife demonstrates the importance of Terraform in achieving infrastructure automation, enabling users to define infrastructure configurations as code and provision resources reliably across different cloud platforms.
+
+12. **Vagrant**: Vagrant simplifies the setup and management of development environments by providing lightweight, reproducible VMs. ArmyKnife showcases the versatility of Vagrant for creating consistent development environments, enabling users to quickly spin up isolated environments for testing and development purposes.
+
+13. **Vault from HashiCorp**: Vault is a tool for managing secrets and protecting sensitive data in modern infrastructure. ArmyKnife highlights the critical role of Vault in securing credentials, API keys, and other sensitive information, empowering users to implement robust security practices and compliance standards within their DevOps workflows.
+
+14. **VirtualBox**: VirtualBox is a powerful virtualization platform that enables users to run multiple operating systems on a single host machine. ArmyKnife demonstrates the utility of VirtualBox for creating isolated development environments, enabling users to experiment, test, and debug their applications in a controlled environment before deployment.
 
 ## Transformative Features
 
@@ -23,34 +59,4 @@ Orchestration Tools, and Provisioning Tools.
 - Embrace the full ArmyKnife experience on Intel-based Mac or Ubuntu systems. While Arm-based Macs are compatible with most features, Virtualbox exclusions apply. Vagrant offers a seamless alternative for these cases.
 
 1. Login to your Docker Hub account so you can push images.
-2. Copy env_sample.txt to .env and fill out settings so you can run the setup-git make target.
-3. After setup-workstation is completed install ansible with brew.
-4. Before running kubespray update the subnet in the Vagrantfile to match yours. Line 53
-5. Before running Kubespary update line 213 with your network interface ip range. mine is 192.168.1
-
-### Quick Installation Guide
-1. Kickstart your journey by forking the repository.
-2. Transition `env_sample.txt` to `.env` and infuse it with your GitHub essence.
-3. Secure your vault's root and unseal tokens, crucial keys to your ArmyKnife kingdom.
-4. Forge a GitHub Personal Access Token (PAT) to unlock the full potential of your development environment.
-5. Embrace the ethos of ArmyKnife by forking the repository, crafting a domain for your scripts within the communal and personal script sanctuaries.
-6. Stay connected with the source of ArmyKnife's evolution by setting an upstream to the original repository.
-7. Navigate the beta waters of ArmyKnife, where complexity and size birth groundbreaking opportunities and challenges alike.
-8. Initiate your conquest with `make import_ova`, summoning the Bitnami VirtualBoxes to your realm.
-9. Prioritize the ELK server's ascent, a beacon that illuminates the path by capturing logs across servers, simplifying the troubleshooting odyssey.
-
-## Usage Unleashed
-ArmyKnife is not just a tool; it's your DevOps ally. With comprehensive guides on harnessing its power for everyday tasks, your journey from novice to guru is just beginning.
-
-## Contribute to the Evolution
-Join the vibrant ArmyKnife community in its continuous quest for improvement. Your contributions, whether code, documentation, or ideas, fuel the project's relentless innovation.
-
-## Unrivaled Support and Enlightenment
-- Encounter a challenge? The ArmyKnife community is here to help. Reach out through our GitHub issue tracker.
-- Seek wisdom? Our documentation is a treasure trove of knowledge, waiting to be explored.
-
-## License to Innovate
-ArmyKnife is your canvas, offered under a license that encourages innovation. Dive into the details in our [LICENSE](LICENSE) document.
-
-## A Tribute to Pioneers
-In our journey, we stand on the shoulders of giants. ArmyKnife is a testament to the spirit of collaboration and innovation, acknowledging every contributor and third-party library that has illuminated our path.
+2. Copy `env_sample

@@ -21,6 +21,7 @@ All notable changes to this project will be documented in this file.
 - Updated subnet to mine 192.168.1 yours might be different Line 53 in Vagrantfile
 - Changed from ubuntu 20.04 to 22.04
 - Disabled IPV6 in the Vagrantfile
+- Removed the Kubespray repo from the Armyknife repo to make it more dynamic and footprint smaller.
 
 ### Fixed
 - Bug in KubeSpray make target where the script does not have permission on .venv.
