@@ -1,0 +1,9 @@
+nginx_user: nginx
+nginx_worker_processes: 1
+nginx_error_log_path: "/var/log/nginx/error.log"
+nginx_access_log_path: "/var/log/nginx/access.log"
+nginx_listen_port: 8080
+nginx_package_name: nginx
+nginx_config_src: nginx.conf
+nginx_config_dest: /etc/nginx/sites-available/default
+nginx_html_dest: /usr/share/nginx/html/index.html

@@ -1,0 +1,30 @@
+- name: Configure webserver with nginx
+  hosts: ubuntu
+  become: True
+  tasks:
+    - name: Ensure nginx is installed
+      package:
+        name: "{{ nginx_package_name }}"
+        update_cache: yes
+
+    - name: Copy nginx config file
+      copy:
+        src: "{{ nginx_config_src }}"
+        dest: "{{ nginx_config_dest }}"
+
+    - name: Manage configuration
+      file:
+        dest: "/etc/nginx/sites-enabled/default"
+        src: "{{ nginx_config_dest }}"
+        state: link
+
+    - name: Copy home page template
+      template:
+        src: "index.html.j2"
+        dest: "{{ nginx_html_dest }}"
+
+    - name: Restart nginx
+      service:
+        name: nginx
+        state: restarted
+
