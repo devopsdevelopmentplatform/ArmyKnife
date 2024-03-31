@@ -4,7 +4,7 @@ localhost ansible_connection=local
 
 
 [all:vars]
-ansible_user=bitnami
+ansible_user=ansible
 ansible_become=yes
 ansible_become_method=sudo
 ansible_python_interpreter=/usr/bin/python3
@@ -17,7 +17,11 @@ gitea ansible_host=10.0.0.190
 
 
 [logging]
-elk ansible_host=10.0.0.137
+ansible ansible_host=10.0.0.97
+ubuntu ansible_host=10.0.0.185
+
+[elkstack]
+elk ansible_host=10.0.0.12 ansible_user=bitnami
 
 [development]
 badrobot ansible_host=10.0.0.174

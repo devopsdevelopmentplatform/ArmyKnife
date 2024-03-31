@@ -1,12 +1,12 @@
 ---
 - name: Install and Configure Filebeat
-  hosts: all   
+  hosts: logging   
   become: true  
 
   tasks:
     - name: Download and Install Filebeat
       get_url:
-        url: https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-7.17.0-amd64.deb  
+        url: https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-7.17.10-amd64.deb  
         dest: /tmp/filebeat.deb
         mode: 0644
       register: download_result
