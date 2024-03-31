@@ -17,6 +17,7 @@ All notable changes to this project will be documented in this file.
 - Added Dockerfile linter called hadolint
 - Line 102 needs to be updated for each person so it points to the correct network interface.
   ArmyKnife/community/python/create_server_ubuntu.py
+- Added Ansible best practices template
 
 ### Changed
 - Changed KubeSpray from host-only network to bridged. 
