@@ -1,0 +1,42 @@
+---
+- name: Configure Bitnami ELK VirtualBox
+  hosts: elkservers
+  become: yes
+  vars:
+    config_file: /opt/bitnami/elasticsearch/config/elasticsearch.yml
+    nftables_conf: /etc/nftables.conf
+
+  tasks:
+    - name: Ensure nftables is installed
+      apt:
+        name: nftables
+        state: present
+
+    - name: Deploy updated elasticsearch.yml
+      ansible.builtin.template:
+        src: templates/elasticsearch.yml.j2
+        dest: "{{ config_file }}"
+
+    - name: Disable IPv6
+      ansible.builtin.sysctl:
+        name: net.ipv6.conf.all.disable_ipv6
+        value: '1'
+        state: present
+        reload: yes
+
+    - name: Update nftables configuration to include port 9200
+      ansible.builtin.lineinfile:
+        path: "{{ nftables_conf }}"
+        regexp: '^.*tcp dport { 22, 80, 443 }.*$'
+        line: 'tcp dport { 22, 80, 443, 9200 } accept'
+        state: present
+
+    - name: Restart nftables to apply changes
+      ansible.builtin.service:
+        name: nftables
+        state: restarted
+
+    - name: Start nftables service if not running
+      ansible.builtin.service:
+        name: nftables
+        state: started

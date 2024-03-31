@@ -1,0 +1,8 @@
+filebeat.inputs:
+  - type: log
+    paths:
+      - /var/log/*.log   # Example paths to log files you want to collect
+
+output.elasticsearch:
+  hosts: ["http://10.0.0.12:9200"]   # Replace with your Elasticsearch server's address
+

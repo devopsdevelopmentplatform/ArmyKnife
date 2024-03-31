@@ -1,0 +1,9 @@
+nginx_user: www-data
+nginx_worker_processes: "{{ ansible_processor_vcpus }}"
+nginx_error_log_path: "/var/log/nginx/error.log"
+nginx_access_log_path: "/var/log/nginx/access.log"
+nginx_listen_port: 80
+nginx_ssl_certificate: "/etc/ssl/certs/nginx.crt"
+nginx_ssl_certificate_key: "/etc/ssl/private/nginx.key"
+nginx_ssl_dhparam_path: "/etc/ssl/certs/dhparam.pem"
+

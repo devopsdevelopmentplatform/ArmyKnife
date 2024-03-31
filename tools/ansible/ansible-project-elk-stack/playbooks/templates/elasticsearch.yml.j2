@@ -1,0 +1,22 @@
+# elasticsearch.yml.j2
+http:
+  port: "9200"
+path:
+  data: /bitnami/elasticsearch/data
+transport:
+  port: "9300"
+network:
+  host: 0.0.0.0
+  publish_host: "{{ ansible_default_ipv4.address }}" 
+  bind_host: 0.0.0.0
+node:
+  name: debian
+discovery:
+  type: single-node
+action:
+  destructive_requires_name: "true"
+xpack:
+  security:
+    enabled: "false"
+  ml:
+    enabled: "false"

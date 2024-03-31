@@ -1,0 +1,60 @@
+---
+- name: Install and Configure Filebeat
+  hosts: logging
+  become: true
+
+  vars:
+    tmp_dir: "/tmp/ansible/ansible"
+
+  tasks:
+    - name: Copy Filebeat package to remote hosts
+      ansible.builtin.copy:
+        src: files/filebeat.deb
+        dest: "{{ tmp_dir }}/filebeat.deb"
+      register: copy_result
+
+    - name: Ensure the target directory exists
+      ansible.builtin.file:
+        path: /tmp/ansible/ansible
+        state: directory
+        mode: '0755'
+
+
+    - name: List files in /tmp/root/ansible
+      ansible.builtin.command:
+        cmd: ls -la /tmp/ansible/ansible
+      register: ls_result
+      ignore_errors: true
+
+    - name: Show ls_result
+      ansible.builtin.debug:
+        var: ls_result.stdout_lines
+
+    - name: Directly list files in the target directory
+      ansible.builtin.command:
+        cmd: ls -la /tmp/ansible/ansible
+      register: ls_direct
+      ignore_errors: true
+
+    - name: Show direct listing results
+      ansible.builtin.debug:
+        var: ls_direct.stdout_lines
+
+
+    - name: Install Filebeat
+      ansible.builtin.apt:
+        deb: "{{ tmp_dir }}/filebeat.deb"
+      when: copy_result.changed
+
+    - name: Configure Filebeat
+      ansible.builtin.template:
+        src: templates/filebeat-config.yml.j2
+        dest: /etc/filebeat/filebeat.yml
+
+    - name: Start and Enable Filebeat
+      ansible.builtin.systemd:
+        name: filebeat
+        enabled: yes
+        state: started
+
+
