@@ -1,0 +1,33 @@
+---
+- hosts: webservers
+  tasks:
+    - name: Install apache2
+      apt:
+        name: apache2
+        state: present
+    - name: Start apache2
+      service:
+        name: apache2
+        state: started
+    - name: Enable apache2
+      service:
+        name: apache2
+        enabled: yes
+
+
+- hosts: dbservers
+  tasks:
+    - name: Install mysql-server
+      apt:
+        name: mysql-server
+        state: present
+    - name: Start mysql-server
+      service:
+        name: mysql
+        state: started
+    - name: Enable mysql-server
+      service:
+        name: mysql
+        enabled: yes
+
+  

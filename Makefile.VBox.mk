@@ -43,5 +43,6 @@ import-ovas:
 # Target to run the setup script
 run-vbox-setup-script:
 	@echo "Running VM setup script for $(VM_NAME)"
-	python3 community/python/create_server_ubuntu.py --name ansible --memory 2048 --cpu 1 --disk 10096 --os Ubuntu_64 --user ansible --folder ansible 
-	# python3 community/python/create_server_ubuntu.py --name ansible --memory 4096 --cpu 2 --disk 124096 --os Ubuntu_64 --user ubuntu --folder ansible
+	#python3 community/python/create_server_ubuntu.py --name ansible --memory 2048 --cpu 1 --disk 10096 --os Ubuntu_64 --user ansible --folder ansible 
+	#python3 community/python/create_server_ubuntu.py --name ansible --memory 4096 --cpu 2 --disk 124096 --os Ubuntu_64 --user ansible --folder ansible
+	python3 community/python/create_server_ubuntu.py --name server01 --memory 2048 --cpu 1 --disk 10096 --os Ubuntu_64 --user ubuntu --folder server01

@@ -1,0 +1,3 @@
+---
+ntp_server: ntp.sydney.example.com
+proxy_server: proxy.sydney.example.com
