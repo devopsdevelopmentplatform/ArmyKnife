@@ -18,6 +18,7 @@ tools/vagrant/.vagrant
 keys/
 tools/vbox/ova/
 tools/vbox/servers/ansible/images/
+tools/vbox/servers/server01/images/
 tools/vagrant/.vagrant/plugins/
 tools/vagrant/.vagrant/machines/
 tools/vagrant/.vagrant/
