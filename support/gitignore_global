@@ -13,12 +13,19 @@ Thumbs.db
 
 # Linux system files
 *~
- .env
- tools/vagrant/.vagrant
- keys/
- tools/vbox/ova/
- tools/vbox/servers/ansible/images/
-
+.env
+tools/vagrant/.vagrant
+keys/
+tools/vbox/ova/
+tools/vbox/servers/ansible/images/
+tools/vagrant/.vagrant/plugins/
+tools/vagrant/.vagrant/machines/
+tools/vagrant/.vagrant/
+tools/vbox/servers/ubuntu/images
+tools/kubespray/
+*.tfplan
+.terraform
+.terraform.lock.hcl
 # Python files
 __pycache__/
 *.py[cod]
