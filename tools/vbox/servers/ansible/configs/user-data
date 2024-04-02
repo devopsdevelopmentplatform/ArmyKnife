@@ -4,7 +4,7 @@ output: {all: '| tee -a /var/log/cloud-init.log'}   # store logs inside vm
 
 timezone: "America/Chicago"
 
-hostname: ubuntu
+hostname: ansible
 
 package_update: true
 package_upgrade: true
