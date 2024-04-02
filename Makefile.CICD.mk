@@ -5,6 +5,7 @@ DOCKER_REGISTRIES=docker.io quay.io
 VAULT_ADDR=HTTP://127.0.0.1:8200
 
 # Include Vault token from .env file
+# Copy example file env_sample.txt to .env before running setup
 include .env
 export
 
