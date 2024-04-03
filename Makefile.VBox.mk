@@ -31,7 +31,8 @@ import-ovas:
 	@cd $(OVA_DIR) && wget https://bitnami.com/redirect/to/2407501/bitnami-gitlab-ce-16.7.0-ce.0-r0-debian-11-amd64.ova && \
   wget https://bitnami.com/redirect/to/2408461/bitnami-gitea-1.21.3-r1-debian-11-amd64.ova && \
   wget https://bitnami.com/redirect/to/2407822/bitnami-jenkins-2.426.2-r1-debian-11-amd64.ova && \
-  wget https://bitnami.com/redirect/to/2409741/bitnami-elk-8.11.4-r0-debian-11-amd64.ova
+  wget https://bitnami.com/redirect/to/2409741/bitnami-elk-8.11.4-r0-debian-11-amd64.ova && \
+  wget https://bitnami.com/redirect/to/2442668/bitnami-harbor-2.10.1-r0-debian-12-amd64.ova
 	@echo "Importing OVA files from $(OVA_DIR)"
 	@for ova in $(OVA_DIR)/*.ova; do \
 		vmname=$$(basename "$$ova" .ova)-$(SUFFIX); \
