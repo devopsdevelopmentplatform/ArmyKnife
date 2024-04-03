@@ -1,5 +1,5 @@
 # Makefile.Registry.mk
-
+# docker login  localhost:5000 -u armyknife-user -p armyknife
 # Variable Definitions
 DOCKER_REGISTRY_DIR := Docker_Registry
 HTPASSWD_FILE := $(DOCKER_REGISTRY_DIR)/auth/htpasswd
