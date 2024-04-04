@@ -64,3 +64,5 @@ Here is the short list of tools we are presenting in this platform. This will pr
 4. You may have to run make setup-workstation several times because of the configuration that is added to ~/.bashrc
 5. Reboot to enable docker and a few other settings.
 6. Run make help to run some of the tools
+7. Make sure to fill out your username and email before running make git-setup
+8. Working on documenting install orders so that dependencies are satisfied. For example, install the local docker registry before building docker images.
