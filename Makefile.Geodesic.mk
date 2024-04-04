@@ -1,7 +1,7 @@
 # Makefile.Docker.mk
 
 # Variables
-IMAGE_NAME := fatporkrinds/frisbee
+IMAGE_NAME := localhost:5000/frisbee
 TAG := latest
 DOCKERFILE_DIR := tools/geodesic
 ORG_IMAGE_NAME := cloudposse/geodesic
@@ -12,7 +12,7 @@ DOCKERFILE_DIR := tools/geodesic
 #BUILD_CMD := docker build -t $(IMAGE_NAME):$(TAG) -f $(DOCKERFILE_DIR)/Dockerfile.debian .
 BUILD_CMD := make all
 #TAG_CMD := docker tag $(ORG_IMAGE_NAME):$(ORGTAG) $(IMAGE_NAME):$(TAG)
-TAG_CMD := docker tag cloudposse/geodesic:dev fatporkrinds/frisbee:latest
+TAG_CMD := docker tag cloudposse/geodesic:dev localhost:5000/frisbee:latest
 PUSH_CMD := docker push $(IMAGE_NAME):$(TAG)
 
 # Default target
