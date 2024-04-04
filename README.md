@@ -62,3 +62,5 @@ Here is the short list of tools we are presenting in this platform. This will pr
 2. Copy `env_sample to .env so that the makefiles can find your secrets file
 3. run make setup-workstation
 4. You may have to run make setup-workstation several times because of the configuration that is added to ~/.bashrc
+5. Reboot to enable docker and a few other settings.
+6. Run make help to run some of the tools
