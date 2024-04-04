@@ -59,4 +59,5 @@ Here is the short list of tools we are presenting in this platform. This will pr
 - Embrace the full ArmyKnife experience on Intel-based Mac or Ubuntu systems. While Arm-based Macs are compatible with most features, Virtualbox exclusions apply. Vagrant offers a seamless alternative for these cases.
 
 1. Login to your Docker Hub account so you can push images.
-2. Copy `env_sample
+2. Copy `env_sample to .env so that the makefiles can find your secrets file
+3. run make setup-workstation
