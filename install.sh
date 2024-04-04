@@ -1,3 +1,4 @@
+# Warning!! This script is not tested and should be used with caution.
 #!/bin/bash
 
 # Ensure Make is installed
