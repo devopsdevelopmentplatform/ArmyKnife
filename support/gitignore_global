@@ -24,6 +24,7 @@ tools/vagrant/.vagrant/machines/
 tools/vagrant/.vagrant/
 tools/vbox/servers/ubuntu/images
 tools/kubespray/
+Docker_Registry/
 *.tfplan
 .terraform
 .terraform.lock.hcl
