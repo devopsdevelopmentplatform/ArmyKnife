@@ -3,6 +3,7 @@ VAGRANT := vagrant
 VAGRANT_FILE := tools/vagrant/Vagrantfile
 BOXES := $(wildcard $(VAGRANT_FILE).*)
 LOCATION := tools/vagrant
+K8S_LOCATION := tools/kubespray
 BOX := jammy
 
 # Phony Targets
