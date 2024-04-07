@@ -20,6 +20,12 @@ include Makefile.Setup.mk
 include Makefile.K8s-Admin.mk
 include Makefile.ELK.mk
 include Makefile.Security.mk
+include Makefile.BashLib.mk
+include Makefile.Registry.mk
+
+
+
+
 
 
 
