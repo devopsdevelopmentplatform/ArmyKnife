@@ -62,9 +62,25 @@ kubespray-install:
 	@echo "Installing KubeSpray...Needs more testing after the cluster is already up."
 	if [ ! -d tools/kubespary ]; then cd tools && git clone https://github.com/kubernetes-sigs/kubespray.git; else echo "KubeSpray already installed"; fi
 	cp Vagrantfile tools/kubespray/Vagrantfile
-	cd tools/kubespray && python3 -m venv .venv
-	cd tools/kubespray/ && sudo chmod 777 .venv && . .venv/bin/activate && pip3 install -r requirements.txt
-	cd tools/kubespray && vagrant up --provider virtualbox
+	cd tools/kubespray && python3 -m venv .venv && sudo chmod 777 .venv && . .venv/bin/activate && pip3 install -r requirements.txt && vagrant up --provider virtualbox
+
+
+# Setup KubeSpray
+# kubespray-install:
+# 	@echo "Installing KubeSpray...Needs more testing after the cluster is already up."
+# 	if [ ! -d tools/kubespary ]; then cd tools && git clone https://github.com/kubernetes-sigs/kubespray.git; else echo "KubeSpray already installed"; fi
+# 	cp Vagrantfile tools/kubespray/Vagrantfile
+# 	cd tools/kubespray && python3 -m venv .venv
+# 	cd tools/kubespray/ && sudo chmod 777 .venv
+# 	@if . tools/kubespray/.venv/bin/activate && pip3 --version; then \
+# 		echo "Virtual environment activated successfully."; \
+# 		pip3 install -r requirements.txt; \
+# 	else \
+# 		echo "Failed to activate virtual environment. Retrying..."; \
+# 		. tools/kubespray/.venv/bin/activate && pip3 install -r requirements.txt; \
+# 	fi
+# 	cd tools/kubespray && vagrant up --provider virtualbox
+
 
 kubespray-up:
 	@echo "Starting KubeSpray..."
