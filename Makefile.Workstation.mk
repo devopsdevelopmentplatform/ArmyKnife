@@ -201,42 +201,42 @@ install-docker-ubuntu:
 #setup-macos: setup-homebrew install-common-packages setup-dotfile-manager install-python-tools install-kubernetes-tools install-github-cli install-vscode install-essential-dev-tools update-shell-config install-amix-vimrc install-oh-my-zsh install-go-support-tools install-rust-support-tools	
 setup-macos: setup-homebrew update-shell-config install-common-packages install-kubernetes-tools install-github-cli setup-dotfile-manager install-essential-dev-tools install-amix-vimrc install-go-support-tools install-rust-support-tools install-oh-my-bash 
 # Main target for setting up the development workstation on Ubuntu
-setup-ubuntu: ubuntu-setup-packages setup-homebrew update-shell-config install-common-packages setup-dotfile-manager install-kubernetes-tools install-github-cli install-essential-dev-tools install-full-vim-ubuntu install-oh-my-bash install-go-support-tools install-rust-support-tools install-docker-ubuntu update-shell-config
+setup-ubuntu: ubuntu-setup-packages setup-homebrew update-shell-config install-common-packages setup-dotfile-manager install-kubernetes-tools install-github-cli install-essential-dev-tools install-full-vim-ubuntu install-oh-my-bash install-go-support-tools install-rust-support-tools install-docker-ubuntu update-shell-config setup-vscode
 
-setup-linux:
+setup-vscode:
 	@echo "Setting up Linux Workstation..."
 	@echo "--------------------------------------------------------------------------------"
 	@echo " ArmyKnife DevOps CI/CD Framework Development Environment Setup for Linux"
 	@echo "--------------------------------------------------------------------------------"
 	@echo "--------------------------------------------------------------------------------"
 	@echo "Installing OS packages and Oh My Zsh..."
-	@$(MAKE) -f Makefile.Workstation.mk ubuntu-setup-packages
-	@$(MAKE) -f Makefile.Workstation.mk install-oh-my-bash
-	@$(MAKE) -f Makefile.Workstation.mk setup-homebrew
+	# Not needed @$(MAKE) -f Makefile.Workstation.mk ubuntu-setup-packages
+	# Not needed @$(MAKE) -f Makefile.Workstation.mk install-oh-my-bash
+	# Not needed @$(MAKE) -f Makefile.Workstation.mk setup-homebrew
 	@echo "--------------------------------------------------------------------------------"
 	@echo "Installing essential development tools..."
-	@$(MAKE) -f Makefile.Workstation.mk install-essential-dev-tools
+	# Not needed @$(MAKE) -f Makefile.Workstation.mk install-essential-dev-tools
 	@echo "--------------------------------------------------------------------------------"
 	@echo "Installing common packages..."
-	@$(MAKE) -f Makefile.Workstation.mk install-common-packages
+	# Not needed @$(MAKE) -f Makefile.Workstation.mk install-common-packages
 	@echo "--------------------------------------------------------------------------------"
 	@echo "Installing dotfile manager..."
-	@$(MAKE) -f Makefile.Workstation.mk setup-dotfile-manager
+	# Not needed @$(MAKE) -f Makefile.Workstation.mk setup-dotfile-manager
 	@echo "--------------------------------------------------------------------------------"
 	@echo "Installing Kubernetes tools..."
-	@$(MAKE) -f Makefile.Workstation.mk install-kubernetes-tools
+	# Not needed @$(MAKE) -f Makefile.Workstation.mk install-kubernetes-tools
 	@echo "--------------------------------------------------------------------------------"
 	@echo "Installing GitHub CLI..."
-	@$(MAKE) -f Makefile.Workstation.mk install-github-cli
+	# Not needed @$(MAKE) -f Makefile.Workstation.mk install-github-cli
 	@echo "--------------------------------------------------------------------------------"
 	@echo "Installing Rust"
-	@$(MAKE) -f Makefile.Workstation.mk install-rust-support-tools
+	# Not needed @$(MAKE) -f Makefile.Workstation.mk install-rust-support-tools
 	@echo "--------------------------------------------------------------------------------"
 	@echo "Installing Go"
-	@$(MAKE) -f Makefile.Workstation.mk install-go-support-tools
+	# Not needed @$(MAKE) -f Makefile.Workstation.mk install-go-support-tools
 	@echo "--------------------------------------------------------------------------------"
 	@echo "Installing Python tools..."
-	@$(MAKE) -f Makefile.Workstation.mk install-python-tools
+	# Not needed @$(MAKE) -f Makefile.Workstation.mk install-python-tools
 	@echo "--------------------------------------------------------------------------------"
 	@echo "Installing Visual Studio Code..."
 	@wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
@@ -247,7 +247,7 @@ setup-linux:
 	@sudo apt install -y code
 	@echo "--------------------------------------------------------------------------------"
 	@echo "Installing Docker..."
-	@$(MAKE) -f Makefile.Workstation.mk install-docker-ubuntu
+	# Not needed @$(MAKE) -f Makefile.Workstation.mk install-docker-ubuntu
 	@echo "--------------------------------------------------------------------------------"
 	@echo "Installing Vim..."
 	@$(MAKE) -f Makefile.Workstation.mk install-full-vim-ubuntu
