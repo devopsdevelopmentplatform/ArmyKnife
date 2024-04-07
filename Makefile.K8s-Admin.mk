@@ -5,6 +5,8 @@
 # Daily smoke test to make sure cluster is up and responding.
 smoke-test:
 	@echo "Running smoke test..."
+	mkdir ~/.kube
+	cp tools/kubespary/inventory/sample/artifacts/admin.conf ~/.kube/config
 	kubectl get pods --all-namespaces
 	kubectl cluster-info
 
