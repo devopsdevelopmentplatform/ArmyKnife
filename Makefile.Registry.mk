@@ -9,7 +9,7 @@ REGISTRY_CONTAINER_NAME := registry
 REGISTRY_PORT := 5000
 
 # Default target
-all: create_dir configure_docker_daemon setup_htpasswd run_registry
+all: create_dir configure_docker_daemon setup_htpasswd run_registry login-registry
 
 # Create directory for Docker registry credentials
 create_dir:
@@ -39,6 +39,9 @@ run_registry: setup_htpasswd
 		-e "REGISTRY_AUTH_HTPASSWD_PATH=/auth/htpasswd" \
 		registry
 	@echo "Docker registry container running with authentication."
+
+login-registry:
+	@docker login localhost:$(REGISTRY_PORT) -u $(USER_NAME) -p $(USER_PASS)
 
 # Clean up resources
 clean:

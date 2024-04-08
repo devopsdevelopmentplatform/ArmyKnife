@@ -3,25 +3,25 @@
 
 
 include Makefile.Libs.mk # Not tested on MacOS
-include Makefile.Vault.mk # Done
-include Makefile.Git.mk # Done
+include Makefile.Vault.mk # Done Stable on Linux and MacOS
+include Makefile.Git.mk # Done Stable on Linux and MacOS
 include Makefile.K8s.mk # Done
 include Makefile.VBox.mk # Not tested on MacOS because cloud image tools not working on MacOS.
-include Makefile.Workstation.mk # Done
+include Makefile.Workstation.mk # Done stable on Linux and MacOS
 include Makefile.Vagrant.mk # Done
-include Makefile.Geodesic.mk # Done
+include Makefile.Geodesic.mk # Done Stable on Linux and MacOS
 include Makefile.Docker.mk # Done
 include Makefile.Python.mk # Done
-include Makefile.Ansible.mk
-include Makefile.Terraform.mk
-include Makefile.Packer.mk
-include Makefile.CICD.mk
-include Makefile.Setup.mk
-include Makefile.K8s-Admin.mk
-include Makefile.ELK.mk
-include Makefile.Security.mk
-include Makefile.BashLib.mk
-include Makefile.Registry.mk
+include Makefile.Ansible.mk # Needs more testing
+include Makefile.Terraform.mk # Needs Tested
+include Makefile.Packer.mk # WIP
+include Makefile.CICD.mk # WIP
+include Makefile.Setup.mk # WIP
+include Makefile.K8s-Admin.mk # WIP but smoke test is working on Linux
+include Makefile.ELK.mk # WIP
+include Makefile.Security.mk # WIP
+include Makefile.BashLib.mk # Needs Testing on MacOS
+include Makefile.Registry.mk # Needs reworked for MacOS option
 
 
 

@@ -300,7 +300,7 @@ options_to_env
 # export DOCKER_TAG="dev-debian"
 # export DOCKER_NAME="geodesic"
 
-export DOCKER_IMAGE="fatporkrinds/frisbee"
+export DOCKER_IMAGE="localhost:5000/frisbee"
 export DOCKER_TAG="latest"
 export DOCKER_NAME="frisbee"
 
