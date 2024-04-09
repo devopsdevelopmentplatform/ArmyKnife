@@ -250,10 +250,10 @@ setup-vscode:
 	# Not needed @$(MAKE) -f Makefile.Workstation.mk install-docker-ubuntu
 	@echo "--------------------------------------------------------------------------------"
 	@echo "Installing Vim..."
-	@$(MAKE) -f Makefile.Workstation.mk install-full-vim-ubuntu
+	# @$(MAKE) -f Makefile.Workstation.mk install-full-vim-ubuntu
 	@echo "--------------------------------------------------------------------------------"
 	@echo "Installing amix/vimrc..."
-	@$(MAKE) -f Makefile.Workstation.mk install-amix-vimrc
+	# @$(MAKE) -f Makefile.Workstation.mk install-amix-vimrc
 	@echo "--------------------------------------------------------------------------------"
 
 
