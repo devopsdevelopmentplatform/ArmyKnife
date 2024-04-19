@@ -7,15 +7,21 @@ USER_NAME := armyknife-user
 USER_PASS := armyknife
 REGISTRY_CONTAINER_NAME := registry
 REGISTRY_PORT := 5000
-OS := $(shell uname -s)
 
 # Default target
-all: create_dir setup_htpasswd run_registry
+all: create_dir configure_docker_daemon setup_htpasswd run_registry
 
 # Create directory for Docker registry credentials
 create_dir:
 	@mkdir -p $(DOCKER_REGISTRY_DIR)/auth
 	@echo "Directory $(DOCKER_REGISTRY_DIR)/auth created for Docker registry credentials."
+
+# Add Docker daemon configuration for insecure registry and restart Docker
+configure_docker_daemon:
+	@echo '{ "insecure-registries":["localhost:$(REGISTRY_PORT)"] }' | sudo tee /etc/docker/daemon.json > /dev/null
+	@sudo systemctl daemon-reload
+	@sudo systemctl restart docker
+	@echo "Docker daemon configured for insecure registry and restarted."
 
 # Setup htpasswd file for authentication
 setup_htpasswd: create_dir
@@ -34,9 +40,6 @@ run_registry: setup_htpasswd
 		registry
 	@echo "Docker registry container running with authentication."
 
-login-registry:
-	@docker login localhost:$(REGISTRY_PORT) -u $(USER_NAME) -p $(USER_PASS)
-
 # Clean up resources
 clean:
 	@docker stop $(REGISTRY_CONTAINER_NAME) > /dev/null 2>&1 || true
@@ -44,8 +47,7 @@ clean:
 	@rm -rf $(HTPASSWD_FILE)
 	@echo "Cleaned up resources."
 
-.PHONY: all create_dir setup_htpasswd run_registry clean
-
+.PHONY: all create_dir configure_docker_daemon setup_htpasswd run_registry clean
 
 
 
