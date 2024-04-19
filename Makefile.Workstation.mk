@@ -72,7 +72,7 @@ setup-dotfile-manager:
 # Tested and working properly
 ubuntu-setup-packages:
 	sudo apt update && sudo apt upgrade -y && sudo apt remove -y minidlna
-	sudo apt install -y git make wget curl jq qemu-system-x86 qemu-utils cloud-guest-utils cloud-init virtualbox cloud-utils build-essential vim virtualbox libvirt-daemon-system libvirt-clients  libvirt-daemon bridge-utils virt-manager libguestfs-tools libosinfo-bin libguestfs-tools virt-top virtinst libvirt-doc wget curl jq make zsh git libz-dev vim vim-gtk3 gnome-terminal gnome-tweaks gnome-shell-extensions gnome-shell-extension-ubuntu-dock
+	sudo apt install -y git make wget curl jq qemu-system-x86 qemu-utils cloud-guest-utils cloud-init virtualbox cloud-utils build-essential vim virtualbox libvirt-daemon-system libvirt-clients  libvirt-daemon bridge-utils virt-manager libguestfs-tools libosinfo-bin libguestfs-tools virt-top virtinst libvirt-doc wget curl jq make zsh git libz-dev vim vim-gtk3 gnome-terminal gnome-tweaks gnome-shell-extensions gnome-shell-extension-ubuntu-dock python3.10-venv
 # Define the target to generate SSH keys
 # Make sure you update the keys in vagrant and virtualbox cloud-init files
 create-ssh-keys:
