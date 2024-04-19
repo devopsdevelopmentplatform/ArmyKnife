@@ -38,13 +38,13 @@ login-registry:
 	@docker login localhost:$(REGISTRY_PORT) -u $(USER_NAME) -p $(USER_PASS)
 
 # Clean up resources
-clean:
+clean-registry:
 	@docker stop $(REGISTRY_CONTAINER_NAME) > /dev/null 2>&1 || true
 	@docker rm $(REGISTRY_CONTAINER_NAME) > /dev/null 2>&1 || true
 	@rm -rf $(HTPASSWD_FILE)
 	@echo "Cleaned up resources."
 
-.PHONY: all create_dir setup_htpasswd run_registry clean login-registry
+.PHONY: all create_dir setup_htpasswd run_registry clean-registry login-registry
 
 
 

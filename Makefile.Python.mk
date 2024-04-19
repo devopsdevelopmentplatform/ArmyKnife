@@ -44,9 +44,9 @@ typecheck:
 	$(VENV_NAME)/bin/mypy $1
 
 # Clean up the virtual environment and other generated files
-clean:
+clean-python:
 	rm -rf $(VENV_NAME)
 	find . -name "*.pyc" -exec rm {} \;
 	find . -name "__pycache__" -exec rm -r {} \;
 
-.PHONY: all venv setup install format python-lint test typecheck clean config
+.PHONY: all venv setup install format python-lint test typecheck clean-python config
