@@ -1,5 +1,4 @@
 # Makefile.Registry.mk
-# docker login  localhost:5000 -u armyknife-user -p armyknife
 # Variable Definitions
 DOCKER_REGISTRY_DIR := Docker_Registry
 HTPASSWD_FILE := $(DOCKER_REGISTRY_DIR)/auth/htpasswd
@@ -24,28 +23,33 @@ setup_htpasswd: create_dir
 
 # Run the Docker registry container with authentication
 run_registry: setup_htpasswd
+	@docker stop $(REGISTRY_CONTAINER_NAME) > /dev/null 2>&1 || true
+	@docker rm $(REGISTRY_CONTAINER_NAME) > /dev/null 2>&1 || true
 	@docker run -itd \
-		-p $(REGISTRY_PORT):$(REGISTRY_PORT) \
-		--name $(REGISTRY_CONTAINER_NAME) \
-		-v "$(shell pwd)/$(HTPASSWD_FILE)":/auth/htpasswd \
-		-e "REGISTRY_AUTH=htpasswd" \
-		-e "REGISTRY_AUTH_HTPASSWD_REALM=Registry Realm" \
-		-e "REGISTRY_AUTH_HTPASSWD_PATH=/auth/htpasswd" \
-		registry
+        -p $(REGISTRY_PORT):$(REGISTRY_PORT) \
+        --name $(REGISTRY_CONTAINER_NAME) \
+        -v "$(shell pwd)/$(HTPASSWD_FILE)":/auth/htpasswd \
+        -e "REGISTRY_AUTH=htpasswd" \
+        -e "REGISTRY_AUTH_HTPASSWD_REALM=Registry Realm" \
+        -e "REGISTRY_AUTH_HTPASSWD_PATH=/auth/htpasswd" \
+        registry
 	@echo "Docker registry container running with authentication."
+
 
 login-registry:
 	@docker login localhost:$(REGISTRY_PORT) -u $(USER_NAME) -p $(USER_PASS)
 
+# Target to bring up containers and login to the registry after reboot
+start-after-reboot: registry-clean configure_docker_daemon run_registry login-registry
+
 # Clean up resources
-clean-registry:
+registry-clean:
 	@docker stop $(REGISTRY_CONTAINER_NAME) > /dev/null 2>&1 || true
 	@docker rm $(REGISTRY_CONTAINER_NAME) > /dev/null 2>&1 || true
 	@rm -rf $(HTPASSWD_FILE)
 	@echo "Cleaned up resources."
 
-.PHONY: all create_dir setup_htpasswd run_registry clean-registry login-registry
-
+.PHONY: all create_dir configure_docker_daemon setup_htpasswd run_registry clean
 
 
 
