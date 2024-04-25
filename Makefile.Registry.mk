@@ -49,7 +49,7 @@ registry-clean:
 	@rm -rf $(HTPASSWD_FILE)
 	@echo "Cleaned up resources."
 
-.PHONY: all create_dir configure_docker_daemon setup_htpasswd run_registry clean
+.PHONY: all create_dir configure_docker_daemon setup_htpasswd run_registry clean start-after-reboot
 
 
 
