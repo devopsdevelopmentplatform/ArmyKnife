@@ -197,6 +197,13 @@ install-docker-ubuntu:
 		echo "Docker is already installed."; \
 	fi
 
+install-vagrant:
+	@which vagrant || (sudo apt update && sudo apt install -y gpg wget apt-transport-https && \
+	wget -O- https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg && \
+	sudo gpg --no-default-keyring --keyring /usr/share/keyrings/hashicorp-archive-keyring.gpg --fingerprint | grep -q "798A EC65 4E5C 1542 8C8E 42EE AA16 FCBC A621 E701" && \
+	echo "deb [arch=$$(dpkg --print-architecture) signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $$(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list && \
+	sudo apt update && sudo apt install -y vagrant)
+
 # Main target for setting up the development workstation on MacOS
 #setup-macos: setup-homebrew install-common-packages setup-dotfile-manager install-python-tools install-kubernetes-tools install-github-cli install-vscode install-essential-dev-tools update-shell-config install-amix-vimrc install-oh-my-zsh install-go-support-tools install-rust-support-tools	
 setup-macos: setup-homebrew update-shell-config install-common-packages install-kubernetes-tools install-github-cli setup-dotfile-manager install-essential-dev-tools install-amix-vimrc install-go-support-tools install-rust-support-tools install-oh-my-bash 
