@@ -8,7 +8,7 @@ ARMYKNIFE := ~/localprojects/ArmyKnife
 
 # Define the packages to be installed via Homebrew (common packages for both)
 
-COMMON_PACKAGES := wget curl jq vault
+COMMON_PACKAGES := wget curl jq 
 
 # Define Python development tools
 PYTHON_DEV_TOOLS := pipenv pytest flake8 isort sphinx tox twine pylint autopep8 black mypy bandit poetry
@@ -72,7 +72,7 @@ setup-dotfile-manager:
 # Tested and working properly
 ubuntu-setup-packages:
 	sudo apt update && sudo apt upgrade -y && sudo apt remove -y minidlna
-	sudo apt install -y git make wget curl jq qemu-system-x86 qemu-utils cloud-guest-utils cloud-init virtualbox cloud-utils build-essential vim virtualbox libvirt-daemon-system libvirt-clients  libvirt-daemon bridge-utils virt-manager libguestfs-tools libosinfo-bin libguestfs-tools virt-top virtinst libvirt-doc wget curl jq make zsh git libz-dev vim vim-gtk3 gnome-terminal gnome-tweaks gnome-shell-extensions gnome-shell-extension-ubuntu-dock python3.10-venv vagrant
+	sudo apt install -y git make wget curl jq qemu-system-x86 qemu-utils cloud-guest-utils cloud-init virtualbox cloud-utils build-essential vim virtualbox libvirt-daemon-system libvirt-clients  libvirt-daemon bridge-utils virt-manager libguestfs-tools libosinfo-bin libguestfs-tools virt-top virtinst libvirt-doc wget curl jq make zsh git libz-dev vim vim-gtk3 gnome-terminal gnome-tweaks gnome-shell-extensions gnome-shell-extension-ubuntu-dock python3.10-venv 
 # Define the target to generate SSH keys
 # Make sure you update the keys in vagrant and virtualbox cloud-init files
 create-ssh-keys:
@@ -198,11 +198,11 @@ install-docker-ubuntu:
 	fi
 
 install-vagrant:
-	@which vagrant || (sudo apt update && sudo apt install -y gpg wget apt-transport-https && \
-	wget -O- https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg && \
-	sudo gpg --no-default-keyring --keyring /usr/share/keyrings/hashicorp-archive-keyring.gpg --fingerprint | grep -q "798A EC65 4E5C 1542 8C8E 42EE AA16 FCBC A621 E701" && \
-	echo "deb [arch=$$(dpkg --print-architecture) signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $$(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list && \
-	sudo apt update && sudo apt install -y vagrant)
+	@which vagrant || (sudo apt update && sudo apt install -y gpg wget apt-transport-https; \
+	sudo wget -O- https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg; \
+	sudo gpg --no-default-keyring --keyring /usr/share/keyrings/hashicorp-archive-keyring.gpg --fingerprint | grep -q "798A EC65 4E5C 1542 8C8E 42EE AA16 FCBC A621 E701"; \
+	echo "deb [arch=$$(dpkg --print-architecture) signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $$(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list; \
+	sudo apt update && sudo apt install -y vagrant vault terraform)
 
 # Main target for setting up the development workstation on MacOS
 #setup-macos: setup-homebrew install-common-packages setup-dotfile-manager install-python-tools install-kubernetes-tools install-github-cli install-vscode install-essential-dev-tools update-shell-config install-amix-vimrc install-oh-my-zsh install-go-support-tools install-rust-support-tools	
@@ -210,6 +210,7 @@ setup-macos: setup-homebrew update-shell-config install-common-packages install-
 # Main target for setting up the development workstation on Ubuntu
 setup-ubuntu: ubuntu-setup-packages setup-homebrew update-shell-config install-common-packages setup-dotfile-manager install-kubernetes-tools install-github-cli install-essential-dev-tools install-full-vim-ubuntu install-oh-my-bash install-go-support-tools install-rust-support-tools install-docker-ubuntu update-shell-config setup-vscode
 
+# Example 
 setup-vscode:
 	@echo "Setting up Linux Workstation..."
 	@echo "--------------------------------------------------------------------------------"
