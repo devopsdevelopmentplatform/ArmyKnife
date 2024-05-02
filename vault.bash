@@ -37,7 +37,7 @@ vault_clean() {
 
 vault_up() {
   log_message "Starting Vault."
-  docker-compose up -d vault 2>&1 || true
+  docker compose up -d vault 2>&1 || true
 
   if [ $? -eq 0 ]; then
     log_message "Vault is up and running successfully."

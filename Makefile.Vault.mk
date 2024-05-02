@@ -1,6 +1,6 @@
 
 
-.PHONY: vault-up vault-down vault-clean vault-connect ingest-secrets-into-vault test-vault-secret print-vault-secrets test-vault-login
+.PHONY: vault-up vault-down vault-clean vault-connect ingest-secrets-into-vault test-vault-secret print-vault-secrets test-vault-login connect-to-vault
 
 # Define variables
 SERVICE=devopsvault

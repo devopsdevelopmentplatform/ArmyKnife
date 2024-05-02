@@ -72,7 +72,7 @@ setup-dotfile-manager:
 # Tested and working properly
 ubuntu-setup-packages:
 	sudo apt update && sudo apt upgrade -y && sudo apt remove -y minidlna
-	sudo apt install -y git make wget curl jq qemu-system-x86 qemu-utils cloud-guest-utils cloud-init virtualbox cloud-utils build-essential vim virtualbox libvirt-daemon-system libvirt-clients  libvirt-daemon bridge-utils virt-manager libguestfs-tools libosinfo-bin libguestfs-tools virt-top virtinst libvirt-doc wget curl jq make zsh git libz-dev vim vim-gtk3 gnome-terminal gnome-tweaks gnome-shell-extensions gnome-shell-extension-ubuntu-dock python3.10-venv 
+	sudo apt install -y git make wget curl jq qemu-system-x86 qemu-utils cloud-guest-utils cloud-init virtualbox cloud-utils build-essential vim virtualbox libvirt-daemon-system libvirt-clients  libvirt-daemon bridge-utils virt-manager libguestfs-tools libosinfo-bin libguestfs-tools virt-top virtinst libvirt-doc wget curl jq make zsh git libz-dev vim vim-gtk3 gnome-terminal gnome-tweaks gnome-shell-extensions gnome-shell-extension-ubuntu-dock python3.12-venv 
 # Define the target to generate SSH keys
 # Make sure you update the keys in vagrant and virtualbox cloud-init files
 create-ssh-keys:
@@ -201,7 +201,7 @@ install-vagrant:
 	@which vagrant || (sudo apt update && sudo apt install -y gpg wget apt-transport-https; \
 	sudo wget -O- https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg; \
 	sudo gpg --no-default-keyring --keyring /usr/share/keyrings/hashicorp-archive-keyring.gpg --fingerprint | grep -q "798A EC65 4E5C 1542 8C8E 42EE AA16 FCBC A621 E701"; \
-	echo "deb [arch=$$(dpkg --print-architecture) signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $$(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list; \
+	echo "deb [arch=$$(dpkg --print-architecture) signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com jammy main" | sudo tee /etc/apt/sources.list.d/hashicorp.list; \
 	sudo apt update && sudo apt install -y vagrant vault terraform)
 
 # Main target for setting up the development workstation on MacOS
@@ -261,7 +261,7 @@ setup-vscode:
 	# @$(MAKE) -f Makefile.Workstation.mk install-full-vim-ubuntu
 	@echo "--------------------------------------------------------------------------------"
 	@echo "Installing amix/vimrc..."
-	# @$(MAKE) -f Makefile.Workstation.mk install-amix-vimrc
+	@$(MAKE) -f Makefile.Workstation.mk install-amix-vimrc
 	@echo "--------------------------------------------------------------------------------"
 
 
