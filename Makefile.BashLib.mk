@@ -5,6 +5,7 @@ LIB_DIR = ~/bashlib/lib
 BIN_DIR = ~/bashlib/bin
 STRING_OPS = $(LIB_DIR)/string_operations.sh
 MATH_OPS = $(LIB_DIR)/math_operations.sh
+VAULT_OPS = $(LIB_DIR)/get_azure_creds.sh
 MAIN_LIB = $(LIB_DIR)/main.sh
 EXAMPLE_SCRIPT = $(BIN_DIR)/example_script.sh
 
@@ -30,6 +31,22 @@ setup-lib:
 	echo 'function math_subtract() {' >> $(MATH_OPS)
 	echo '    echo "$$(( $$1 - $$2 ))"' >> $(MATH_OPS)
 	echo '}' >> $(MATH_OPS)
+	touch $(VAULT_OPS)
+	echo 'function get_vault_credentials() {' >> $(VAULT_OPS)
+	echo '    if ! command -v vault &> /dev/null; then' >> $(VAULT_OPS)
+	echo '        echo "Vault command line tool is not installed. Please install it manually."' >> $(VAULT_OPS)
+	echo '        return 1' >> $(VAULT_OPS)
+	echo '    fi' >> $(VAULT_OPS)
+	echo '    response=$$(vault kv get --mount="kv" Cloud/Azure)' >> $(VAULT_OPS)
+	echo '    azure_client_id=$$(echo "$$response" | awk '\''/appId/ {print $$2}'\'')' >> $(VAULT_OPS)
+	echo '    azure_client_secret=$$(echo "$$response" | awk '\''/password/ {print $$2}'\'')' >> $(VAULT_OPS)
+	echo '    azure_subscription_id=$$(echo "$$response" | awk '\''/subscription/ {print $$2}'\'')' >> $(VAULT_OPS)
+	echo '    azure_tenant_id=$$(echo "$$response" | awk '\''/tenant/ {print $$2}'\'')' >> $(VAULT_OPS)
+	echo '    export AZURE_CLIENT_ID=$$azure_client_id' >> $(VAULT_OPS)
+	echo '    export AZURE_CLIENT_SECRET=$$azure_client_secret' >> $(VAULT_OPS)
+	echo '    export AZURE_SUBSCRIPTION_ID=$$azure_subscription_id' >> $(VAULT_OPS)
+	echo '    export AZURE_TENANT_ID=$$azure_tenant_id' >> $(VAULT_OPS)
+	echo '}' >> $(VAULT_OPS)
 
 # Set up bin directory
 setup-bin:
@@ -41,6 +58,7 @@ setup-main:
 	echo '# Source all library files' >> $(MAIN_LIB)
 	echo 'source "$$(dirname "$${BASH_SOURCE[0]}")/string_operations.sh"' >> $(MAIN_LIB)
 	echo 'source "$$(dirname "$${BASH_SOURCE[0]}")/math_operations.sh"' >> $(MAIN_LIB)
+	echo 'source "$$(dirname "$${BASH_SOURCE[0]}")/get_azure_creds.sh"' >> $(MAIN_LIB)
 
 # Set up example script
 setup-example:
