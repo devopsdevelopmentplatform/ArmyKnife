@@ -22,7 +22,8 @@ include Makefile.ELK.mk # WIP
 include Makefile.Security.mk # WIP
 include Makefile.BashLib.mk # Needs Testing on MacOS
 include Makefile.Registry.mk # Needs reworked for MacOS option
-
+include Makefile.Postgres.mk
+include Makefile.Terraform2.mk
 
 
 

@@ -3,8 +3,11 @@
         SYSTEM "https://resources.jetbrains.com/writerside/1.0/product-profile.dtd">
 
 <instance-profile id="addp"
-                  name="ArmyKnife DevOps Development Platform" start-page="Default-topic.md">
+                  name="ArmyKnife DevOps Development Platform" start-page="Introduction.md">
 
-    <toc-element topic="Default-topic.md"/>
-    <toc-element topic="Setup-Workstation.md"/>
+    <toc-element topic="Forward.md"/>
+    <toc-element topic="PreFace.md"/>
+    <toc-element topic="Introduction.md"/>
+    <toc-element topic="Setup-Workstation.md">
+    </toc-element>
 </instance-profile>

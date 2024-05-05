@@ -43,6 +43,9 @@ Here are the current Makefiles and the status of each. So far if it says "Done",
 - include Makefile.Security.mk # WIP
 - include Makefile.BashLib.mk # Done Stable on Linux and MacOS
 - include Makefile.Registry.mk # Done Stable on Linux and MacOS
+- include Makefile.Postgres.mk # Done but could use some additional testing
+- include Makefile.Terraform2.mk # Done but could use some additional testing
+
 
 Many Makefile targets are undocumented and not included in the general setup processes but are vey useful. For example
 the ingest-secrets-into-vault Makefile target in the Makefile.Vault.mk file is very handy to take all your secrets in
@@ -53,7 +56,8 @@ your .env file and ingest them into vault.
 It depends on if your running on Mac or Linux. 75% of the testing has been done on Linux but Mac is working now it just
 needs some love and testing.
 
-### Linux Ubuntu Jammy 22.04 LTS
+### Linux Ubuntu Jammy 22.04 LTS - main branch
+### Linux Ubuntu Noble 24.04 LTS - noble branch
 
 ## Tier 1 (DevOps)
 
@@ -135,6 +139,11 @@ needs some love and testing.
 - Convert the large makefile targets to Bash, Python, Go, or Rust
 - Add Fedora as an option
 - Test on Windows with WSL
+- Create an ArmyKnife Pro Version and do Cloud Deploys
+- Create a front end or IDP
+- Add lots more bash functions in the bash library
+- Add all the modern DevOps tools
+- Add all the cloud clients
 
 
 # Demo Hardware Used
