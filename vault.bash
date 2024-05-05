@@ -23,7 +23,7 @@ log_message() {
 
 vault_clean() {
   local output
-  output=$(docker-compose down --volumes --remove-orphans --rmi all 2>&1) || true
+  output=$(docker compose down --volumes --remove-orphans --rmi all 2>&1) || true
   log_message "Cleaning Vault artifacts sending output and errors to log file.\n$output"
 
   if [ $? -eq 0 ]; then

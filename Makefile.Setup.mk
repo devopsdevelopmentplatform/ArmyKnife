@@ -56,7 +56,7 @@ endif
 setup-vault:
 	@echo "Setting up Vault"
 	./vault.bash
-    #@$(MAKE) -d -f Makefile.Vault.mk connect-to-vault
+	@$(MAKE) -d -f Makefile.Vault.mk connect-to-vault
 	@echo "Vault setup completed."
 
 # connect-to-vault:
