@@ -62,6 +62,7 @@ needs some love and testing.
 ## Tier 1 (DevOps)
 
 1. My recommendation is to create a folder called localprojects on your $HOME root and clone the repo into it.
+Its best to fork it so you can save your changes for your environment. For example your network interface is different than mine.
   ```bash
     mkdir -p $HOME/localprojects
    ```
