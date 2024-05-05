@@ -208,7 +208,7 @@ install-vagrant:
 #setup-macos: setup-homebrew install-common-packages setup-dotfile-manager install-python-tools install-kubernetes-tools install-github-cli install-vscode install-essential-dev-tools update-shell-config install-amix-vimrc install-oh-my-zsh install-go-support-tools install-rust-support-tools	
 setup-macos: setup-homebrew update-shell-config install-common-packages install-kubernetes-tools install-github-cli setup-dotfile-manager install-essential-dev-tools install-amix-vimrc install-go-support-tools install-rust-support-tools install-oh-my-bash 
 # Main target for setting up the development workstation on Ubuntu
-setup-ubuntu: ubuntu-setup-packages setup-homebrew update-shell-config install-common-packages setup-dotfile-manager install-kubernetes-tools install-github-cli install-essential-dev-tools install-full-vim-ubuntu install-oh-my-bash install-go-support-tools install-rust-support-tools install-docker-ubuntu update-shell-config setup-vscode
+setup-ubuntu: ubuntu-setup-packages setup-homebrew update-shell-config install-common-packages setup-dotfile-manager install-kubernetes-tools install-github-cli install-essential-dev-tools install-full-vim-ubuntu install-oh-my-bash install-go-support-tools install-rust-support-tools install-docker-ubuntu update-shell-config setup-vscode install-vagrant
 
 # Example 
 setup-vscode:
