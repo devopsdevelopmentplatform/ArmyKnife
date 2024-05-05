@@ -22,6 +22,7 @@ tools/vbox/servers/server01/images/
 tools/vagrant/.vagrant/plugins/
 tools/vagrant/.vagrant/machines/
 tools/vagrant/.vagrant/
+tools/kubespray/.venv/
 tools/vbox/servers/ubuntu/images
 tools/kubespray/
 Docker_Registry/

@@ -66,7 +66,7 @@ users:
       chpasswd: { expire: False }
       ssh_pwauth: True
       ssh_authorized_keys:
-        - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCyJEkrwUkhiEnh+dLQPyzqR/Wgq4f09a0nfqljoCBz2QEASPTU5BVIA2vTWJJdlO4z6FzYmEH3O0JZn9Y57m3wZUK//rUCkaD0CbXjjoURkKj5o+5wBcBmvIAnbd7wndwYHQyK6gob6MgHaugL6Tn2JVKYcmsiT/MpsNVp+g5Igbb3kyRVN/nmI9Mt0V+PydjSIDv1Zem0+Ou0YvrwvYGaRNnqPjN8evHFNec0xXHJc9jLe21tH7VPsXDOVqQNOoQ11Ipv7RjABesLyW5J7dv1xtp8mpdvEprFjWaOy6ySz4HdQMa1w370EZgPcQ2CNRuM+DTgggLHiJE17lKGnGFvEW4xkIASyLfq4Wt8IiJfxzKv9pjoe41KKRHnwAFA1jHtQw7v7nQ0boudS/gu5IH2U5LNBbmZIYKYrOzlD7iYAz5cwYy5/h0wwr09F2vT5ABHdUZcg9Hg9qgJxC+KE5bXGMtceaNxl4Yt5sIL2W16XliG386uePSTAAVXyAeZtV0+PZkS3yVps353UsZBydvL88+R0rqDgHjEjVmcmqeL6/QAK1EIQnbiD1Cndc1OFalvumTDk7Gjpqr2vLXpxfwPPDN9lA+nbnymv8RcTvNDbjRlM9gDijNUDpsOdjMDfAbUrPSqiE1+jzD7JICVaZo8P0TiVQNz3XsYjB7TaCTfJw== YourEmail@example.com
+        - ssh-rsa XXXXXXXXXXX
 
     - name: ansible
       shell: /bin/bash
@@ -77,15 +77,15 @@ users:
       chpasswd: { expire: False }
       ssh_pwauth: True
       ssh_authorized_keys:
-        - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCyJEkrwUkhiEnh+dLQPyzqR/Wgq4f09a0nfqljoCBz2QEASPTU5BVIA2vTWJJdlO4z6FzYmEH3O0JZn9Y57m3wZUK//rUCkaD0CbXjjoURkKj5o+5wBcBmvIAnbd7wndwYHQyK6gob6MgHaugL6Tn2JVKYcmsiT/MpsNVp+g5Igbb3kyRVN/nmI9Mt0V+PydjSIDv1Zem0+Ou0YvrwvYGaRNnqPjN8evHFNec0xXHJc9jLe21tH7VPsXDOVqQNOoQ11Ipv7RjABesLyW5J7dv1xtp8mpdvEprFjWaOy6ySz4HdQMa1w370EZgPcQ2CNRuM+DTgggLHiJE17lKGnGFvEW4xkIASyLfq4Wt8IiJfxzKv9pjoe41KKRHnwAFA1jHtQw7v7nQ0boudS/gu5IH2U5LNBbmZIYKYrOzlD7iYAz5cwYy5/h0wwr09F2vT5ABHdUZcg9Hg9qgJxC+KE5bXGMtceaNxl4Yt5sIL2W16XliG386uePSTAAVXyAeZtV0+PZkS3yVps353UsZBydvL88+R0rqDgHjEjVmcmqeL6/QAK1EIQnbiD1Cndc1OFalvumTDk7Gjpqr2vLXpxfwPPDN9lA+nbnymv8RcTvNDbjRlM9gDijNUDpsOdjMDfAbUrPSqiE1+jzD7JICVaZo8P0TiVQNz3XsYjB7TaCTfJw== YourEmail@example.com
-
+        - ssh-rsa XXXXXXXXXXX
+        
 runcmd:
-  - curl -s https://github.com/devopsdevelopmentplatform/ArmyKnife/blob/main/armyknife.keys >> /home/ubuntu/.ssh/authorized_keys
-  - chmod 0600 /home/ubuntu/.ssh/authorized_keys
-  - chown ubuntu:ubuntu /home/ubuntu/.ssh/authorized_keys
-  - curl -s https://github.com/devopsdevelopmentplatform/ArmyKnife/blob/main/armyknife.keys >> /home/ansible/.ssh/authorized_keys
-  - chmod 0600 /home/ansible/.ssh/authorized_keys
-  - chown ansible:ansible /home/ansible/.ssh/authorized_keys
+  #- curl -s https://github.com/devopsdevelopmentplatform/ArmyKnife/blob/main/armyknife.keys >> /home/ubuntu/.ssh/authorized_keys
+  #- chmod 0600 /home/ubuntu/.ssh/authorized_keys
+  #- chown ubuntu:ubuntu /home/ubuntu/.ssh/authorized_keys
+  #- curl -s https://github.com/devopsdevelopmentplatform/ArmyKnife/blob/main/armyknife.keys >> /home/ansible/.ssh/authorized_keys
+  #- chmod 0600 /home/ansible/.ssh/authorized_keys
+  #- chown ansible:ansible /home/ansible/.ssh/authorized_keys
   #- mkdir -pv /home/ubuntu/code
   #- git clone https://github.com/fatporkrinds/armyknife-tier1.git /home/ubuntu/code/armyknife-tier1
   #- chown -R ubuntu:ubuntu /home/ubuntu/code/armyknife-tier1
@@ -246,7 +246,7 @@ write_files:
               name: en*s3
             set-name: ens3
             nameservers:
-              addresses: [1.1.1.1, 1.0.0.1]
+              addresses: [192.168.10.1, 192.168.10.1]
 
   - path: /etc/systemd/system/docker.service.d/override.conf
     content: |
@@ -263,19 +263,16 @@ write_files:
     content: |
       {
         "dns": [
-          "1.1.1.1",
-          "1.0.0.1"
+          "192.168.10.1",
+          "192.168.10.1"
         ],
         "hosts": ["tcp://0.0.0.0:2375", "unix:///var/run/docker.sock"]
       }
 
 bootcmd:
-  - printf "[Resolve]\nDNS=1.1.1.1" > /etc/systemd/resolved.conf
-  - printf "\nDNS=1.0.0.1" >> /etc/systemd/resolved.conf
+  - printf "[Resolve]\nDNS=192.168.10.1" > /etc/systemd/resolved.conf
+  - printf "\nDNS=192.168.10.1" >> /etc/systemd/resolved.conf
   - systemctl restart systemd-resolved
 
 final_message: "The system is finally up, after $UPTIME seconds"
 
-# power_state:
-#   timeout: 300
-#   mode: reboot

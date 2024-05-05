@@ -264,3 +264,15 @@ startup-local-registry:
 	@echo "Starting Local Docker Registry"
 	@$(MAKE) -d -f Makefile.Registry.mk start-after-reboot
 	@echo "Local Docker Registry started."
+
+################################################################################################################
+# Add Bash Libraries
+################################################################################################################
+
+add-bash-library:
+	@echo "Adding Bash Libraries"
+	@$(MAKE) -d -f Makefile.BashLib.mk all
+	echo "source "$$HOME/bashlib/lib/main.sh"" >> $$HOME/.bashrc
+	echo "export VAULT_ADDR=http://127.0.0.1:8200" >> $$HOME/.bashrc
+	echo "export VAULT_TOKEN=$$(cat .env | grep VAULT_TOKEN | cut -d '=' -f2)" >> $$HOME/.bashrc
+	@echo "Bash Libraries added."
