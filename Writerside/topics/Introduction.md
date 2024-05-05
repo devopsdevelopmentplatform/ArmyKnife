@@ -88,7 +88,7 @@ Its best to fork it so you can save your changes for your environment. For examp
    ```
 7. Run the third Makefile target. (This will be incorporated into the main workflow soon.)
   ```bash
-     make build-local-registry
+     make build-local-registry or make create-local-registry
    ```
 9. Run the fourth Makefile target. When you're done you can run `make connect-to-vault`.
   ```bash
@@ -100,7 +100,7 @@ Its best to fork it so you can save your changes for your environment. For examp
    ```
 10. Run the sixth Makefile target. (This will be incorporated in the main Makefile soon)
   ```bash
-     make -f Makefile.BashLib.mk all
+     make -f Makefile.BashLib.mk all or make add-bash-library
    ```
 12. Run the seventh Makefile target. If you have plenty of RAM and CPU then run kubespray.
   ```bash
