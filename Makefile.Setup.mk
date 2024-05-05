@@ -5,7 +5,7 @@
 # Phony targets
 # These targets are not files, but they are commands that you want to run
 # Using the .PHONY special target, it tells make that these targets are not real files.
-.PHONY: help notify-user-add-secrets setup-workstation setup-vault vagrant-up connect-to-vault vagrant-destroy-all setup-git build-custom-geodesic connect-to-my-geodesic ssh-vagrant install-minikube install-kubespray create-vbox-vm ova-import build-docker-images ingest-secrets ingest-secrets-into-vault build-go-demo-app security-test-mygoapp scan-image-with-grype scan-image-with-syft scan-image-with-trivy scan-image-with-dockle lint-mygoapp-dockerfile install-and-run-notary build-docker-images-alpine-golang build-cloud-cli-image test-cloud-cli-image login-to-registries push-cloud-cli-image-to-registries run-local build-python-demo-app k8s-smoke-test		
+.PHONY: help notify-user-add-secrets setup-workstation setup-vault vagrant-up connect-to-vault vagrant-destroy-all setup-git build-custom-geodesic connect-to-my-geodesic ssh-vagrant install-minikube install-kubespray create-vbox-vm ova-import build-docker-images ingest-secrets ingest-secrets-into-vault build-go-demo-app security-test-mygoapp scan-image-with-grype scan-image-with-syft scan-image-with-trivy scan-image-with-dockle lint-mygoapp-dockerfile install-and-run-notary build-docker-images-alpine-golang build-cloud-cli-image test-cloud-cli-image login-to-registries push-cloud-cli-image-to-registries run-local build-python-demo-app k8s-smoke-test create-local-registry
 
 # Variables
 # These are the variables that are used in the Makefile
@@ -249,3 +249,18 @@ run-local:
 	@echo "Running Cloud CLI Image locally"
 	@$(MAKE) -d -f Makefile.CICD.mk run_local
 	@echo "Cloud CLI Image running locally."
+
+
+################################################################################################################
+# Create a local Docker Registry
+################################################################################################################
+
+create-local-registry:
+	@echo "Creating Local Docker Registry"
+	@$(MAKE) -d -f Makefile.Registry.mk all
+	@echo "Local Docker Registry created."	
+
+startup-local-registry:
+	@echo "Starting Local Docker Registry"
+	@$(MAKE) -d -f Makefile.Registry.mk start-after-reboot
+	@echo "Local Docker Registry started."
