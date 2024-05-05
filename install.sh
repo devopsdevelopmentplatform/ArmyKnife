@@ -12,12 +12,13 @@ if ! command -v make &>/dev/null; then
     fi
     exit 1
 fi
+
 # Copy over .bashrc or .zshrc if it doesn't exist depending on if MacOS or Linux.
-# if [ "`uname`" = "Darwin" ]; then \
-#     cp support/.zshrc ~/.zshrc; \
-# else \
-#     cp support/.bashrc ~/.bashrc; \
-# fi
+if [ "`uname`" = "Darwin" ]; then \
+    cp support/.zshrc ~/.zshrc; \
+else \
+    cp support/.bashrc ~/.bashrc; \
+fi
 
 
 
